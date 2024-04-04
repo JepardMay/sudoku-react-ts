@@ -1,0 +1,151 @@
+.Grid {
+  display: flex;
+}
+
+.difficulty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.difficulty img {
+  width: 32px;
+  height: 32px;
+}
+
+.difficulty-easy img:first-child ~ img,
+.difficulty-medium img:nth-child(2) ~ img,
+.difficulty-medium img:nth-child(3) ~ img { 
+  filter: grayscale(100%) contrast(30%);
+}
+
+.Grid table {
+  position: relative;
+  font-size: 24px;
+  border: var(--border-width) solid var(--border-color);
+  border-collapse: collapse;
+  user-select: none;
+}
+
+.Grid tr {
+  position: relative;
+}
+
+.Grid tr:nth-child(3),
+.Grid tr:nth-child(6) {
+  border-bottom: var(--border-width) solid var(--border-color);
+}
+
+.Grid .cell {
+  position: relative;
+  width: var(--cell-width);
+  height: var(--cell-width);
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid var(--border-color);
+  transition: background-color 200ms ease-in,
+    color 100ms ease-in;
+}
+
+.Grid .cell:nth-child(3),
+.Grid .cell:nth-child(6) {
+  border-right: var(--border-width) solid var(--border-color);
+}
+
+.Grid .cell.selected,
+.Grid .btn.selected {
+  background-color: #94C9A9;
+}
+
+.Grid .cell:hover,
+.Grid .btn:hover {
+  background-color: rgba(148, 201, 169, 0.5);
+}
+
+
+.Grid .cell.mistake {
+  color: #FE5F55;
+}
+
+.Grid footer {
+  display: grid;
+  grid-template-columns: repeat(6, calc(var(--cell-width) * 1.238));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.Grid .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: inherit;
+  font-size: 24px;
+  color: var(--text-color);
+  background-color: transparent;
+  border: 2px solid var(--border-color);
+  text-transform: uppercase;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  transition: background-color 200ms ease-in,
+    color 200ms ease-in;
+}
+
+.Grid .btn svg {
+  width: 25px;
+  height: 25px;
+}
+
+.Grid .btn-text {
+  font-size: 15px;
+}
+
+.pencil-mark {
+  position: absolute;
+  font-size: 12px;
+}
+
+.pencil-mark_1 {
+  top: 0;
+  left: 4px;
+}
+
+.pencil-mark_2 {
+  top: 0;
+  left: 20px;
+}
+
+.pencil-mark_3 {
+  top: 0;
+  left: 36px;
+}
+
+.pencil-mark_4 {
+  top: 16px;
+  left: 4px;
+}
+
+.pencil-mark_5 {
+  top: 16px;
+  left: 20px;
+}
+
+.pencil-mark_6 {
+  top: 16px;
+  left: 36px;
+}
+
+.pencil-mark_7 {
+  top: 32px;
+  left: 4px;
+}
+
+.pencil-mark_8 {
+  top: 32px;
+  left: 20px;
+}
+
+.pencil-mark_9 {
+  top: 32px;
+  left: 36px;
+}

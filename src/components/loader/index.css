@@ -1,0 +1,45 @@
+.Loader {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 20px 140px;
+}
+
+.Loader img {
+  position: absolute;
+}
+
+.Loader_animate img {
+  animation: loading 1s cubic-bezier(0.28, 1.21, 0.35, 1.2) infinite alternate;
+}
+
+.Loader img:nth-child(5) {
+  animation-delay: 0.2s;
+}
+
+.Loader img:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.Loader img:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+.Loader img:nth-child(2) {
+  animation-delay: 0.8s;
+}
+
+.Loader img:nth-child(1) {
+  animation-delay: 1s;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateY(0px);
+  }
+
+  100% {
+    transform: translateY(20px);
+  }
+}
