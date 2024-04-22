@@ -1,5 +1,27 @@
 .Grid {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.Grid-header {
+  width: 100%;
+  padding: 0 80px;
+}
+
+.Grid-back-btn {
+  position: absolute;
+  top: 80px;
+  left: 80px;
+  width: 40px;
+  height: 40px;
+  color: var(--border-color);
+  background-color: transparent;
+  border: none;
+  transform: rotate(90deg);
+  cursor: pointer;
+  transition: color 200ms ease-in;
 }
 
 .difficulty {
@@ -20,7 +42,7 @@
   filter: grayscale(100%) contrast(30%);
 }
 
-.Grid table {
+.Grid-table {
   position: relative;
   font-size: 24px;
   border: var(--border-width) solid var(--border-color);
@@ -55,24 +77,21 @@
 
 .Grid .cell.selected,
 .Grid .btn.selected {
-  background-color: #94C9A9;
-}
-
-.Grid .cell:hover,
-.Grid .btn:hover {
-  background-color: rgba(148, 201, 169, 0.5);
+  color: var(--background-color);
+  background-color: var(--active-color);
 }
 
 
 .Grid .cell.mistake {
-  color: #FE5F55;
+  color: var(--mistake-color);
 }
 
-.Grid footer {
+.Grid-footer {
   display: grid;
-  grid-template-columns: repeat(6, calc(var(--cell-width) * 1.238));
+  grid-template-rows: repeat(6, calc(var(--cell-width) * 1.238));
+  grid-auto-flow: column;
   gap: 1rem;
-  margin: 1rem 0;
+  margin: 0 1rem;
 }
 
 .Grid .btn {
@@ -148,4 +167,105 @@
 .pencil-mark_9 {
   top: 32px;
   left: 36px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .Grid-back-btn:hover, 
+  .Grid-back-btn:focus { 
+    color: var(--active-color);
+  }
+
+  .Grid .cell:hover,
+  .Grid .btn:hover,
+  .Grid .btn:focus {
+    background-color: var(--active-color-transparent);
+  }
+}
+
+@media (max-width: 768px) {
+  .Grid {
+    display: block;
+    padding: 20px 5px;
+  }
+
+  .Grid-back-btn {
+    top: 50px;
+    left: 10px
+  }
+
+  .difficulty img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .Grid-table,
+  .Grid .btn {
+    font-size: 18px;
+  }
+
+  .Grid-footer {
+    grid-template-columns: repeat(6, calc(var(--cell-width) * 1.238));
+    grid-template-rows: none;
+    grid-auto-flow: row;
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .Grid .btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .Grid .btn-text {
+    font-size: 10px;
+  }
+
+  .pencil-mark {
+    font-size: 8px;
+  }
+
+  .pencil-mark_1 {
+    top: 0;
+    left: 4px;
+  }
+
+  .pencil-mark_2 {
+    top: 0;
+    left: 15px;
+  }
+
+  .pencil-mark_3 {
+    top: 0;
+    left: 26px;
+  }
+
+  .pencil-mark_4 {
+    top: 14px;
+    left: 4px;
+  }
+
+  .pencil-mark_5 {
+    top: 14px;
+    left: 15px;
+  }
+
+  .pencil-mark_6 {
+    top: 14px;
+    left: 26px;
+  }
+
+  .pencil-mark_7 {
+    top: 26px;
+    left: 4px;
+  }
+
+  .pencil-mark_8 {
+    top: 26px;
+    left: 15px;
+  }
+
+  .pencil-mark_9 {
+    top: 26px;
+    left: 26px;
+  }
 }

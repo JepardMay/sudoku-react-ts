@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { SudokuData, INPUT_TYPE } from '../../api';
-import { PencilIcon, EraserIcon } from '../Icons';
+import { SudokuData, INPUT_TYPE } from '../../models';
+import { FETCH_URL } from '../../api';
+import { PencilIcon, EraserIcon, ArrowBack } from '../Icons';
 import Logo from '../logo/index';
 import Loader from '../loader/index';
 import './index.css';
 
-// interface Props {
-//   setView: (view: boolean) => void;
-// }
+interface Props {
+  setGame: (view: boolean) => void;
+}
 
-function Grid() {
+function Grid({setGame}: Props) {
   const [state, setState] = useState<SudokuData>({
     newboard: {
       grids: [
@@ -32,10 +33,9 @@ function Grid() {
   useEffect(() => {
     setLoading(true);
 
-    fetch('https://sudoku-api.vercel.app/api/dosuku')
+    fetch(FETCH_URL)
       .then((res) => res.json())
       .then((data) => {
-        console.log('here');
         setState(data);
         setTimeout(() => {
           setLoading(false);
@@ -189,7 +189,10 @@ function Grid() {
   };
 
   const header = (
-    <header>
+    <header className="Grid-header">
+      <button type="button" className="Grid-back-btn" onClick={ () => setGame(false) }>
+        <ArrowBack />
+      </button>
       <Logo />
       <div
         className={`difficulty difficulty-${state.newboard.grids[0].difficulty.toLowerCase()}`}
@@ -202,7 +205,7 @@ function Grid() {
   );
 
   const table = (
-    <table>
+    <table className="Grid-table">
       <tbody>
         {state.newboard.grids[0].value.map((value, rowIndex) =>
           renderRow(value, rowIndex),
@@ -226,7 +229,7 @@ function Grid() {
   }
 
   const footer = (
-    <footer>
+    <footer className="Grid-footer">
       {buttons}
       <button
         type="button"
@@ -261,14 +264,14 @@ function Grid() {
   );
 
   const grid = (
-    <section className="section">
+    <>
       {header}
       {table}
       {footer}
-    </section>
+    </>
   );
 
-  return <div className="Grid">{loading ? <Loader loading /> : grid}</div>;
+  return <section className="Grid">{loading ? <Loader loading /> : grid}</section>;
 }
 
 export default Grid;

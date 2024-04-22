@@ -1,14 +1,17 @@
 import React from 'react';
 import Logo from '../logo';
 
-// interface Props {
-//   setView: (view: boolean) => void;
-// }
+import './index.css';
 
-function Main() {
+interface Props {
+  setGame: (view: boolean) => void;
+}
+
+function Main({setGame}:Props) {
   return (
     <div className="Main">
-      <Logo mod={'big'} />
+      <Logo mod={ 'big' } />
+      <button className="Main-btn" type="button" onClick={ () => setGame(true) }>Play</button>
     </div>
   );
 }
