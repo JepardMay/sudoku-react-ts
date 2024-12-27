@@ -1,16 +1,16 @@
 import React from 'react';
 
-import './index.css';
+import { LogoContainer } from './styles';
 
 interface Props {
   mod?: string;
 }
 
-function Logo({ mod }: Props) {
+function Logo({ mod }: Readonly<Props>) {
   return (
-    <div className={mod ? `Logo Logo_${mod}` : 'Logo'}>
+    <LogoContainer className={mod}>
       <img src="./img/sudoku.png" alt="Sudoku" width="384" height="128" />
-    </div>
+    </LogoContainer>
   );
 }
 

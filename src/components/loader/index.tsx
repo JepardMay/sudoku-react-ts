@@ -1,21 +1,21 @@
 import React from 'react';
 
-import './index.css';
+import { LoaderContainer } from './styles';
 
 interface Props {
   loading: boolean;
 }
 
-function Loader({ loading }: Props) {
+function Loader({ loading }: Readonly<Props>) {
+  const lettersSrc = ['u-2', 'k', 'o', 'd', 'u-1', 's'];
+  const letters = ['U', 'K', 'O', 'D', 'U', 'S'];
+
   return (
-    <div className={loading ? 'Loader Loader_animate' : 'Loader'}>
-      <img src="./img/letters/u-2.png" alt="U" />
-      <img src="./img/letters/k.png" alt="K" />
-      <img src="./img/letters/o.png" alt="O" />
-      <img src="./img/letters/d.png" alt="D" />
-      <img src="./img/letters/u-1.png" alt="U" />
-      <img src="./img/letters/s.png" alt="S" />
-    </div>
+    <LoaderContainer loading={loading}>
+      {letters.map((letter, index) => (
+        <img key={lettersSrc[index]} src={`./img/letters/${lettersSrc[index]}.png`} alt={letter} />
+      ))}
+    </LoaderContainer>
   );
 }
 

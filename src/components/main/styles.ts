@@ -1,8 +1,6 @@
-.Main .Logo {
-  margin-bottom: 50px;
-}
+import styled from 'styled-components';
 
-.Main-btn {
+export const MainBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,18 +17,16 @@
   cursor: pointer;
   transition: background-color 200ms ease-in,
     color 200ms ease-in;
-}
 
-@media (hover: hover) and (pointer: fine) {
-  .Main-btn:hover { 
-    color: var(--background-color);
-    background-color: var(--active-color);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover { 
+      color: var(--background-color);
+      background-color: var(--active-color);
+    }
   }
-}
 
-@media (max-width: 768px) {
-  .Main-btn {
+  @media (max-width: 768px) {
     padding: 18px;
     font-size: 22px;
   }
-}
+`; 

@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import Main from '../main/index';
 import Grid from '../grid/index';
 
-import './index.css';
+import { Container } from './styles';
 
 function App() {
   const [game, setGame] = useState<boolean>(false);
 
   return (
-    <div className="App">{ game ?
-      <Grid setGame={ setGame } /> :
-      <Main setGame={ setGame } /> }
-    </div>
+    <Container>
+      { game ?
+        <Grid setGame={ setGame } /> :
+        <Main setGame={ setGame } />
+      }
+    </Container>
   );
 }
 
