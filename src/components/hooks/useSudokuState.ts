@@ -18,6 +18,8 @@ const useSudokuState = () => {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [inputType, setInputType] = useState<string>(INPUT_TYPE.DIGIT_FIRST);
+  const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
+  const [selectedCell, setSelectedCell] = useState<{ row: number, col: number } | null>(null);
   const [pencilMode, setPencilMode] = useState<boolean>(false);
   const [eraserMode, setEraserMode] = useState<boolean>(false);
 
@@ -28,6 +30,10 @@ const useSudokuState = () => {
     setLoading,
     inputType,
     setInputType,
+    selectedNumber,
+    setSelectedNumber,
+    selectedCell,
+    setSelectedCell,
     pencilMode,
     setPencilMode,
     eraserMode,

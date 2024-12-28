@@ -20,6 +20,10 @@ function Grid({setGame}: Readonly<Props>) {
     setLoading,
     inputType,
     setInputType,
+    selectedNumber,
+    setSelectedNumber,
+    selectedCell,
+    setSelectedCell,
     pencilMode,
     setPencilMode,
     eraserMode,
@@ -33,7 +37,15 @@ function Grid({setGame}: Readonly<Props>) {
       {loading ? <Loader loading={loading} /> : (
         <>
           <Header setGame={setGame} difficulty={state.newboard.grids[0].difficulty} />
-          <Table data={state} />
+          <Table
+            data={ state }
+            inputType={ inputType }
+            eraserMode={eraserMode}
+            selectedNumber={ selectedNumber }
+            selectedCell={selectedCell}
+            setSelectedCell={setSelectedCell}
+            setState={ setState }
+          />
           <Footer
             pencilMode={pencilMode}
             setPencilMode={setPencilMode}
@@ -41,6 +53,11 @@ function Grid({setGame}: Readonly<Props>) {
             setEraserMode={setEraserMode}
             inputType={inputType}
             setInputType={setInputType}
+            selectedNumber={selectedNumber}
+            setSelectedNumber={setSelectedNumber}
+            selectedCell={selectedCell}
+            setSelectedCell={setSelectedCell}
+            setState={ setState }
           />
         </>
       )}

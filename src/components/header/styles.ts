@@ -49,7 +49,9 @@ export const Difficulty = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 28px;
-    height: 28px;
+    & img {
+      width: 28px;
+      height: 28px;
+    }
   }
 `;

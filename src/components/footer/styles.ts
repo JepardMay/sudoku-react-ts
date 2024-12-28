@@ -35,14 +35,20 @@ export const FooterBtn = styled.button<BtnProps>`
   transition: background-color 200ms ease-in,
     color 200ms ease-in;
 
-  &.selected {
+  &.selected,
+  &.pencil-selected {
     color: var(--background-color);
     background-color: var(--active-color);
+  }
+
+  &.pencil-selected svg {
+    transform: rotate(45deg);
   }
 
   svg {
     width: 25px;
     height: 25px;
+    transition: transform 200ms ease-in;
   }
 
   @media (hover: hover) and (pointer: fine) {
