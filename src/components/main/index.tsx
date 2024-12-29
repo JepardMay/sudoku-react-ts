@@ -4,14 +4,17 @@ import Logo from '../logo';
 import { MainBtn } from './styles';
 
 interface Props {
-  setGame: (view: boolean) => void;
+  resume: boolean;
+  startNewGame: () => void;
+  resumeGame: () => void;
 }
 
-function Main({ setGame }: Readonly<Props>) {
+function Main({ resume, startNewGame, resumeGame }: Readonly<Props>) {
   return (
     <div>
       <Logo mod='big' />
-      <MainBtn onClick={ () => setGame(true) }>Play</MainBtn>
+      { resume && <MainBtn onClick={ resumeGame }>Resume Game</MainBtn> }
+      <MainBtn onClick={ startNewGame }>New Game</MainBtn>
     </div>
   );
 }

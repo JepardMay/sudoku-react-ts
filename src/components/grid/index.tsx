@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useSudokuState from '../hooks/useSudokuState';
 import useFetchSudokuData from '../hooks/useFetchSudokuData';
 import Loader from '../loader';
@@ -9,10 +9,12 @@ import Footer from '../footer';
 import { GridSection } from './styles';
 
 interface Props {
+  resume: boolean;
+  setResume: (view: boolean) => void;
   setGame: (view: boolean) => void;
 }
 
-function Grid({ setGame }: Readonly<Props>) {
+function Grid({ resume, setResume, setGame }: Readonly<Props>) {
   const {
     state,
     setState,
@@ -31,13 +33,19 @@ function Grid({ setGame }: Readonly<Props>) {
     setNumber
   } = useSudokuState();
 
-  useFetchSudokuData(setState, setLoading);
+  useFetchSudokuData(setState, setLoading, !resume);
+  
+  useEffect(() => {
+    if (resume) {
+      setLoading(false);
+    }
+  }, [resume, setLoading]);
 
   return (
     <GridSection>
       {loading ? <Loader loading={loading} /> : (
         <>
-          <Header setGame={setGame} difficulty={state.newboard.grids[0].difficulty} />
+          <Header setResume={setResume} setGame={setGame} difficulty={state.newboard.grids[0].difficulty} />
           <Table
             data={state}
             inputType={inputType}

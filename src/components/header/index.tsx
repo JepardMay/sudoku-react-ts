@@ -5,14 +5,18 @@ import Logo from '../logo/index';
 import { HeaderContainer, BackBtn, Difficulty } from './styles';
 
 interface Props {
+  setResume: (resume: boolean) => void;
   setGame: (view: boolean) => void;
   difficulty: string;
 }
 
-function Header({ setGame, difficulty }: Readonly<Props>) {
+function Header({ setResume, setGame, difficulty }: Readonly<Props>) {
   return (
     <HeaderContainer>
-      <BackBtn onClick={ () => setGame(false) }>
+      <BackBtn onClick={ () => {
+        setGame(false);
+        setResume(true);
+      }}>
         <ArrowBack />
       </BackBtn>
       <Logo />

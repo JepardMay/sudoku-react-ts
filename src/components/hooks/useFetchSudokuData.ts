@@ -17,8 +17,10 @@ const transformGridData = (grid: { difficulty: string; solution: number[][]; val
   value: transformGridValues(grid.value),
 });
 
-const useFetchSudokuData = (setState: React.Dispatch<React.SetStateAction<SudokuData>>, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+const useFetchSudokuData = (setState: React.Dispatch<React.SetStateAction<SudokuData>>, setLoading: React.Dispatch<React.SetStateAction<boolean>>, shouldFetch: boolean) => {
   useEffect(() => {
+    if (!shouldFetch) return;
+
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -38,7 +40,9 @@ const useFetchSudokuData = (setState: React.Dispatch<React.SetStateAction<Sudoku
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
       }
     };
 

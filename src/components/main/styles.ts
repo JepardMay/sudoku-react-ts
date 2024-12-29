@@ -5,11 +5,11 @@ export const MainBtn = styled.button`
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 212px; 
+  max-width: 250px; 
   margin: 0 auto;
   padding: 20px;
   font: inherit;
-  font-size: 28px;
+  font-size: 26px;
   color: var(--text-color);
   background-color: transparent;
   border: 2px solid var(--border-color);
@@ -17,6 +17,10 @@ export const MainBtn = styled.button`
   cursor: pointer;
   transition: background-color 200ms ease-in,
     color 200ms ease-in;
+
+  & + & {
+    margin-top: 15px;
+  }
 
   @media (hover: hover) and (pointer: fine) {
     &:hover { 
