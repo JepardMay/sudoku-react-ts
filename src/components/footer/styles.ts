@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface BtnProps {
-  btnType?: string;
+  btnType?: 'text' | 'number';
 }
 
 export const FooterContainer = styled.footer`
@@ -20,12 +20,16 @@ export const FooterContainer = styled.footer`
   }
 `;
 
-export const FooterBtn = styled.button<BtnProps>`
+const filterProps = ({ ...props }: BtnProps & React.ButtonHTMLAttributes<HTMLButtonElement>) => props;
+
+export const FooterBtn = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== 'btnType',
+}).attrs<BtnProps>(filterProps)`
   display: flex;
   justify-content: center;
   align-items: center;
   font: inherit;
-  font-size: ${({ btnType }) => btnType === 'text' ? '15px': '24px'};
+  font-size: ${({ btnType }) => (btnType === 'text' ? '15px' : '24px')};
   color: var(--text-color);
   background-color: transparent;
   border: 2px solid var(--border-color);
@@ -59,7 +63,7 @@ export const FooterBtn = styled.button<BtnProps>`
   }
   
   @media (max-width: 768px) {
-    font-size: ${({ btnType }) => btnType === 'text' ? '10px' : '18px'};
+    font-size: ${({ btnType }) => (btnType === 'text' ? '10px' : '18px')};
     
     svg {
       width: 18px;

@@ -3,15 +3,20 @@ export enum INPUT_TYPE {
   CELL_FIRST = 'Cell first',
 }
 
+export interface Cell {
+  value: number;
+  pencilMarks: number[];
+}
+
+export interface Grid {
+  difficulty: string;
+  solution: number[][];
+  value: Cell[][];
+}
+
 export interface SudokuData {
   newboard: {
-    grids: [
-      {
-        difficulty: string;
-        solution: [[number]];
-        value: [[number]];
-      },
-    ];
+    grids: Grid[];
     message: string;
     results: number;
   };

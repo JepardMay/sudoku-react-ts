@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { PencilIcon, EraserIcon } from '../Icons';
 import { SudokuData, INPUT_TYPE } from '../../models';
 
@@ -15,6 +15,7 @@ interface FooterProps {
   setSelectedNumber: React.Dispatch<React.SetStateAction<number | null>>;
   selectedCell: { row: number, col: number } | null;
   setSelectedCell: React.Dispatch<React.SetStateAction<{ row: number, col: number } | null>>;
+  setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
   setState: React.Dispatch<React.SetStateAction<SudokuData>>;
 }
 
@@ -29,34 +30,30 @@ function Footer({
   setSelectedNumber,
   selectedCell,
   setSelectedCell,
+  setNumber,
   setState
 }: Readonly<FooterProps>) {
   const buttons = [];
-
-  const handleNumberClick = (number: number) => {
+  const handleNumberClick = useCallback((number: number) => {
     if (inputType === INPUT_TYPE.CELL_FIRST && selectedCell) {
-      setState(prevState => {
-        const newState = { ...prevState };
-        newState.newboard.grids[0].value[selectedCell.row][selectedCell.col] = number;
-        return newState;
-      });
+      setNumber(selectedCell.row, selectedCell.col, number);
     } else if (inputType === INPUT_TYPE.DIGIT_FIRST) {
       setSelectedNumber(number);
     }
-  };
+  }, [inputType, selectedCell, setNumber, setSelectedNumber]);
 
-  const handleEraserClick = () => {
+  const handleEraserClick = useCallback(() => {
     if (inputType === INPUT_TYPE.CELL_FIRST && selectedCell) {
       setState(prevState => {
         const newState = { ...prevState };
-        newState.newboard.grids[0].value[selectedCell.row][selectedCell.col] = 0;
+        newState.newboard.grids[0].value[selectedCell.row][selectedCell.col] = { value: 0, pencilMarks: [] };
         return newState;
       });
     } else {
       setEraserMode(!eraserMode);
     }
-  };
-  
+  }, [inputType, selectedCell, setEraserMode, eraserMode, setState]);
+
   for (let i = 1; i <= 9; i++) {
     buttons.push(
       <FooterBtn
@@ -99,4 +96,4 @@ function Footer({
   );
 }
 
-export default Footer;
+export default React.memo(Footer);

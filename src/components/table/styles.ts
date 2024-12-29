@@ -51,3 +51,102 @@ export const TableCell = styled.td`
     }
   }
 `;
+
+export const PencilMark = styled.span`
+  position: absolute;
+  font-size: 12px;
+  
+  &._1 {
+    top: 0;
+    left: 4px;
+  }
+
+  &._2 {
+    top: 0;
+    left: 20px;
+  }
+
+  &._3 {
+    top: 0;
+    left: 36px;
+  }
+
+  &._4 {
+    top: 16px;
+    left: 4px;
+  }
+
+  &._5 {
+    top: 16px;
+    left: 20px;
+  }
+
+  &._6 {
+    top: 16px;
+    left: 36px;
+  }
+
+  &._7 {
+    top: 32px;
+    left: 4px;
+  }
+
+  &._8 {
+    top: 32px;
+    left: 20px;
+  }
+
+  &._9 {
+    top: 32px;
+    left: 36px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 8px;
+
+    &._1 {
+      top: 0;
+      left: 4px;
+    }
+
+    &._2 {
+      top: 0;
+      left: 15px;
+    }
+
+    &._3 {
+      top: 0;
+      left: 26px;
+    }
+
+    &._4 {
+      top: 14px;
+      left: 4px;
+    }
+
+    &._5 {
+      top: 14px;
+      left: 15px;
+    }
+
+    &._6 {
+      top: 14px;
+      left: 26px;
+    }
+
+    &._7 {
+      top: 26px;
+      left: 4px;
+    }
+
+    &._8 {
+      top: 26px;
+      left: 15px;
+    }
+
+    &._9 {
+      top: 26px;
+      left: 26px;
+    }
+  }
+`;

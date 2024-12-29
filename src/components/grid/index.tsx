@@ -12,7 +12,7 @@ interface Props {
   setGame: (view: boolean) => void;
 }
 
-function Grid({setGame}: Readonly<Props>) {
+function Grid({ setGame }: Readonly<Props>) {
   const {
     state,
     setState,
@@ -28,6 +28,7 @@ function Grid({setGame}: Readonly<Props>) {
     setPencilMode,
     eraserMode,
     setEraserMode,
+    setNumber
   } = useSudokuState();
 
   useFetchSudokuData(setState, setLoading);
@@ -38,13 +39,14 @@ function Grid({setGame}: Readonly<Props>) {
         <>
           <Header setGame={setGame} difficulty={state.newboard.grids[0].difficulty} />
           <Table
-            data={ state }
-            inputType={ inputType }
+            data={state}
+            inputType={inputType}
             eraserMode={eraserMode}
-            selectedNumber={ selectedNumber }
+            selectedNumber={selectedNumber}
             selectedCell={selectedCell}
             setSelectedCell={setSelectedCell}
-            setState={ setState }
+            setNumber={setNumber}
+            setState={setState}
           />
           <Footer
             pencilMode={pencilMode}
@@ -57,7 +59,8 @@ function Grid({setGame}: Readonly<Props>) {
             setSelectedNumber={setSelectedNumber}
             selectedCell={selectedCell}
             setSelectedCell={setSelectedCell}
-            setState={ setState }
+            setNumber={setNumber}
+            setState={setState}
           />
         </>
       )}
@@ -65,4 +68,4 @@ function Grid({setGame}: Readonly<Props>) {
   );
 }
 
-export default Grid;
+export default React.memo(Grid);
