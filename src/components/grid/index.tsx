@@ -5,6 +5,7 @@ import Loader from '../loader';
 import Header from '../header';
 import Table from '../table';
 import Footer from '../footer';
+import Message from '../message';
 
 import { GridSection } from './styles';
 
@@ -31,7 +32,8 @@ function Grid({ resume, setResume, setGame }: Readonly<Props>) {
     eraserMode,
     setEraserMode,
     setNumber,
-    conflictingCells
+    conflictingCells,
+    isCompleted,
   } = useSudokuState();
 
   useFetchSudokuData(setState, setLoading, !resume);
@@ -41,6 +43,13 @@ function Grid({ resume, setResume, setGame }: Readonly<Props>) {
       setLoading(false);
     }
   }, [resume, setLoading]);
+  
+  useEffect(() => {
+    if (isCompleted) {
+      localStorage.removeItem('sudokuState');
+      setResume(false);
+    }
+  }, [isCompleted, setResume]);
 
   return (
     <GridSection>
@@ -72,6 +81,7 @@ function Grid({ resume, setResume, setGame }: Readonly<Props>) {
             setNumber={setNumber}
             setState={setState}
           />
+          { isCompleted && <Message setGame={setGame} /> }
         </>
       )}
     </GridSection>

@@ -1,4 +1,4 @@
-import { CellPosition } from '../../models';
+import { Grid, CellPosition } from '../../models';
 
 export const validateCell = (grid: number[][], row: number, col: number, value: number): CellPosition[] => {
   const conflictingCells: CellPosition[] = [];
@@ -17,4 +17,31 @@ export const validateCell = (grid: number[][], row: number, col: number, value: 
   }
 
   return conflictingCells.filter(cell => cell.row !== row || cell.col !== col);
+};
+
+export const validatePuzzle = (grid: Grid): boolean => {
+  const { value } = grid;
+
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      const cellValue = value[row][col].value;
+
+      if (cellValue === 0) {
+        return false;
+      }
+
+      const conflictingCells = validateCell(
+        value.map(row => row.map(cell => cell.value)),
+        row,
+        col,
+        cellValue
+      );
+
+      if (conflictingCells.length > 0) {
+        return false;
+      }
+    }
+  }
+
+  return true;
 };

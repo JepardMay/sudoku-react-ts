@@ -42,9 +42,9 @@ export const Difficulty = styled.div`
     height: 32px;
   }
 
-  .easy img:first-child ~ img,
-  .medium img:nth-child(2) ~ img,
-  .hard img:nth-child(3) ~ img { 
+  &.easy img:first-child ~ img,
+  &.medium img:nth-child(2) ~ img,
+  &.hard img:nth-child(3) ~ img { 
     filter: grayscale(100%) contrast(30%);
   }
 
