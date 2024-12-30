@@ -10,7 +10,11 @@ interface Props {
   difficulty: string;
 }
 
-function Header({ setResume, setGame, difficulty }: Readonly<Props>) {
+function Header({
+  setResume,
+  setGame,
+  difficulty
+}: Readonly<Props>) {
   return (
     <HeaderContainer>
       <BackBtn onClick={ () => {

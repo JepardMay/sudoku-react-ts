@@ -3,6 +3,11 @@ export enum INPUT_TYPE {
   CELL_FIRST = 'Cell first',
 }
 
+export type CellPosition = {
+  row: number;
+  col: number
+}
+
 export interface Cell {
   value: number;
   pencilMarks: number[];

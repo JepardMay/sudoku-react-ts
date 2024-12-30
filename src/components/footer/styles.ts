@@ -36,8 +36,8 @@ export const FooterBtn = styled.button.withConfig({
   text-transform: uppercase;
   aspect-ratio: 1 / 1;
   cursor: pointer;
-  transition: background-color 200ms ease-in,
-    color 200ms ease-in;
+  transition: background-color var(--default-transition),
+    color var(--default-transition);
 
   &.selected,
   &.pencil-selected {
@@ -52,7 +52,7 @@ export const FooterBtn = styled.button.withConfig({
   svg {
     width: 25px;
     height: 25px;
-    transition: transform 200ms ease-in;
+    transition: transform var(--default-transition);
   }
 
   @media (hover: hover) and (pointer: fine) {

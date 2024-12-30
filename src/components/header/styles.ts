@@ -16,7 +16,7 @@ export const BackBtn = styled.button`
   border: none;
   transform: rotate(90deg);
   cursor: pointer;
-  transition: color 200ms ease-in;
+  transition: color var(--default-transition);
 
   @media (hover: hover) and (pointer: fine) {
     &:hover, 

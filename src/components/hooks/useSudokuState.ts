@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SudokuData, INPUT_TYPE } from '../../models';
+import { SudokuData, CellPosition, INPUT_TYPE } from '../../models';
+import { validateCell } from '../utils/validationUtils';
 
 const useSudokuState = () => {
   const loadStateFromLocalStorage = (): SudokuData | null => {
@@ -30,6 +31,7 @@ const useSudokuState = () => {
   const [selectedCell, setSelectedCell] = useState<{ row: number, col: number } | null>(null);
   const [pencilMode, setPencilMode] = useState<boolean>(false);
   const [eraserMode, setEraserMode] = useState<boolean>(false);
+  const [conflictingCells, setConflictingCells] = useState<CellPosition[]>([]);
 
   const saveStateToLocalStorage = (state: SudokuData) => {
     localStorage.setItem('sudokuState', JSON.stringify(state));
@@ -40,6 +42,14 @@ const useSudokuState = () => {
   }, [state]);
 
   const setNumber = useCallback((rowIndex: number, cellIndex: number, number: number) => { 
+    const gridValues = state.newboard.grids[0].value.map(row => row.map(cell => cell.value));
+    const conflicts = validateCell(gridValues, rowIndex, cellIndex, number);
+
+    if (conflicts.length > 0) {
+      setConflictingCells(conflicts);
+      return;
+    }
+    
     const newState = { ...state };
     const cell = newState.newboard.grids[0].value[rowIndex][cellIndex];
 
@@ -55,8 +65,9 @@ const useSudokuState = () => {
       cell.pencilMarks = [];
     }
 
+    setConflictingCells([]);
     setState(newState);
-  }, [pencilMode, state]);
+  }, [pencilMode, state, conflictingCells]);
 
   return {
     state,
@@ -74,6 +85,7 @@ const useSudokuState = () => {
     eraserMode,
     setEraserMode,
     setNumber,
+    conflictingCells,
   };
 };
 

@@ -9,7 +9,11 @@ interface Props {
   resumeGame: () => void;
 }
 
-function Main({ resume, startNewGame, resumeGame }: Readonly<Props>) {
+function Main({
+  resume,
+  startNewGame,
+  resumeGame
+}: Readonly<Props>) {
   return (
     <div>
       <Logo mod='big' />

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { SudokuData, Cell, INPUT_TYPE } from '../../models';
+import { SudokuData, CellPosition, Cell, INPUT_TYPE } from '../../models';
 
 import { TableContainer, TableRow, TableCell, PencilMark } from './styles';
 
@@ -12,9 +12,20 @@ interface TableProps {
   setSelectedCell: React.Dispatch<React.SetStateAction<{ row: number, col: number } | null>>;
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
   setState: React.Dispatch<React.SetStateAction<SudokuData>>;
+  conflictingCells: CellPosition[];
 }
 
-function Table({ data, inputType, eraserMode, setNumber, selectedNumber, selectedCell, setSelectedCell, setState }: Readonly<TableProps>) {
+function Table({
+  data,
+  inputType,
+  eraserMode,
+  setNumber,
+  selectedNumber,
+  selectedCell,
+  setSelectedCell,
+  setState,
+  conflictingCells,
+}: Readonly<TableProps>) {
   const selectCell = useCallback((rowIndex: number, cellIndex: number) => {
     setSelectedCell({ row: rowIndex, col: cellIndex });
   }, [setSelectedCell]);
@@ -41,12 +52,16 @@ function Table({ data, inputType, eraserMode, setNumber, selectedNumber, selecte
     }
   }, [eraserMode, inputType, selectedNumber, selectCell, setNumber, eraseCell]);
 
+  const isConflicting = useCallback((row: number, col: number) => {
+    return conflictingCells.some(cell => cell.row === row && cell.col === col);
+  }, [conflictingCells]);
+
   const renderCell = useCallback((cell: Cell, cellIndex: number, rowIndex: number) => {
     const isSelected = selectedCell?.row === rowIndex && selectedCell?.col === cellIndex;
 
     return (
       <TableCell
-        className={`${cell.locked ? 'locked' : ''} ${isSelected ? 'selected' : ''}`}
+        className={`${cell.locked ? 'locked' : ''} ${isSelected ? 'selected' : ''} ${isConflicting(rowIndex, cellIndex) ? 'conflicting' : ''}`}
         key={`cell: ${cellIndex + 1 + rowIndex * 9}`}
         data-row={rowIndex}
         data-cell={ cellIndex }

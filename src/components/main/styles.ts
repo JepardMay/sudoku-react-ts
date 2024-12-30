@@ -15,8 +15,8 @@ export const MainBtn = styled.button`
   border: 2px solid var(--border-color);
   text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 200ms ease-in,
-    color 200ms ease-in;
+  transition: background-color var(--default-transition),
+    color var(--default-transition);
 
   & + & {
     margin-top: 15px;

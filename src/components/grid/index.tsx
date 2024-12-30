@@ -30,7 +30,8 @@ function Grid({ resume, setResume, setGame }: Readonly<Props>) {
     setPencilMode,
     eraserMode,
     setEraserMode,
-    setNumber
+    setNumber,
+    conflictingCells
   } = useSudokuState();
 
   useFetchSudokuData(setState, setLoading, !resume);
@@ -55,6 +56,7 @@ function Grid({ resume, setResume, setGame }: Readonly<Props>) {
             setSelectedCell={setSelectedCell}
             setNumber={setNumber}
             setState={setState}
+            conflictingCells={conflictingCells}
           />
           <Footer
             pencilMode={pencilMode}

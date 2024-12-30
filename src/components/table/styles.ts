@@ -28,8 +28,8 @@ export const TableCell = styled.td`
   text-align: center;
   vertical-align: middle;
   border: 1px solid var(--border-color);
-  transition: background-color 200ms ease-in,
-    color 100ms ease-in;
+  transition: background-color var(--default-transition),
+    color var(--default-transition);
 
   &:nth-child(3),
   &:nth-child(6) {
@@ -47,6 +47,10 @@ export const TableCell = styled.td`
 
   &.locked {
     pointer-events: none;
+  }
+
+  &.conflicting {
+    background-color: var(--conflicting-color);
   }
 
   @media (hover: hover) and (pointer: fine) {
