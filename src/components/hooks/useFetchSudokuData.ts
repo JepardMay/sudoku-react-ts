@@ -5,6 +5,7 @@ import { SudokuData, Cell, Grid } from '../../models';
 const transformCellValue = (cellValue: number): Cell => ({
   value: cellValue,
   pencilMarks: [],
+  locked: cellValue !== 0,
 });
 
 const transformRowValues = (row: number[]): Cell[] => row.map(transformCellValue);

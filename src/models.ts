@@ -6,6 +6,7 @@ export enum INPUT_TYPE {
 export interface Cell {
   value: number;
   pencilMarks: number[];
+  locked?: boolean;
 }
 
 export interface Grid {

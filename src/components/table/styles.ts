@@ -45,6 +45,10 @@ export const TableCell = styled.td`
     color: var(--mistake-color);
   }
 
+  &.locked {
+    pointer-events: none;
+  }
+
   @media (hover: hover) and (pointer: fine) {
     &:not(.selected):hover {
       background-color: var(--active-color-transparent);

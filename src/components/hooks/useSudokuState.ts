@@ -56,7 +56,7 @@ const useSudokuState = () => {
     }
 
     setState(newState);
-  }, [pencilMode, setState]);
+  }, [pencilMode, state]);
 
   return {
     state,

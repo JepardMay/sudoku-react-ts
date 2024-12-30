@@ -39,20 +39,22 @@ function Footer({
       setNumber(selectedCell.row, selectedCell.col, number);
     } else if (inputType === INPUT_TYPE.DIGIT_FIRST) {
       setSelectedNumber(number);
+      setEraserMode(false);
     }
   }, [inputType, selectedCell, setNumber, setSelectedNumber]);
 
-  const handleEraserClick = useCallback(() => {
+  const handleEraserClick = () => {
     if (inputType === INPUT_TYPE.CELL_FIRST && selectedCell) {
       setState(prevState => {
         const newState = { ...prevState };
         newState.newboard.grids[0].value[selectedCell.row][selectedCell.col] = { value: 0, pencilMarks: [] };
         return newState;
       });
-    } else {
-      setEraserMode(!eraserMode);
+    } else if (inputType === INPUT_TYPE.DIGIT_FIRST) {
+      setEraserMode(true);
+      setSelectedNumber(null);
     }
-  }, [inputType, selectedCell, setEraserMode, eraserMode, setState]);
+  };
 
   for (let i = 1; i <= 9; i++) {
     buttons.push(

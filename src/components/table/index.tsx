@@ -28,6 +28,8 @@ function Table({ data, inputType, eraserMode, setNumber, selectedNumber, selecte
   }, [setState]);
   
   const handleCellClick = useCallback((rowIndex: number, cellIndex: number, cell: Cell) => {
+    if (cell.locked) return;
+    
     if (eraserMode) {
       eraseCell(rowIndex, cellIndex);
     } else if (inputType === INPUT_TYPE.DIGIT_FIRST) {
@@ -44,7 +46,7 @@ function Table({ data, inputType, eraserMode, setNumber, selectedNumber, selecte
 
     return (
       <TableCell
-        className={`${cell.value !== 0 ? 'locked' : ''} ${isSelected ? 'selected' : ''}`}
+        className={`${cell.locked ? 'locked' : ''} ${isSelected ? 'selected' : ''}`}
         key={`cell: ${cellIndex + 1 + rowIndex * 9}`}
         data-row={rowIndex}
         data-cell={ cellIndex }
