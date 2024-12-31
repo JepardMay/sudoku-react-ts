@@ -1,4 +1,4 @@
-import { Grid, CellPosition } from '../../models';
+import { Grid, CellPosition, Cell, NumberCounts } from '../../models';
 
 export const validateCell = (grid: number[][], row: number, col: number, value: number): CellPosition[] => {
   const conflictingCells: CellPosition[] = [];
@@ -45,3 +45,19 @@ export const validatePuzzle = (grid: Grid): boolean => {
 
   return true;
 };
+
+export const countNumbersInGrid = (grid: Cell[][]): NumberCounts => {
+  const count: NumberCounts = {};
+
+  for (const row of grid) {
+    for (const cell of row) {
+      const value = cell.value;
+      if (value !== 0) {
+        count[value] = (count[value] || 0) + 1;
+      }
+    }
+  }
+
+  return count;
+};
+

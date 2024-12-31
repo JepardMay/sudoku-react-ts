@@ -3,6 +3,10 @@ export enum INPUT_TYPE {
   CELL_FIRST = 'Cell first',
 }
 
+export type NumberCounts = {
+  [key: number]: number;
+};
+
 export type CellPosition = {
   row: number;
   col: number

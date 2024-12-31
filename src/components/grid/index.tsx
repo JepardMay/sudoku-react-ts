@@ -34,6 +34,7 @@ function Grid({ resume, setResume, setGame }: Readonly<Props>) {
     setNumber,
     conflictingCells,
     isCompleted,
+    numberCounts,
   } = useSudokuState();
 
   useFetchSudokuData(setState, setLoading, !resume);
@@ -80,6 +81,7 @@ function Grid({ resume, setResume, setGame }: Readonly<Props>) {
             setSelectedCell={setSelectedCell}
             setNumber={setNumber}
             setState={setState}
+            numberCounts={numberCounts}
           />
           { isCompleted && <Message setGame={setGame} /> }
         </>

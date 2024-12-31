@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SudokuData, CellPosition, INPUT_TYPE } from '../../models';
-import { validateCell, validatePuzzle } from '../utils/validationUtils';
+import { SudokuData, CellPosition, NumberCounts, INPUT_TYPE } from '../../models';
+import { validateCell, validatePuzzle, countNumbersInGrid } from '../utils/validationUtils';
 
 const useSudokuState = () => {
   const loadStateFromLocalStorage = (): SudokuData | null => {
@@ -32,6 +32,7 @@ const useSudokuState = () => {
   const [pencilMode, setPencilMode] = useState<boolean>(false);
   const [eraserMode, setEraserMode] = useState<boolean>(false);
   const [conflictingCells, setConflictingCells] = useState<CellPosition[]>([]);
+  const [numberCounts, setNumberCounts] = useState<NumberCounts>({});
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
   const saveStateToLocalStorage = (state: SudokuData) => {
@@ -40,6 +41,7 @@ const useSudokuState = () => {
 
   useEffect(() => {
     saveStateToLocalStorage(state);
+    setNumberCounts(countNumbersInGrid(state.newboard.grids[0].value));
   }, [state]);
 
   const checkCompletion = useCallback(() => {
@@ -100,6 +102,7 @@ const useSudokuState = () => {
     setNumber,
     conflictingCells,
     isCompleted,
+    numberCounts,
   };
 };
 

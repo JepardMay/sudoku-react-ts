@@ -25,6 +25,7 @@ const filterProps = ({ ...props }: BtnProps & React.ButtonHTMLAttributes<HTMLBut
 export const FooterBtn = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'btnType',
 }).attrs<BtnProps>(filterProps)`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,6 +50,11 @@ export const FooterBtn = styled.button.withConfig({
     transform: rotate(45deg);
   }
 
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   svg {
     width: 25px;
     height: 25px;
@@ -71,3 +77,11 @@ export const FooterBtn = styled.button.withConfig({
     }
   }
 `;
+
+export const NumberCount = styled.span`
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  font-size: 10px;
+  opacity: 0.8;
+`; 

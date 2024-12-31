@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { PencilIcon, EraserIcon } from '../Icons';
-import { SudokuData, INPUT_TYPE } from '../../models';
+import { SudokuData, INPUT_TYPE, NumberCounts, CellPosition } from '../../models';
 
-import { FooterContainer, FooterBtn } from './styles';
+import { FooterContainer, FooterBtn, NumberCount } from './styles';
 
 interface FooterProps {
   pencilMode: boolean;
@@ -13,10 +13,11 @@ interface FooterProps {
   setInputType: React.Dispatch<React.SetStateAction<string>>;
   selectedNumber: number | null;
   setSelectedNumber: React.Dispatch<React.SetStateAction<number | null>>;
-  selectedCell: { row: number, col: number } | null;
-  setSelectedCell: React.Dispatch<React.SetStateAction<{ row: number, col: number } | null>>;
+  selectedCell: CellPosition | null;
+  setSelectedCell: React.Dispatch<React.SetStateAction<CellPosition | null>>;
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
   setState: React.Dispatch<React.SetStateAction<SudokuData>>;
+  numberCounts: NumberCounts;
 }
 
 function Footer({
@@ -31,7 +32,8 @@ function Footer({
   selectedCell,
   setSelectedCell,
   setNumber,
-  setState
+  setState,
+  numberCounts,
 }: Readonly<FooterProps>) {
   const buttons = [];
   const handleNumberClick = useCallback((number: number) => {
@@ -57,14 +59,17 @@ function Footer({
   };
 
   for (let i = 1; i <= 9; i++) {
+    const isDisabled = numberCounts[i] === 9;
     buttons.push(
       <FooterBtn
         btnType="number"
-        className={selectedNumber === i ? 'selected' : ''}
+        className={selectedNumber === i && !isDisabled ? 'selected' : ''}
         key={ `button: ${i}` }
-        onClick={() => handleNumberClick(i)}
+        onClick={ () => handleNumberClick(i) }
+        disabled={isDisabled}
       >
-        {i}
+        { i }
+        <NumberCount>{numberCounts[i]}</NumberCount> 
       </FooterBtn>,
     );
   }
