@@ -77,6 +77,31 @@ const useSudokuState = () => {
     } else {
       cell.value = number;
       cell.pencilMarks = [];
+
+      for (let col = 0; col < 9; col++) {
+        if (col !== cellIndex) {
+          newState.newboard.grids[0].value[rowIndex][col].pencilMarks = 
+            newState.newboard.grids[0].value[rowIndex][col].pencilMarks.filter(mark => mark !== number);
+        }
+      }
+
+      for (let row = 0; row < 9; row++) {
+        if (row !== rowIndex) {
+          newState.newboard.grids[0].value[row][cellIndex].pencilMarks = 
+            newState.newboard.grids[0].value[row][cellIndex].pencilMarks.filter(mark => mark !== number);
+        }
+      }
+
+      const startRow = Math.floor(rowIndex / 3) * 3;
+      const startCol = Math.floor(cellIndex / 3) * 3;
+      for (let r = startRow; r < startRow + 3; r++) {
+        for (let c = startCol; c < startCol + 3; c++) {
+          if (r !== rowIndex || c !== cellIndex) {
+            newState.newboard.grids[0].value[r][c].pencilMarks = 
+              newState.newboard.grids[0].value[r][c].pencilMarks.filter(mark => mark !== number);
+          }
+        }
+      }
     }
 
     setConflictingCells([]);
