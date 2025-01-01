@@ -18,6 +18,11 @@ export const BackBtn = styled.button`
   cursor: pointer;
   transition: color var(--default-transition);
 
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
   @media (hover: hover) and (pointer: fine) {
     &:hover, 
     &:focus { 

@@ -40,6 +40,11 @@ export const FooterBtn = styled.button.withConfig({
   transition: background-color var(--default-transition),
     color var(--default-transition);
 
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
   &.selected,
   &.pencil-selected {
     color: var(--background-color);
