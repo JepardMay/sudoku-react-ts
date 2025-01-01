@@ -20,6 +20,16 @@
   box-sizing: border-box;
 }
 
+html {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   color: var(--text-color);
@@ -30,6 +40,12 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+[type="button"],
+[type="reset"] {
+  appearance: none;
 }
 
 @media (max-width: 768px) {

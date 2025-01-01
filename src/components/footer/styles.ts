@@ -29,6 +29,7 @@ export const FooterBtn = styled.button.withConfig({
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
   font: inherit;
   font-size: ${({ btnType }) => (btnType === 'text' ? '15px' : '24px')};
   color: var(--text-color);
@@ -39,11 +40,6 @@ export const FooterBtn = styled.button.withConfig({
   cursor: pointer;
   transition: background-color var(--default-transition),
     color var(--default-transition);
-
-  svg {
-    width: 100%;
-    height: 100%;
-  }
 
   &.selected,
   &.pencil-selected {

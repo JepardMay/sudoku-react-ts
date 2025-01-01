@@ -11,6 +11,7 @@ export const BackBtn = styled.button`
   left: 80px;
   width: 40px;
   height: 40px;
+  padding: 0;
   color: var(--border-color);
   background-color: transparent;
   border: none;
