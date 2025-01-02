@@ -5,7 +5,7 @@ import Loader from '../loader';
 import Header from '../header';
 import Table from '../table';
 import Footer from '../footer';
-import Message from '../message';
+import Modal from '../modal';
 
 import { GridSection } from './styles';
 
@@ -13,9 +13,17 @@ interface Props {
   resume: boolean;
   setResume: (view: boolean) => void;
   setGame: (view: boolean) => void;
+  setError: (error: string) => void;
+  difficulty: string;
 }
 
-function Grid({ resume, setResume, setGame }: Readonly<Props>) {
+function Grid({
+  resume,
+  setResume,
+  setGame,
+  setError,
+  difficulty
+}: Readonly<Props>) {
   const {
     state,
     setState,
@@ -37,7 +45,15 @@ function Grid({ resume, setResume, setGame }: Readonly<Props>) {
     numberCounts,
   } = useSudokuState();
 
-  useFetchSudokuData(setState, setLoading, !resume);
+  useFetchSudokuData({
+    state,
+    setState,
+    setLoading,
+    shouldFetch: !resume,
+    chosenDifficulty: difficulty,
+    setGame,
+    setError
+  });
   
   useEffect(() => {
     if (resume) {
@@ -83,7 +99,13 @@ function Grid({ resume, setResume, setGame }: Readonly<Props>) {
             setState={setState}
             numberCounts={numberCounts}
           />
-          { isCompleted && <Message setGame={setGame} /> }
+          { isCompleted && <Modal
+            title='Congratulations!'
+            message='You have successfully completed the Sudoku puzzle.'
+            btnText='Back to Main'
+            onClose={() => setGame(false)}
+            showConfetti
+          /> }
         </>
       )}
     </GridSection>

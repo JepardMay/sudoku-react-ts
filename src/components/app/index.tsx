@@ -10,9 +10,12 @@ function App() {
     const savedState = localStorage.getItem('sudokuState');
     return !!savedState;
   });
+  const [difficulty, setDifficulty] = useState<string>('random');
+  const [error, setError] = useState<string | null>(null);
 
-  const startNewGame = useCallback(() => {
+  const startNewGame = useCallback((difficulty: string) => {
     localStorage.removeItem('sudokuState');
+    setDifficulty(difficulty);
     setResume(false);
     setGame(true);
   }, []);
@@ -25,8 +28,20 @@ function App() {
   return (
     <Container>
       { game ?
-        <Grid resume={resume} setResume={setResume} setGame={setGame} /> :
-        <Main resume={resume} startNewGame={startNewGame} resumeGame={resumeGame} />
+        <Grid
+          resume={ resume }
+          setResume={ setResume }
+          setGame={ setGame }
+          setError={ setError }
+          difficulty={ difficulty }
+        /> :
+        <Main
+          resume={ resume }
+          startNewGame={ startNewGame }
+          resumeGame={ resumeGame }
+          error={ error }
+          setError={ setError }
+        />
       }
     </Container>
   );

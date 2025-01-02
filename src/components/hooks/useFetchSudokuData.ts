@@ -1,32 +1,57 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { FETCH_URL } from '../../api';
-import { SudokuData, Cell, Grid } from '../../models';
-
-const transformCellValue = (cellValue: number): Cell => ({
-  value: cellValue,
-  pencilMarks: [],
-  locked: cellValue !== 0,
-});
-
-const transformRowValues = (row: number[]): Cell[] => row.map(transformCellValue);
-
-const transformGridValues = (rows: number[][]): Cell[][] => rows.map(transformRowValues);
+import { SudokuData, Grid, SudokuFetch } from '../../models';
 
 const transformGridData = (grid: { difficulty: string; solution: number[][]; value: number[][] }): Grid => ({
   difficulty: grid.difficulty,
   solution: grid.solution,
-  value: transformGridValues(grid.value),
+  value: grid.value.map(row => row.map(cellValue => ({
+    value: cellValue,
+    pencilMarks: [],
+    locked: cellValue !== 0,
+  }))),
 });
 
-const useFetchSudokuData = (setState: React.Dispatch<React.SetStateAction<SudokuData>>, setLoading: React.Dispatch<React.SetStateAction<boolean>>, shouldFetch: boolean) => {
+const fetchSudokuGrid = async () => {
+  const response = await fetch(FETCH_URL);
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+  }
+  return response.json();
+};
+
+const fetchGridWithDifficulty = async (chosenDifficulty: string = 'random', maxAttempts: number = 27) => {
+  let grid;
+
+  for (let attempts = 0; attempts < maxAttempts; attempts++) {
+    grid = await fetchSudokuGrid();
+
+    if (chosenDifficulty === 'random' || grid.newboard.grids[0].difficulty.toLowerCase() === chosenDifficulty) {
+      return grid;
+    }
+  }
+
+  throw new Error(`Failed to find grid with difficulty ${chosenDifficulty} after ${maxAttempts} attempts`);
+};
+
+const useFetchSudokuData = ({
+  setState,
+  setLoading,
+  shouldFetch,
+  chosenDifficulty,
+  setGame,
+  setError
+}: SudokuFetch) => {
+  const hasDataFetched = useRef(false);
+
   useEffect(() => {
-    if (!shouldFetch) return;
+    if (!shouldFetch || hasDataFetched.current) return;
 
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(FETCH_URL);
-        const data = await response.json();
+        const data = await fetchGridWithDifficulty(chosenDifficulty);
 
         // Transform the data to include pencilMarks
         const transformedData: SudokuData = {
@@ -38,17 +63,21 @@ const useFetchSudokuData = (setState: React.Dispatch<React.SetStateAction<Sudoku
         };
 
         setState(transformedData);
-      } catch (error) {
+      } catch(error) {
         console.error('Error fetching data:', error);
+        setError((error as Error).message);
+        setGame(false);
       } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
+        setLoading(false);
       }
     };
+    
+    fetchData();
 
-    fetchData().catch(error => console.error('Error fetching data:', error));
-  }, [setState, setLoading]);
+    return () => {
+      hasDataFetched.current = true;
+    };
+  }, [shouldFetch, chosenDifficulty]);
 };
 
 export default useFetchSudokuData;

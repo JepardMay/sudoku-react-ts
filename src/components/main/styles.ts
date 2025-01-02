@@ -18,7 +18,7 @@ export const MainBtn = styled.button`
   transition: background-color var(--default-transition),
     color var(--default-transition);
 
-  & + & {
+  & {
     margin-top: 15px;
   }
 
@@ -34,3 +34,19 @@ export const MainBtn = styled.button`
     font-size: 22px;
   }
 `; 
+
+export const BtnGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+`;
+
+export const SmallBtn = styled(MainBtn)`
+  padding: 10px;
+  font-size: 18px;
+
+  & {
+    margin-top: 0;
+  }
+`;

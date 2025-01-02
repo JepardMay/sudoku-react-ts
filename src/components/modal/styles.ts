@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MessageContainer = styled.div`
+export const ModalContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -14,8 +14,8 @@ export const MessageContainer = styled.div`
   background-color: var(--overlay-color);
 `;
 
-export const MessageWrapper = styled.div`
-  max-width: 300px;
+export const ModalWrapper = styled.div`
+  max-width: 350px;
   width: 100%;
   padding: 30px;
   background-color: var(--background-color);

@@ -5,11 +5,21 @@ export enum INPUT_TYPE {
 
 export type NumberCounts = {
   [key: number]: number;
-};
+}
 
 export type CellPosition = {
   row: number;
-  col: number
+  col: number;
+}
+
+export type SudokuFetch = {
+  state: SudokuData;
+  setState: React.Dispatch<React.SetStateAction<SudokuData>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setGame: (view: boolean) => void;
+  setError: (error: string) => void;
+  shouldFetch: boolean;
+  chosenDifficulty: string;
 }
 
 export interface Cell {
