@@ -7,7 +7,7 @@ import Table from '../table';
 import Footer from '../footer';
 import Modal from '../modal';
 
-import { GridSection } from './styles';
+import { GridSection, Btn } from './styles';
 
 interface Props {
   resume: boolean;
@@ -102,10 +102,11 @@ function Grid({
           { isCompleted && <Modal
             title='Congratulations!'
             message='You have successfully completed the Sudoku puzzle.'
-            btnText='Back to Main'
             onClose={() => setGame(false)}
             showConfetti
-          /> }
+          >
+            <Btn onClick={() => setGame(false)}>Back to Main</Btn>
+          </Modal>}
         </>
       )}
     </GridSection>

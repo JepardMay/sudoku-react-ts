@@ -9,14 +9,18 @@ export const FooterContainer = styled.footer`
   grid-template-rows: repeat(6, calc(var(--cell-width) * 1.238));
   grid-auto-flow: column;
   gap: 1rem;
-  margin: 0 1rem;
+  margin-left: 1rem;
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(6, calc(var(--cell-width) * 1.238));
+    grid-template-columns: repeat(6, calc(var(--cell-width) * 1.26));
     grid-template-rows: none;
     grid-auto-flow: row;
     gap: 0.75rem;
     margin: 1rem 0;
+  }
+
+  @media (max-width: 375px) {
+    grid-template-columns: repeat(6, calc(var(--cell-width) * 1.238));
   }
 `;
 

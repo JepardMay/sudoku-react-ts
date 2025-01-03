@@ -15,6 +15,7 @@ export const ModalContainer = styled.div`
 `;
 
 export const ModalWrapper = styled.div`
+  position: relative;
   max-width: 350px;
   width: 100%;
   padding: 30px;
@@ -22,33 +23,30 @@ export const ModalWrapper = styled.div`
   border: 1px solid var(--border-color);
 `;
 
-export const Btn = styled.button`
+export const CloseBtn = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 150px; 
-  margin: 0 auto;
-  padding: 10px;
-  font: inherit;
-  font-size: 16px;
+  width: 40px; 
+  height: 40px; 
+  padding: 5px;
   color: var(--text-color);
   background-color: transparent;
-  border: 2px solid var(--border-color);
-  text-transform: uppercase;
+  border: none;
   cursor: pointer;
-  transition: background-color var(--default-transition),
-    color var(--default-transition);
+  transition: background-color var(--default-transition);
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 
   @media (hover: hover) and (pointer: fine) {
     &:hover { 
       color: var(--background-color);
-      background-color: var(--active-color);
     }
-  }
-
-  @media (max-width: 768px) {
-    padding: 8px;
-    font-size: 14px;
   }
 `; 

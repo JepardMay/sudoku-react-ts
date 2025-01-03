@@ -28,7 +28,6 @@ function Main({
       <MainBtn onClick={ () => setDifficultyModal(true) }>New Game</MainBtn>
       {(difficultyModal && !error) && <Modal
         title='Choose  the difficulty level'
-        btnText='Close'
         onClose={ () => setDifficultyModal(false) }>
         <BtnGrid>
           <SmallBtn onClick={() => startNewGame('easy')}>Easy</SmallBtn>
@@ -39,9 +38,8 @@ function Main({
       </Modal>
       }
       {error && <Modal
-        title='Error occurred'
+        title='An error occurred'
         message='Please try to start the again'
-        btnText='Close'
         onClose={ () => setError(null) }>
       </Modal>
       }
