@@ -27,6 +27,7 @@ export const TableCell = styled.td`
   height: var(--cell-width);
   text-align: center;
   vertical-align: middle;
+  background-color: var(--background-color);
   border: 1px solid var(--border-color);
   transition: background-color var(--default-transition),
     color var(--default-transition);
@@ -41,7 +42,7 @@ export const TableCell = styled.td`
     background-color: var(--active-color);
   }
 
-  &.mistake {
+  &.invalid {
     color: var(--mistake-color);
   }
 

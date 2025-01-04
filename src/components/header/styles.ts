@@ -76,6 +76,7 @@ export const SettingsBtn = styled(Btn)`
   bottom: 0;
   width: 32px;
   height: 32px;
+  background-color: var(--background-color);
   border: 2px solid var(--border-color);
 
   @media (max-width: 768px) {

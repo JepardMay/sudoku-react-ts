@@ -10,14 +10,16 @@ interface Props {
   setResume: (resume: boolean) => void;
   setGame: (view: boolean) => void;
   difficulty: string;
+  validateEntireGrid: () => void;
 }
 
 function Header({
   setResume,
   setGame,
-  difficulty
+  difficulty,
+  validateEntireGrid,
 }: Readonly<Props>) {
-  const [settingModal, setSettingModal] = useState<boolean>(false);
+  const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
   return (
     <HeaderContainer>
@@ -34,12 +36,12 @@ function Header({
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
         </Difficulty>
-        <SettingsBtn onClick={() => setSettingModal(!settingModal)}>
+        <SettingsBtn onClick={() => setSettingsModal(!settingsModal)}>
           <EllipsisIcon />
         </SettingsBtn>
       </HeaderWrapper>
-      <Modal show={settingModal} onClose={ () => setSettingModal(false) }>
-        <Settings />
+      <Modal show={settingsModal} onClose={ () => setSettingsModal(false) }>
+        <Settings setSettingsModal={setSettingsModal} validateEntireGrid={validateEntireGrid}/>
       </Modal>
     </HeaderContainer>
   );

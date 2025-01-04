@@ -11,7 +11,7 @@ export const MainBtn = styled.button`
   font: inherit;
   font-size: 26px;
   color: var(--text-color);
-  background-color: transparent;
+  background-color: var(--background-color);
   border: 2px solid var(--border-color);
   text-transform: uppercase;
   cursor: pointer;

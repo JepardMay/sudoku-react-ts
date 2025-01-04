@@ -61,3 +61,19 @@ export const countNumbersInGrid = (grid: Cell[][]): NumberCounts => {
   return count;
 };
 
+export const findInvalidCells = (grid: Grid) => {
+  const invalidCells: CellPosition[] = [];
+
+  for (let row = 0; row < grid.solution.length; row++) {
+    for (let col = 0; col < grid.solution[row].length; col++) {
+      const solutionValue = grid.solution[row][col];
+      const cellValue = grid.value[row][col].value;
+      
+      if (cellValue !== 0 && cellValue !== solutionValue) {
+        invalidCells.push({ row, col });
+      }
+    }
+  }
+
+  return invalidCells;
+};

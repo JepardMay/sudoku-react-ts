@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SettingsList = styled.ul`
   margin: 0;
   padding: 0 20px;
-  list-style: none;
+  /* list-style: none; */
 `;
 
 export const SettingsItem = styled.li`

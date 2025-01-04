@@ -43,6 +43,8 @@ function Grid({
     conflictingCells,
     isCompleted,
     numberCounts,
+    invalidCells,
+    validateEntireGrid,
   } = useSudokuState();
 
   useFetchSudokuData({
@@ -72,7 +74,7 @@ function Grid({
     <GridSection>
       {loading ? <Loader loading={loading} /> : (
         <>
-          <Header setResume={setResume} setGame={setGame} difficulty={state.newboard.grids[0].difficulty} />
+          <Header setResume={setResume} setGame={setGame} difficulty={state.newboard.grids[0].difficulty} validateEntireGrid={validateEntireGrid}/>
           <Table
             data={state}
             inputType={inputType}
@@ -83,6 +85,7 @@ function Grid({
             setNumber={setNumber}
             setState={setState}
             conflictingCells={conflictingCells}
+            invalidCells={invalidCells}
           />
           <Footer
             pencilMode={pencilMode}

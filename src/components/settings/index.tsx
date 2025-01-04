@@ -2,13 +2,24 @@ import React, { useState } from 'react';
 
 import { SettingsList, SettingsItem, SettingsBtn, Toggle } from './styles';
 
-const Settings = () => {
+interface Props {
+  validateEntireGrid: () => void;
+  setSettingsModal: (state: boolean) => void;
+}
+
+const Settings = ({
+  validateEntireGrid,
+  setSettingsModal,
+}: Readonly<Props>) => {
   const [activeToggles, setActiveToggles] = useState<{ [key: number]: boolean; }>({});
 
   const settings = [
     {
       text: 'Validate the Puzzle',
-      onClick: () => {}
+      onClick: () => {
+        validateEntireGrid();
+        setSettingsModal(false);
+      }
     },
     {
       text: 'Solve the Puzzle',
@@ -33,7 +44,7 @@ const Settings = () => {
           <SettingsBtn
             className={ activeToggles[i] ? 'active' : '' }
             onClick={ () => {
-              handleToggleClick(i);
+              if (el.toggle) handleToggleClick(i);
               el.onClick();
             }}>
             <span>{ el.text }</span>

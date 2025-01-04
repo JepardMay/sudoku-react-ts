@@ -13,6 +13,7 @@ interface TableProps {
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
   setState: React.Dispatch<React.SetStateAction<SudokuData>>;
   conflictingCells: CellPosition[];
+  invalidCells: CellPosition[];
 }
 
 function Table({
@@ -25,6 +26,7 @@ function Table({
   setSelectedCell,
   setState,
   conflictingCells,
+  invalidCells,
 }: Readonly<TableProps>) {
   const selectCell = useCallback((rowIndex: number, cellIndex: number) => {
     setSelectedCell({ row: rowIndex, col: cellIndex });
@@ -56,12 +58,16 @@ function Table({
     return conflictingCells.some(cell => cell.row === row && cell.col === col);
   }, [conflictingCells]);
 
+  const isInvalid = useCallback((row: number, col: number) => {
+    return invalidCells.some(cell => cell.row === row && cell.col === col);
+  }, [invalidCells]);
+
   const renderCell = useCallback((cell: Cell, cellIndex: number, rowIndex: number) => {
     const isSelected = selectedCell?.row === rowIndex && selectedCell?.col === cellIndex;
 
     return (
       <TableCell
-        className={`${cell.locked ? 'locked' : ''} ${isSelected ? 'selected' : ''} ${isConflicting(rowIndex, cellIndex) ? 'conflicting' : ''}`}
+        className={`${cell.locked ? 'locked' : ''} ${isSelected ? 'selected' : ''} ${isConflicting(rowIndex, cellIndex) ? 'conflicting' : ''} ${isInvalid(rowIndex, cellIndex) ? 'invalid' : ''}`}
         key={`cell: ${cellIndex + 1 + rowIndex * 9}`}
         data-row={rowIndex}
         data-cell={ cellIndex }

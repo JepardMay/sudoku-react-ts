@@ -37,7 +37,7 @@ export const FooterBtn = styled.button.withConfig({
   font: inherit;
   font-size: ${({ btnType }) => (btnType === 'text' ? '15px' : '24px')};
   color: var(--text-color);
-  background-color: transparent;
+  background-color: var(--background-color);
   border: 2px solid var(--border-color);
   text-transform: uppercase;
   aspect-ratio: 1 / 1;
