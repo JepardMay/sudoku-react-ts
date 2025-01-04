@@ -1,24 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { SettingsList, SettingsItem, SettingsBtn } from './styles';
+import { SettingsList, SettingsItem, SettingsBtn, Toggle } from './styles';
 
 const Settings = () => {
+  const [activeToggles, setActiveToggles] = useState<{ [key: number]: boolean; }>({});
+
   const settings = [
     {
-      text: 'Validate Puzzle',
+      text: 'Validate the Puzzle',
       onClick: () => {}
     },
     {
-      text: 'Solve Puzzle',
+      text: 'Solve the Puzzle',
       onClick: () => {}
     },
+    {
+      text: 'Highlight crossing',
+      onClick: () => { 
+      },
+      toggle: true
+    },
   ];
+
+   const handleToggleClick = (index: number) => {
+    setActiveToggles((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
 
   return (
     <SettingsList>
       { settings.map((el, i) =>
         <SettingsItem key={ `setting-${i + 1}` }>
-          <SettingsBtn onClick={el.onClick}>{el.text}</SettingsBtn>
+          <SettingsBtn
+            className={ activeToggles[i] ? 'active' : '' }
+            onClick={ () => {
+              handleToggleClick(i);
+              el.onClick();
+            }}>
+            <span>{ el.text }</span>
+            {el.toggle && <Toggle/>}
+          </SettingsBtn>
         </SettingsItem>)
       }
     </SettingsList>
