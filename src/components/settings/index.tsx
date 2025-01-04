@@ -5,11 +5,13 @@ import { SettingsList, SettingsItem, SettingsBtn, Toggle } from './styles';
 interface Props {
   validateEntireGrid: () => void;
   setSettingsModal: (state: boolean) => void;
+  handleSolvingSudoku: () => void;
 }
 
 const Settings = ({
   validateEntireGrid,
   setSettingsModal,
+  handleSolvingSudoku,
 }: Readonly<Props>) => {
   const [activeToggles, setActiveToggles] = useState<{ [key: number]: boolean; }>({});
 
@@ -23,10 +25,13 @@ const Settings = ({
     },
     {
       text: 'Solve the Puzzle',
-      onClick: () => {}
+      onClick: () => {
+        handleSolvingSudoku();
+        setSettingsModal(false);
+      }
     },
     {
-      text: 'Highlight crossing',
+      text: 'Highlight crossings',
       onClick: () => { 
       },
       toggle: true

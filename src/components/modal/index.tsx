@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import Confetti from 'react-confetti-boom';
 import { CloseIcon } from '../Icons';
@@ -15,14 +15,17 @@ interface Props {
 }
 
 const Modal = ({ title, message, onClose, showConfetti = false, children, show }: Readonly<Props>) => {
+  const nodeRef = useRef(null);
+
   return (
     <CSSTransition
       in={show}
       timeout={300}
+      nodeRef={nodeRef}
       classNames="modal"
       unmountOnExit
     >
-      <ModalContainer>
+      <ModalContainer ref={nodeRef}>
         <ModalWrapper className="modal-wrapper">
           { title && <h2>{ title }</h2> }
           { message && <p>{ message }</p> }

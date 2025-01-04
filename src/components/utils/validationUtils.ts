@@ -1,4 +1,4 @@
-import { Grid, CellPosition, Cell, NumberCounts } from '../../models';
+import { SudokuData, Grid, CellPosition, Cell, NumberCounts } from '../../models';
 
 export const validateCell = (grid: number[][], row: number, col: number, value: number): CellPosition[] => {
   const conflictingCells: CellPosition[] = [];
@@ -76,4 +76,46 @@ export const findInvalidCells = (grid: Grid) => {
   }
 
   return invalidCells;
+};
+
+export const solveSudoku = (setState: React.Dispatch<React.SetStateAction<SudokuData>>, onComplete: () => void) => {
+  let timeoutsRemaining = 0;
+
+  const fillCell = (gridIndex: number, row: number, col: number) => {
+    if (row >= 9) {
+      if (timeoutsRemaining === 0) {
+        setTimeout(() => {
+          onComplete();
+        }, 2000);
+      }
+      return;
+    }
+
+    const nextCol = (col + 1) % 9;
+    const nextRow = col === 8 ? row + 1 : row;
+
+    timeoutsRemaining++;
+
+    setTimeout(() => {
+      setState(prevState => {
+        const newState = { ...prevState };
+        const grid = newState.newboard.grids[gridIndex];
+        if (grid.value[row][col].value === 0) {
+          grid.value[row][col].value = grid.solution[row][col];
+        }
+        return newState;
+      });
+
+      timeoutsRemaining--;
+      if (timeoutsRemaining === 0 && nextRow >= 9) {
+        setTimeout(() => {
+          onComplete();
+        }, 2000);
+      }
+
+      fillCell(gridIndex, nextRow, nextCol);
+    }, 50);
+  };
+
+  fillCell(0, 0, 0);
 };

@@ -11,6 +11,7 @@ interface Props {
   setGame: (view: boolean) => void;
   difficulty: string;
   validateEntireGrid: () => void;
+  handleSolvingSudoku: () => void;
 }
 
 function Header({
@@ -18,6 +19,7 @@ function Header({
   setGame,
   difficulty,
   validateEntireGrid,
+  handleSolvingSudoku,
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
@@ -41,7 +43,11 @@ function Header({
         </SettingsBtn>
       </HeaderWrapper>
       <Modal show={settingsModal} onClose={ () => setSettingsModal(false) }>
-        <Settings setSettingsModal={setSettingsModal} validateEntireGrid={validateEntireGrid}/>
+        <Settings 
+          setSettingsModal={setSettingsModal} 
+          validateEntireGrid={validateEntireGrid}
+          handleSolvingSudoku={handleSolvingSudoku}
+        />
       </Modal>
     </HeaderContainer>
   );
