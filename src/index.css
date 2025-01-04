@@ -12,6 +12,7 @@
   --mistake-color: #fe5f55;
   --conflicting-color: #90c9fd;
   --default-transition: 0.15s ease-out;
+  --modal-transition: 0.3s ease-in-out;
 }
 
 *,
@@ -46,6 +47,42 @@ button,
 [type="button"],
 [type="reset"] {
   appearance: none;
+}
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-enter .modal-wrapper {
+  transform: translateY(20px);
+}
+
+.modal-enter-active {
+  opacity: 1;
+  transition: opacity var(--modal-transition);
+}
+
+.modal-enter-active .modal-wrapper {
+  transform: translateY(0);
+  transition: transform var(--modal-transition);
+}
+
+.modal-exit {
+  opacity: 1;
+}
+
+.modal-exit .modal-wrapper {
+  transform: translateY(0);
+}
+
+.modal-exit-active {
+  opacity: 0;
+  transition: opacity var(--modal-transition);
+}
+
+.modal-exit-active .modal-wrapper {
+  transform: translateY(20px);
+  transition: transform var(--modal-transition);
 }
 
 @media (max-width: 768px) {

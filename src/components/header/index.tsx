@@ -38,10 +38,9 @@ function Header({
           <EllipsisIcon />
         </SettingsBtn>
       </HeaderWrapper>
-      { settingModal && <Modal onClose={ () => setSettingModal(false) }>
-        <Settings/>
+      <Modal show={settingModal} onClose={ () => setSettingModal(false) }>
+        <Settings />
       </Modal>
-      }
     </HeaderContainer>
   );
 }

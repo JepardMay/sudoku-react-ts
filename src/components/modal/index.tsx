@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransition } from 'react-transition-group';
 import Confetti from 'react-confetti-boom';
 import { CloseIcon } from '../Icons';
 
@@ -10,21 +11,29 @@ interface Props {
   onClose: () => void;
   showConfetti?: boolean;
   children?: React.ReactNode;
+  show: boolean;
 }
 
-const Modal = ({ title, message, onClose, showConfetti = false, children }: Readonly<Props>) => {
+const Modal = ({ title, message, onClose, showConfetti = false, children, show }: Readonly<Props>) => {
   return (
-    <ModalContainer>
-      <ModalWrapper>
-        { title && <h2>{ title }</h2> }
-        { message && <p>{ message }</p> }
-        {children}
-        <CloseBtn onClick={ onClose } aria-label='Close Modal'>
-          <CloseIcon/>
-        </CloseBtn>
-      </ModalWrapper>
-      { showConfetti && <Confetti mode="boom" particleCount={ 50 } effectInterval={ 1000 } effectCount={ 3 } /> }
-    </ModalContainer>
+    <CSSTransition
+      in={show}
+      timeout={300}
+      classNames="modal"
+      unmountOnExit
+    >
+      <ModalContainer>
+        <ModalWrapper className="modal-wrapper">
+          { title && <h2>{ title }</h2> }
+          { message && <p>{ message }</p> }
+          {children}
+          <CloseBtn onClick={ onClose } aria-label='Close Modal'>
+            <CloseIcon/>
+          </CloseBtn>
+        </ModalWrapper>
+        { showConfetti && <Confetti mode="boom" particleCount={ 50 } effectInterval={ 1000 } effectCount={ 3 } /> }
+      </ModalContainer>
+    </CSSTransition>
   );
 };
 

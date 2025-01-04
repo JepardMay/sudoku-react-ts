@@ -46,7 +46,7 @@ export const CloseBtn = styled.button`
 
   @media (hover: hover) and (pointer: fine) {
     &:hover { 
-      color: var(--background-color);
+      color: var(--border-color);
     }
   }
 `; 

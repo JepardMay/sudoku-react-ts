@@ -99,14 +99,15 @@ function Grid({
             setState={setState}
             numberCounts={numberCounts}
           />
-          { isCompleted && <Modal
+          <Modal
+            show={isCompleted}
             title='Congratulations!'
             message='You have successfully completed the Sudoku puzzle.'
             onClose={() => setGame(false)}
             showConfetti
           >
             <Btn onClick={() => setGame(false)}>Back to Main</Btn>
-          </Modal>}
+          </Modal>
         </>
       )}
     </GridSection>

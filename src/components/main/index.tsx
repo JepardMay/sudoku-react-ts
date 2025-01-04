@@ -26,7 +26,8 @@ function Main({
       <Logo mod='big' />
       { resume && <MainBtn onClick={ resumeGame }>Resume Game</MainBtn> }
       <MainBtn onClick={ () => setDifficultyModal(true) }>New Game</MainBtn>
-      {(difficultyModal && !error) && <Modal
+      <Modal
+        show={difficultyModal && !error}
         title='Choose  the difficulty level'
         onClose={ () => setDifficultyModal(false) }>
         <BtnGrid>
@@ -36,13 +37,12 @@ function Main({
           <SmallBtn onClick={() => startNewGame('random')}>Random</SmallBtn>
         </BtnGrid>
       </Modal>
-      }
-      {error && <Modal
+      <Modal
+        show={error ? true : false}
         title='An error occurred'
         message='Please try to start the again'
         onClose={ () => setError(null) }>
       </Modal>
-      }
     </div>
   );
 }
