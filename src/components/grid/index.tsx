@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import useSudokuState from '../hooks/useSudokuState';
 import useFetchSudokuData from '../hooks/useFetchSudokuData';
 import Loader from '../loader';
@@ -11,9 +11,9 @@ import { GridSection, Btn } from './styles';
 
 interface Props {
   resume: boolean;
-  setResume: (view: boolean) => void;
-  setGame: (view: boolean) => void;
-  setError: (error: string) => void;
+  setResume: React.Dispatch<React.SetStateAction<boolean>>;
+  setGame: React.Dispatch<React.SetStateAction<boolean>>;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
   difficulty: string;
 }
 
@@ -71,6 +71,8 @@ function Grid({
     }
   }, [isCompleted, setResume]);
 
+  const [isHighlighting, setIsHighlighting] = useState<boolean>(false);
+
   return (
     <GridSection>
       {loading ? <Loader loading={loading} /> : (
@@ -81,6 +83,8 @@ function Grid({
             difficulty={state.newboard.grids[0].difficulty} 
             validateEntireGrid={validateEntireGrid}
             handleSolvingSudoku={handleSolvingSudoku}
+            isHighlighting={isHighlighting}
+            setIsHighlighting={setIsHighlighting}
           />
           <Table
             data={state}
@@ -93,6 +97,7 @@ function Grid({
             setState={setState}
             conflictingCells={conflictingCells}
             invalidCells={invalidCells}
+            isHighlighting={isHighlighting}
           />
           <Footer
             pencilMode={pencilMode}

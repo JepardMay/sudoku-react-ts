@@ -42,6 +42,10 @@ export const TableCell = styled.td`
     background-color: var(--active-color);
   }
 
+  &.highlight {
+    background-color: var(--highlight-color);
+  }
+
   &.invalid {
     color: var(--mistake-color);
   }

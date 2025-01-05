@@ -9,7 +9,7 @@ interface Props {
   startNewGame: (difficulty: string) => void;
   resumeGame: () => void;
   error: string | null;
-  setError: (state: string | null) => void;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 function Main({

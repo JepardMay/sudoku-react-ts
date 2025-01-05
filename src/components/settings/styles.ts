@@ -59,7 +59,7 @@ export const Toggle = styled.span`
   }
 
   .active &::before {
-    left: calc(100% - 24px);
+    left: calc(100% - 22px);
     background-color: var(--border-color);
   }
 `;

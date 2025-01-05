@@ -7,11 +7,13 @@ import Settings from '../settings';
 import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, SettingsBtn } from './styles';
 
 interface Props {
-  setResume: (resume: boolean) => void;
-  setGame: (view: boolean) => void;
+  setResume: React.Dispatch<React.SetStateAction<boolean>>;
+  setGame: React.Dispatch<React.SetStateAction<boolean>>;
   difficulty: string;
   validateEntireGrid: () => void;
   handleSolvingSudoku: () => void;
+  isHighlighting: boolean;
+  setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Header({
@@ -20,6 +22,8 @@ function Header({
   difficulty,
   validateEntireGrid,
   handleSolvingSudoku,
+  isHighlighting,
+  setIsHighlighting,
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
@@ -47,6 +51,8 @@ function Header({
           setSettingsModal={setSettingsModal} 
           validateEntireGrid={validateEntireGrid}
           handleSolvingSudoku={handleSolvingSudoku}
+          isHighlighting={isHighlighting}
+          setIsHighlighting={setIsHighlighting}
         />
       </Modal>
     </HeaderContainer>

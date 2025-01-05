@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { SettingsList, SettingsItem, SettingsBtn, Toggle } from './styles';
 
 interface Props {
   validateEntireGrid: () => void;
-  setSettingsModal: (state: boolean) => void;
+  setSettingsModal: React.Dispatch<React.SetStateAction<boolean>>;
   handleSolvingSudoku: () => void;
+  isHighlighting: boolean;
+  setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Settings = ({
   validateEntireGrid,
   setSettingsModal,
   handleSolvingSudoku,
+  isHighlighting,
+  setIsHighlighting,
 }: Readonly<Props>) => {
-  const [activeToggles, setActiveToggles] = useState<{ [key: number]: boolean; }>({});
-
   const settings = [
     {
       text: 'Validate the Puzzle',
@@ -33,25 +35,20 @@ const Settings = ({
     {
       text: 'Highlight crossings',
       onClick: () => { 
+        setIsHighlighting(!isHighlighting);
       },
-      toggle: true
+      toggle: true,
+      className: `${isHighlighting ? 'active' : ''}`
     },
   ];
-
-   const handleToggleClick = (index: number) => {
-    setActiveToggles((prev) => ({ ...prev, [index]: !prev[index] }));
-  };
 
   return (
     <SettingsList>
       { settings.map((el, i) =>
         <SettingsItem key={ `setting-${i + 1}` }>
           <SettingsBtn
-            className={ activeToggles[i] ? 'active' : '' }
-            onClick={ () => {
-              if (el.toggle) handleToggleClick(i);
-              el.onClick();
-            }}>
+            className={ el.className }
+            onClick={el.onClick}>
             <span>{ el.text }</span>
             {el.toggle && <Toggle/>}
           </SettingsBtn>

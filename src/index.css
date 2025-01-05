@@ -9,6 +9,7 @@
   --active-color: #6772a9;
   --overlay-color: rgba(0, 0, 0, 0.3);
   --active-color-transparent: #bbc1e5;
+  --highlight-color: #d4d9f8;
   --mistake-color: #fe5f55;
   --conflicting-color: #90c9fd;
   --default-transition: 0.15s ease-out;

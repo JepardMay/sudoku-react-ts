@@ -14,6 +14,7 @@ interface TableProps {
   setState: React.Dispatch<React.SetStateAction<SudokuData>>;
   conflictingCells: CellPosition[];
   invalidCells: CellPosition[];
+  isHighlighting: boolean;
 }
 
 function Table({
@@ -27,6 +28,7 @@ function Table({
   setState,
   conflictingCells,
   invalidCells,
+  isHighlighting,
 }: Readonly<TableProps>) {
   const selectCell = useCallback((rowIndex: number, cellIndex: number) => {
     setSelectedCell({ row: rowIndex, col: cellIndex });
@@ -64,10 +66,11 @@ function Table({
 
   const renderCell = useCallback((cell: Cell, cellIndex: number, rowIndex: number) => {
     const isSelected = selectedCell?.row === rowIndex && selectedCell?.col === cellIndex;
+    const isHighlighted = (selectedCell?.row === rowIndex || selectedCell?.col === cellIndex) && !isSelected;
 
     return (
       <TableCell
-        className={`${cell.locked ? 'locked' : ''} ${isSelected ? 'selected' : ''} ${isConflicting(rowIndex, cellIndex) ? 'conflicting' : ''} ${isInvalid(rowIndex, cellIndex) ? 'invalid' : ''}`}
+        className={`${cell.locked ? 'locked' : ''} ${isSelected ? 'selected' : ''} ${isConflicting(rowIndex, cellIndex) ? 'conflicting' : ''} ${isInvalid(rowIndex, cellIndex) ? 'invalid' : ''} ${isHighlighted && isHighlighting ? 'highlight' : ''}`}
         key={`cell: ${cellIndex + 1 + rowIndex * 9}`}
         data-row={rowIndex}
         data-cell={ cellIndex }
@@ -77,7 +80,7 @@ function Table({
           <PencilMark className={ `_${mark}` } key={ `cell: ${cellIndex + 1 + rowIndex * 9}, mark: ${mark}` }>{ mark }</PencilMark>) }
       </TableCell>
     );
-  }, [handleCellClick, selectedCell]);
+  }, [handleCellClick, selectedCell, isHighlighting]);
   
   const renderRow = useCallback((row: Cell[], rowIndex: number) => (
     <TableRow key={`row: ${rowIndex + 1}`}>
