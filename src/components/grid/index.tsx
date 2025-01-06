@@ -47,6 +47,7 @@ function Grid({
     validateEntireGrid,
     handleSolvingSudoku,
     getHint,
+    reset,
   } = useSudokuState();
 
   useFetchSudokuData({
@@ -87,6 +88,7 @@ function Grid({
             isHighlighting={isHighlighting}
             setIsHighlighting={setIsHighlighting}
             getHint={getHint}
+            reset={reset}
           />
           <Table
             data={state}

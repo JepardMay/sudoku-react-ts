@@ -15,6 +15,7 @@ interface Props {
   isHighlighting: boolean;
   setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
   getHint: () => void;
+  reset: () => void;
 }
 
 function Header({
@@ -26,6 +27,7 @@ function Header({
   isHighlighting,
   setIsHighlighting,
   getHint,
+  reset,
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
@@ -56,6 +58,7 @@ function Header({
           isHighlighting={isHighlighting}
           setIsHighlighting={setIsHighlighting}
           getHint={getHint}
+          reset={reset}
         />
       </Modal>
     </HeaderContainer>

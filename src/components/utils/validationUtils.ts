@@ -138,3 +138,11 @@ export const getRandomEmptyCell = (emptyCells: CellPosition[]): CellPosition => 
   const randomIndex = Math.floor(Math.random() * emptyCells.length);
   return emptyCells[randomIndex];
 };
+
+export const resetGrid = (grid: Cell[][]): Cell[][] => {
+  return grid.map(row => 
+    row.map(cell => 
+      cell.locked ? cell : { ...cell, value: 0, pencilMarks: [] }
+    )
+  );
+};

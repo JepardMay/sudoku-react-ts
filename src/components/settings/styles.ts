@@ -48,10 +48,10 @@ export const Toggle = styled.span`
   &::before {
     content: "";
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 19px;
-    height: 19px;
+    top: 3px;
+    left: 4px;
+    width: 18px;
+    height: 18px;
     background-color: var(--active-color);
     border-radius: 50%;
     transition: left var(--default-transition),

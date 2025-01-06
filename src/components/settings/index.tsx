@@ -9,6 +9,7 @@ interface Props {
   isHighlighting: boolean;
   setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
   getHint: () => void;
+  reset: () => void;
 }
 
 const Settings = ({
@@ -18,6 +19,7 @@ const Settings = ({
   isHighlighting,
   setIsHighlighting,
   getHint,
+  reset,
 }: Readonly<Props>) => {
   const settings = [
     {
@@ -38,6 +40,13 @@ const Settings = ({
       text: 'Solve',
       onClick: () => {
         handleSolvingSudoku();
+        setSettingsModal(false);
+      }
+    },
+    {
+      text: 'Reset',
+      onClick: () => {
+        reset();
         setSettingsModal(false);
       }
     },

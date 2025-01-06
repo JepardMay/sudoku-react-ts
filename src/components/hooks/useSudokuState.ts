@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { SudokuData, CellPosition, NumberCounts, INPUT_TYPE } from '../../models';
-import { validateCell, validatePuzzle, countNumbersInGrid, findInvalidCells, solveSudoku, findEmptyCells, getRandomEmptyCell } from '../utils/validationUtils';
+import { validateCell, validatePuzzle, countNumbersInGrid, findInvalidCells, solveSudoku, findEmptyCells, getRandomEmptyCell, resetGrid } from '../utils/validationUtils';
 
 const useSudokuState = () => {
   const loadStateFromLocalStorage = (): SudokuData | null => {
@@ -133,6 +133,14 @@ const useSudokuState = () => {
     setState(newState);
   }, [state]);
 
+  const reset = useCallback(() => {
+    setState(prevState => {
+      const newState = { ...prevState };
+      newState.newboard.grids[0].value = resetGrid(newState.newboard.grids[0].value);
+      return newState;
+    });
+  }, [state]);
+
   return {
     state,
     setState,
@@ -156,6 +164,7 @@ const useSudokuState = () => {
     validateEntireGrid,
     handleSolvingSudoku,
     getHint,
+    reset,
   };
 };
 
