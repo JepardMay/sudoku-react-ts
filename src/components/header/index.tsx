@@ -14,6 +14,7 @@ interface Props {
   handleSolvingSudoku: () => void;
   isHighlighting: boolean;
   setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
+  getHint: () => void;
 }
 
 function Header({
@@ -24,6 +25,7 @@ function Header({
   handleSolvingSudoku,
   isHighlighting,
   setIsHighlighting,
+  getHint,
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
@@ -53,6 +55,7 @@ function Header({
           handleSolvingSudoku={handleSolvingSudoku}
           isHighlighting={isHighlighting}
           setIsHighlighting={setIsHighlighting}
+          getHint={getHint}
         />
       </Modal>
     </HeaderContainer>

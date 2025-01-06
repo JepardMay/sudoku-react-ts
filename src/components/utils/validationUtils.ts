@@ -119,3 +119,22 @@ export const solveSudoku = (setState: React.Dispatch<React.SetStateAction<Sudoku
 
   fillCell(0, 0, 0);
 };
+
+export const findEmptyCells = (gridValues: Cell[][]): CellPosition[] => {
+  const emptyCells: CellPosition[] = [];
+
+  for (let row = 0; row < gridValues.length; row++) {
+    for (let col = 0; col < gridValues[row].length; col++) {
+      if (gridValues[row][col].value === 0) {
+        emptyCells.push({ row, col });
+      }
+    }
+  }
+
+  return emptyCells;
+};
+
+export const getRandomEmptyCell = (emptyCells: CellPosition[]): CellPosition => {
+  const randomIndex = Math.floor(Math.random() * emptyCells.length);
+  return emptyCells[randomIndex];
+};

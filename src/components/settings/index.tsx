@@ -8,6 +8,7 @@ interface Props {
   handleSolvingSudoku: () => void;
   isHighlighting: boolean;
   setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
+  getHint: () => void;
 }
 
 const Settings = ({
@@ -16,17 +17,25 @@ const Settings = ({
   handleSolvingSudoku,
   isHighlighting,
   setIsHighlighting,
+  getHint,
 }: Readonly<Props>) => {
   const settings = [
     {
-      text: 'Validate the Puzzle',
+      text: 'Validate',
       onClick: () => {
         validateEntireGrid();
         setSettingsModal(false);
       }
     },
     {
-      text: 'Solve the Puzzle',
+      text: "Hint",
+      onClick: () => {
+        getHint();
+        setSettingsModal(false);
+      }
+    },
+    {
+      text: 'Solve',
       onClick: () => {
         handleSolvingSudoku();
         setSettingsModal(false);
@@ -39,7 +48,7 @@ const Settings = ({
       },
       toggle: true,
       className: `${isHighlighting ? 'active' : ''}`
-    },
+    }
   ];
 
   return (
