@@ -1,4 +1,5 @@
 import React from 'react';
+import { getSettingsConfig } from './config';
 
 import { SettingsList, SettingsItem, SettingsBtn, Toggle } from './styles';
 
@@ -12,7 +13,7 @@ interface Props {
   reset: () => void;
 }
 
-const Settings = ({
+function Settings ({
   validateEntireGrid,
   setSettingsModal,
   handleSolvingSudoku,
@@ -20,45 +21,16 @@ const Settings = ({
   setIsHighlighting,
   getHint,
   reset,
-}: Readonly<Props>) => {
-  const settings = [
-    {
-      text: 'Validate',
-      onClick: () => {
-        validateEntireGrid();
-        setSettingsModal(false);
-      }
-    },
-    {
-      text: "Hint",
-      onClick: () => {
-        getHint();
-        setSettingsModal(false);
-      }
-    },
-    {
-      text: 'Solve',
-      onClick: () => {
-        handleSolvingSudoku();
-        setSettingsModal(false);
-      }
-    },
-    {
-      text: 'Reset',
-      onClick: () => {
-        reset();
-        setSettingsModal(false);
-      }
-    },
-    {
-      text: 'Highlight crossings',
-      onClick: () => { 
-        setIsHighlighting(!isHighlighting);
-      },
-      toggle: true,
-      className: `${isHighlighting ? 'active' : ''}`
-    }
-  ];
+}: Readonly<Props>) {
+  const settings = getSettingsConfig(
+    validateEntireGrid,
+    setSettingsModal,
+    handleSolvingSudoku,
+    getHint,
+    reset,
+    isHighlighting,
+    setIsHighlighting
+  );
 
   return (
     <SettingsList>

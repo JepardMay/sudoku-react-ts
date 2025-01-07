@@ -5,9 +5,9 @@ import Loader from '../loader';
 import Header from '../header';
 import Table from '../table';
 import Footer from '../footer';
-import Modal from '../modal';
+import { CompletionModal } from './modals';
 
-import { GridSection, Btn } from './styles';
+import { GridSection } from './styles';
 
 interface Props {
   resume: boolean;
@@ -126,15 +126,10 @@ function Grid({
             setState={setState}
             numberCounts={numberCounts}
           />
-          <Modal
+          <CompletionModal
             show={isCompleted}
-            title='Congratulations!'
-            message='You have successfully completed the Sudoku puzzle.'
             onClose={() => setGame(false)}
-            showConfetti
-          >
-            <Btn onClick={() => setGame(false)}>Back to Main</Btn>
-          </Modal>
+          />
         </>
       )}
     </GridSection>

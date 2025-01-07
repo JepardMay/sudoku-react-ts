@@ -23,3 +23,11 @@ export const initialSudokuState = (): SudokuData => {
     },
   };
 };
+
+export const removeSavedState = (): void => {
+  localStorage.removeItem('sudokuState');
+};
+
+export const checkSavedState = (): boolean => {
+  return !!loadStateFromLocalStorage();
+};

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { SudokuData } from '../../models';
-import { ArrowBack, EllipsisIcon, ArrowAlt } from '../Icons';
+import { ArrowBack } from '../Icons';
 import Logo from '../logo/index';
-import Modal from '../modal';
-import Settings from '../settings';
+import { SettingsModal } from './modals';
+import { UndoButton, RedoButton, SettingsButton } from './buttons';
 
-import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, SettingsBtn, UndoBtn, RedoBtn } from './styles';
+import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty } from './styles';
 
 interface Props {
   setResume: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,7 +23,7 @@ interface Props {
   redo: () => void;
 }
 
-function Header({
+function Header ({
   setResume,
   setGame,
   difficulty,
@@ -36,46 +36,45 @@ function Header({
   history,
   redoStack,
   undo, 
-  redo,
+  redo
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
+  const handleBackClick = () => {
+    setGame(false);
+    setResume(true);
+  };
+
+  const handleSettingsClick = () => {
+    setSettingsModal(!settingsModal);
+  };
+
   return (
     <HeaderContainer>
-      <BackBtn onClick={ () => {
-        setGame(false);
-        setResume(true);
-      }}>
+      <BackBtn onClick={handleBackClick}>
         <ArrowBack />
       </BackBtn>
       <HeaderWrapper>
-        <UndoBtn onClick={ undo } disabled={ history.length === 0 }>
-          <ArrowAlt />
-        </UndoBtn>
-        <RedoBtn onClick={redo} disabled={ redoStack.length === 0 }>
-          <ArrowAlt />
-        </RedoBtn>
+        <UndoButton onClick={undo} disabled={history.length === 0} />
+        <RedoButton onClick={redo} disabled={redoStack.length === 0} />
         <Logo />
         <Difficulty className={difficulty.toLowerCase()}>
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
         </Difficulty>
-        <SettingsBtn onClick={() => setSettingsModal(!settingsModal)}>
-          <EllipsisIcon />
-        </SettingsBtn>
+        <SettingsButton onClick={handleSettingsClick} />
       </HeaderWrapper>
-      <Modal show={settingsModal} onClose={ () => setSettingsModal(false) }>
-        <Settings 
-          setSettingsModal={setSettingsModal} 
-          validateEntireGrid={validateEntireGrid}
-          handleSolvingSudoku={handleSolvingSudoku}
-          isHighlighting={isHighlighting}
-          setIsHighlighting={setIsHighlighting}
-          getHint={getHint}
-          reset={reset}
-        />
-      </Modal>
+      <SettingsModal
+        show={settingsModal}
+        onClose={() => setSettingsModal(false)}
+        validateEntireGrid={validateEntireGrid}
+        handleSolvingSudoku={handleSolvingSudoku}
+        isHighlighting={isHighlighting}
+        setIsHighlighting={setIsHighlighting}
+        getHint={getHint}
+        reset={reset}
+      />
     </HeaderContainer>
   );
 }

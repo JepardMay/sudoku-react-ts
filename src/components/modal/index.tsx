@@ -14,7 +14,7 @@ interface Props {
   show: boolean;
 }
 
-const Modal = ({ title, message, onClose, showConfetti = false, children, show }: Readonly<Props>) => {
+function Modal ({ title, message, onClose, showConfetti = false, children, show }: Readonly<Props>) {
   const nodeRef = useRef(null);
 
   return (

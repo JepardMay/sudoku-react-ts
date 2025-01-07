@@ -1,20 +1,18 @@
 import React, { useState, useCallback } from 'react';
 import Main from '../main/index';
 import Grid from '../grid/index';
+import { checkSavedState, removeSavedState } from '../utils/stateInitialization';
 
 import { Container } from './styles';
 
 function App() {
   const [game, setGame] = useState<boolean>(false);
-  const [resume, setResume] = useState<boolean>(() => {
-    const savedState = localStorage.getItem('sudokuState');
-    return !!savedState;
-  });
+  const [resume, setResume] = useState<boolean>(checkSavedState);
   const [difficulty, setDifficulty] = useState<string>('random');
   const [error, setError] = useState<string | null>(null);
 
   const startNewGame = useCallback((difficulty: string) => {
-    localStorage.removeItem('sudokuState');
+    removeSavedState();
     setDifficulty(difficulty);
     setResume(false);
     setGame(true);
@@ -27,22 +25,23 @@ function App() {
 
   return (
     <Container>
-      { game ?
+      {game ? (
         <Grid
-          resume={ resume }
-          setResume={ setResume }
-          setGame={ setGame }
-          setError={ setError }
-          difficulty={ difficulty }
-        /> :
-        <Main
-          resume={ resume }
-          startNewGame={ startNewGame }
-          resumeGame={ resumeGame }
-          error={ error }
-          setError={ setError }
+          resume={resume}
+          setResume={setResume}
+          setGame={setGame}
+          setError={setError}
+          difficulty={difficulty}
         />
-      }
+      ) : (
+        <Main
+          resume={resume}
+          startNewGame={startNewGame}
+          resumeGame={resumeGame}
+          error={error}
+          setError={setError}
+        />
+      )}
     </Container>
   );
 }

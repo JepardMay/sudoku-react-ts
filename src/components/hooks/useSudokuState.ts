@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { SudokuData, CellPosition, NumberCounts, INPUT_TYPE } from '../../models';
-import { validateCell, validatePuzzle, countNumbersInGrid, findInvalidCells, solveSudoku, findEmptyCells, getRandomEmptyCell, resetGrid } from '../utils/validationUtils';
+import { validateCell, validatePuzzle, findInvalidCells } from '../utils/validationUtils';
+import { countNumbersInGrid, solveSudoku, findEmptyCells, getRandomEmptyCell, resetGrid } from '../utils/gridUtils';
 import { initialSudokuState } from '../utils/stateInitialization';
 import { updatePencilMarks, updateCellValue } from '../utils/updateUtils';
 import { updateHistory, undo as undoHistory, redo as redoHistory } from '../utils/historyUtils';
@@ -29,7 +30,7 @@ const useSudokuState = () => {
     setNumberCounts(countNumbersInGrid(state.newboard.grids[0].value));
   }, [state]);
 
-  const checkCompletion = useCallback(() => {
+  useEffect(() => {
     const grid = state.newboard.grids[0];
     if (validatePuzzle(grid)) {
       setIsCompleted(true);
@@ -43,7 +44,7 @@ const useSudokuState = () => {
   }, [state]);
 
   const handleSolvingSudoku = useCallback(() => {
-    solveSudoku(setState, () => setIsCompleted(true));
+    solveSudoku(setState);
   }, [state]);
 
   const setNumber = useCallback((rowIndex: number, cellIndex: number, number: number) => {
@@ -67,9 +68,7 @@ const useSudokuState = () => {
 
       setConflictingCells([]);
     });
-
-    checkCompletion();
-  }, [pencilMode, state, conflictingCells, checkCompletion]);
+  }, [pencilMode, state, conflictingCells]);
 
   const undo = useCallback(() => {
     undoHistory(history, setState, setHistory, setRedoStack, state);
