@@ -13,7 +13,7 @@ const useSudokuState = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [inputType, setInputType] = useState<string>(() => {
     const savedInputType = localStorage.getItem('inputType');
-    return savedInputType || INPUT_TYPE.DIGIT_FIRST;
+    return savedInputType ?? INPUT_TYPE.DIGIT_FIRST;
   });
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
   const [selectedCell, setSelectedCell] = useState<CellPosition | null>(null);
