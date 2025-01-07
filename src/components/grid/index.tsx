@@ -48,6 +48,10 @@ function Grid({
     handleSolvingSudoku,
     getHint,
     reset,
+    history,
+    redoStack,
+    undo, 
+    redo,
   } = useSudokuState();
 
   useFetchSudokuData({
@@ -89,6 +93,10 @@ function Grid({
             setIsHighlighting={setIsHighlighting}
             getHint={getHint}
             reset={reset}
+            history={history}
+            redoStack={redoStack}
+            undo={undo}
+            redo={redo}
           />
           <Table
             data={state}

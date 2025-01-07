@@ -1,30 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { SudokuData, CellPosition, NumberCounts, INPUT_TYPE } from '../../models';
 import { validateCell, validatePuzzle, countNumbersInGrid, findInvalidCells, solveSudoku, findEmptyCells, getRandomEmptyCell, resetGrid } from '../utils/validationUtils';
+import { initialSudokuState } from '../utils/stateInitialization';
+import { updatePencilMarks, updateCellValue } from '../utils/updateUtils';
+import { updateHistory, undo as undoHistory, redo as redoHistory } from '../utils/historyUtils';
 
 const useSudokuState = () => {
-  const loadStateFromLocalStorage = (): SudokuData | null => {
-    const savedState = localStorage.getItem('sudokuState');
-    return savedState ? JSON.parse(savedState) : null;
-  };
-
-  const [state, setState] = useState<SudokuData>(() => {
-    const savedState = loadStateFromLocalStorage();
-    return savedState || {
-      newboard: {
-        grids: [
-          {
-            difficulty: '',
-            solution: [[0]],
-            value: Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => ({ value: 0, pencilMarks: [] }))),
-          },
-        ],
-        message: '',
-        results: 0,
-      },
-    };
-  });
-
+  const [state, setState] = useState<SudokuData>(initialSudokuState);
+  const [history, setHistory] = useState<SudokuData[]>([]);
+  const [redoStack, setRedoStack] = useState<SudokuData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [inputType, setInputType] = useState<string>(INPUT_TYPE.DIGIT_FIRST);
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
@@ -68,57 +52,32 @@ const useSudokuState = () => {
 
     if (!pencilMode && conflicts.length > 0) {
       setConflictingCells(conflicts);
-
-      setTimeout(() => {
-        setConflictingCells([]);
-      }, 3000);
+      setTimeout(() => setConflictingCells([]), 3000);
       return;
     }
 
-    const newState = { ...state };
-    const cell = newState.newboard.grids[0].value[rowIndex][cellIndex];
+    updateHistory(setState, setHistory, setRedoStack, state, newState => {
+      const cell = newState.newboard.grids[0].value[rowIndex][cellIndex];
 
-    if (pencilMode) {
-      const pencilMarks = cell.pencilMarks;
-      if (pencilMarks.includes(number)) {
-        cell.pencilMarks = pencilMarks.filter(mark => mark !== number);
+      if (pencilMode) {
+        updatePencilMarks(cell, number);
       } else {
-        cell.pencilMarks.push(number);
-      }
-    } else {
-      cell.value = number;
-      cell.pencilMarks = [];
-
-      for (let col = 0; col < 9; col++) {
-        if (col !== cellIndex) {
-          newState.newboard.grids[0].value[rowIndex][col].pencilMarks = 
-            newState.newboard.grids[0].value[rowIndex][col].pencilMarks.filter(mark => mark !== number);
-        }
+        updateCellValue(newState, rowIndex, cellIndex, number);
       }
 
-      for (let row = 0; row < 9; row++) {
-        if (row !== rowIndex) {
-          newState.newboard.grids[0].value[row][cellIndex].pencilMarks = 
-            newState.newboard.grids[0].value[row][cellIndex].pencilMarks.filter(mark => mark !== number);
-        }
-      }
+      setConflictingCells([]);
+    });
 
-      const startRow = Math.floor(rowIndex / 3) * 3;
-      const startCol = Math.floor(cellIndex / 3) * 3;
-      for (let r = startRow; r < startRow + 3; r++) {
-        for (let c = startCol; c < startCol + 3; c++) {
-          if (r !== rowIndex || c !== cellIndex) {
-            newState.newboard.grids[0].value[r][c].pencilMarks = 
-              newState.newboard.grids[0].value[r][c].pencilMarks.filter(mark => mark !== number);
-          }
-        }
-      }
-    }
-
-    setConflictingCells([]);
-    setState(newState);
     checkCompletion();
-  }, [pencilMode, state, conflictingCells]);
+  }, [pencilMode, state, conflictingCells, checkCompletion]);
+
+  const undo = useCallback(() => {
+    undoHistory(history, setState, setHistory, setRedoStack, state);
+  }, [history, state]);
+
+  const redo = useCallback(() => {
+    redoHistory(redoStack, setState, setHistory, state, setRedoStack);
+  }, [redoStack, state]);
 
   const getHint = useCallback(() => {
     const grid = state.newboard.grids[0];
@@ -128,16 +87,14 @@ const useSudokuState = () => {
 
     const { row, col } = getRandomEmptyCell(emptyCells);
 
-    const newState = { ...state };
-    newState.newboard.grids[0].value[row][col].value = grid.solution[row][col];
-    setState(newState);
+    updateHistory(setState, setHistory, setRedoStack, state, newState => {
+      newState.newboard.grids[0].value[row][col].value = grid.solution[row][col];
+    });
   }, [state]);
 
   const reset = useCallback(() => {
-    setState(prevState => {
-      const newState = { ...prevState };
+    updateHistory(setState, setHistory, setRedoStack, state, newState => {
       newState.newboard.grids[0].value = resetGrid(newState.newboard.grids[0].value);
-      return newState;
     });
   }, [state]);
 
@@ -165,6 +122,10 @@ const useSudokuState = () => {
     handleSolvingSudoku,
     getHint,
     reset,
+    history, 
+    redoStack,
+    undo,
+    redo,
   };
 };
 

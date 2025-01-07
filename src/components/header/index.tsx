@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { ArrowBack, EllipsisIcon } from '../Icons';
+import { SudokuData } from '../../models';
+import { ArrowBack, EllipsisIcon, ArrowAlt } from '../Icons';
 import Logo from '../logo/index';
 import Modal from '../modal';
 import Settings from '../settings';
 
-import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, SettingsBtn } from './styles';
+import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, SettingsBtn, UndoBtn, RedoBtn } from './styles';
 
 interface Props {
   setResume: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +17,10 @@ interface Props {
   setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
   getHint: () => void;
   reset: () => void;
+  history: SudokuData[];
+  redoStack: SudokuData[];
+  undo: () => void;
+  redo: () => void;
 }
 
 function Header({
@@ -28,6 +33,10 @@ function Header({
   setIsHighlighting,
   getHint,
   reset,
+  history,
+  redoStack,
+  undo, 
+  redo,
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
@@ -40,6 +49,12 @@ function Header({
         <ArrowBack />
       </BackBtn>
       <HeaderWrapper>
+        <UndoBtn onClick={ undo } disabled={ history.length === 0 }>
+          <ArrowAlt />
+        </UndoBtn>
+        <RedoBtn onClick={redo} disabled={ redoStack.length === 0 }>
+          <ArrowAlt />
+        </RedoBtn>
         <Logo />
         <Difficulty className={difficulty.toLowerCase()}>
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />

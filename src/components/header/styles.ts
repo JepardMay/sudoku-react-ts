@@ -27,6 +27,11 @@ export const Btn = styled.button`
     height: 100%;
   }
 
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   @media (hover: hover) and (pointer: fine) {
     &:hover, 
     &:focus { 
@@ -71,8 +76,7 @@ export const Difficulty = styled.div`
   }
 `;
 
-export const SettingsBtn = styled(Btn)`
-  right: 0;
+export const BaseBtn = styled(Btn)`
   bottom: 0;
   width: 32px;
   height: 32px;
@@ -80,12 +84,54 @@ export const SettingsBtn = styled(Btn)`
   border: 2px solid var(--border-color);
 
   @media (max-width: 768px) {
-    right: -74px;
     width: 28px;
     height: 28px;
   }
 
   @media (max-width: 375px) {
+    width: 28px;
+    height: 28px;
+  }
+`;
+
+export const SettingsBtn = styled(BaseBtn)`
+  right: 0;
+
+  @media (max-width: 768px) {
+    right: -74px;
+  }
+
+  @media (max-width: 375px) {
     right: -68px;
+  }
+`;
+
+export const UndoBtn = styled(BaseBtn)`
+  left: 0;
+  padding: 3px;
+
+  @media (max-width: 768px) {
+    left: -74px;
+  }
+
+  @media (max-width: 375px) {
+    left: -68px;
+  }
+`;
+
+export const RedoBtn = styled(BaseBtn)`
+  left: 37px;
+  padding: 3px;
+
+  svg {
+    transform: scaleX(-1);
+  }
+
+  @media (max-width: 768px) {
+    left: -37px;
+  }
+
+  @media (max-width: 375px) {
+    left: -31px;
   }
 `;
