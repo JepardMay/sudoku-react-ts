@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const SettingsList = styled.ul`
   margin: 0;
-  padding: 0 20px;
+  padding: 0 15px;
   /* list-style: none; */
 `;
 
@@ -20,8 +20,10 @@ export const SettingsBtn = styled.button`
   display: flex;
   align-items: center;
   padding: 0;
+  padding-right: 58px;
   font: inherit;
   font-size: 18px;
+  text-align: left;
   color: var(--text-color);
   border: none;
   background-color: transparent;

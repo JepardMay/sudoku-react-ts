@@ -11,6 +11,8 @@ interface SettingsModalProps {
   setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
   getHint: () => void;
   reset: () => void;
+  nightTheme: boolean;
+  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
@@ -21,7 +23,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   isHighlighting, 
   setIsHighlighting, 
   getHint, 
-  reset
+  reset,
+  nightTheme,
+  setNightTheme
 }) => (
   <Modal show={show} onClose={onClose}>
     <Settings 
@@ -32,6 +36,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       setIsHighlighting={setIsHighlighting}
       getHint={getHint}
       reset={reset}
+      nightTheme={nightTheme}
+      setNightTheme={setNightTheme}
     />
   </Modal>
 );

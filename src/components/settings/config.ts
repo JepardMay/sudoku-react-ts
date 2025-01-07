@@ -5,7 +5,9 @@ export const getSettingsConfig = (
   getHint: () => void,
   reset: () => void,
   isHighlighting: boolean,
-  setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>
+  setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>,
+  nightTheme: boolean,
+  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>,
 ) => [
   {
     text: 'Validate',
@@ -42,5 +44,13 @@ export const getSettingsConfig = (
     },
     toggle: true,
     className: `${isHighlighting ? 'active' : ''}`
-  }
+  },
+  {
+    text: 'Night Theme',
+    onClick: () => { 
+      setNightTheme(!nightTheme);
+    },
+    toggle: true,
+    className: `${nightTheme ? 'active' : ''}`
+  },
 ];

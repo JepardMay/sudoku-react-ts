@@ -11,9 +11,12 @@ const useSudokuState = () => {
   const [history, setHistory] = useState<SudokuData[]>([]);
   const [redoStack, setRedoStack] = useState<SudokuData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [inputType, setInputType] = useState<string>(INPUT_TYPE.DIGIT_FIRST);
+  const [inputType, setInputType] = useState<string>(() => {
+    const savedInputType = localStorage.getItem('inputType');
+    return savedInputType || INPUT_TYPE.DIGIT_FIRST;
+  });
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
-  const [selectedCell, setSelectedCell] = useState<{ row: number, col: number } | null>(null);
+  const [selectedCell, setSelectedCell] = useState<CellPosition | null>(null);
   const [pencilMode, setPencilMode] = useState<boolean>(false);
   const [eraserMode, setEraserMode] = useState<boolean>(false);
   const [conflictingCells, setConflictingCells] = useState<CellPosition[]>([]);
@@ -37,6 +40,10 @@ const useSudokuState = () => {
     }
   }, [state]);
 
+  useEffect(() => {
+    localStorage.setItem('inputType', inputType);
+  }, [inputType]);
+
   const validateEntireGrid = useCallback(() => {
     const grid = state.newboard.grids[0];
     const invalidCells = findInvalidCells(grid);
@@ -44,7 +51,7 @@ const useSudokuState = () => {
   }, [state]);
 
   const handleSolvingSudoku = useCallback(() => {
-    solveSudoku(setState);
+    solveSudoku(setState, setInvalidCells, setSelectedCell);
   }, [state]);
 
   const setNumber = useCallback((rowIndex: number, cellIndex: number, number: number) => {

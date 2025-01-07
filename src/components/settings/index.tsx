@@ -11,6 +11,8 @@ interface Props {
   setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
   getHint: () => void;
   reset: () => void;
+  nightTheme: boolean;
+  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Settings ({
@@ -21,6 +23,8 @@ function Settings ({
   setIsHighlighting,
   getHint,
   reset,
+  nightTheme,
+  setNightTheme,
 }: Readonly<Props>) {
   const settings = getSettingsConfig(
     validateEntireGrid,
@@ -29,7 +33,9 @@ function Settings ({
     getHint,
     reset,
     isHighlighting,
-    setIsHighlighting
+    setIsHighlighting, 
+    nightTheme,
+    setNightTheme,
   );
 
   return (

@@ -15,7 +15,11 @@ export const countNumbersInGrid = (grid: Cell[][]): NumberCounts => {
   return count;
 };
 
-export const solveSudoku = (setState: React.Dispatch<React.SetStateAction<SudokuData>>) => {
+export const solveSudoku = (
+  setState: React.Dispatch<React.SetStateAction<SudokuData>>,
+  setInvalidCells: React.Dispatch<React.SetStateAction<CellPosition[]>>,
+  setSelectedCell: React.Dispatch<React.SetStateAction<CellPosition | null>>
+) => {
   const fillCell = (gridIndex: number, row: number, col: number) => {
     if (row >= 9) {
       return;
@@ -24,11 +28,14 @@ export const solveSudoku = (setState: React.Dispatch<React.SetStateAction<Sudoku
     const nextCol = (col + 1) % 9;
     const nextRow = col === 8 ? row + 1 : row;
 
+    setInvalidCells([]);
+    setSelectedCell(null);
+
     setTimeout(() => {
       setState(prevState => {
         const newState = { ...prevState };
         const grid = newState.newboard.grids[gridIndex];
-        if (grid.value[row][col].value === 0) {
+        if (grid.value[row][col].value !== grid.solution[row][col]) {
           grid.value[row][col].value = grid.solution[row][col];
         }
         return newState;

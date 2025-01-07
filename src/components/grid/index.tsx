@@ -15,6 +15,8 @@ interface Props {
   setGame: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
   difficulty: string;
+  nightTheme: boolean;
+  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Grid({
@@ -22,7 +24,9 @@ function Grid({
   setResume,
   setGame,
   setError,
-  difficulty
+  difficulty,
+  nightTheme,
+  setNightTheme
 }: Readonly<Props>) {
   const {
     state,
@@ -97,6 +101,8 @@ function Grid({
             redoStack={redoStack}
             undo={undo}
             redo={redo}
+            nightTheme={nightTheme}
+            setNightTheme={setNightTheme}
           />
           <Table
             data={state}

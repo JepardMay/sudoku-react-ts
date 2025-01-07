@@ -16,6 +16,13 @@
   --modal-transition: 0.3s ease-in-out;
 }
 
+.night-theme {
+  --text-color: #f8f8f8;
+  --background-color: #000000;
+  --active-color: #2a3c99;
+  --highlight-color: #434867;
+}
+
 *,
 *::before,
 *::after {
@@ -41,6 +48,8 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--background-color);
 }
 
 body::after {
@@ -52,7 +61,6 @@ body::after {
   bottom: 0;
   z-index: -1;
 
-  background-color: var(--background-color);
   background-image:  linear-gradient(var(--active-color) 5px, transparent 5px), linear-gradient(90deg, var(--active-color) 5px, transparent 5px), linear-gradient(var(--active-color) 2.5px, transparent 2.5px), linear-gradient(90deg, var(--active-color) 2.5px, var(--background-color) 2.5px);
   background-size: 125px 125px, 125px 125px, 25px 25px, 25px 25px;
   background-position: -5px -5px, -5px -5px, -2.5px -2.5px, -2.5px -2.5px;

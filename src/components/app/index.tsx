@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Main from '../main/index';
 import Grid from '../grid/index';
 import { checkSavedState, removeSavedState } from '../utils/stateInitialization';
@@ -10,6 +10,15 @@ function App() {
   const [resume, setResume] = useState<boolean>(checkSavedState);
   const [difficulty, setDifficulty] = useState<string>('random');
   const [error, setError] = useState<string | null>(null);
+  const [nightTheme, setNightTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('nightTheme');
+    return savedTheme === 'true';
+  });
+
+  useEffect(() => {
+    document.documentElement.className = nightTheme ? 'night-theme' : '';
+    localStorage.setItem('nightTheme', String(nightTheme));
+  }, [nightTheme]);
 
   const startNewGame = useCallback((difficulty: string) => {
     removeSavedState();
@@ -32,6 +41,8 @@ function App() {
           setGame={setGame}
           setError={setError}
           difficulty={difficulty}
+          nightTheme={nightTheme}
+          setNightTheme={setNightTheme}
         />
       ) : (
         <Main

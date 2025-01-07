@@ -21,6 +21,8 @@ interface Props {
   redoStack: SudokuData[];
   undo: () => void;
   redo: () => void;
+  nightTheme: boolean;
+  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Header ({
@@ -36,7 +38,9 @@ function Header ({
   history,
   redoStack,
   undo, 
-  redo
+  redo,
+  nightTheme,
+  setNightTheme
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
@@ -74,6 +78,8 @@ function Header ({
         setIsHighlighting={setIsHighlighting}
         getHint={getHint}
         reset={reset}
+        nightTheme={nightTheme}
+        setNightTheme={setNightTheme}
       />
     </HeaderContainer>
   );
