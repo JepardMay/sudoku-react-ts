@@ -23,13 +23,14 @@ export const NumberButton: React.FC<NumberButtonProps> = ({ number, isSelected, 
 
 interface IconButtonProps {
   isSelected: boolean;
+  className?: string;
   onClick: () => void;
   children: React.ReactNode;
 }
 
-export const IconButton: React.FC<IconButtonProps> = ({ isSelected, onClick, children }) => (
+export const IconButton: React.FC<IconButtonProps> = ({ isSelected, className, onClick, children }) => (
   <FooterBtn
-    className={isSelected ? 'selected' : ''}
+    className={`${isSelected ? 'selected' : ''} ${className ?? ''}`}
     onClick={onClick}
   >
     {children}

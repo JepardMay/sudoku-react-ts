@@ -12,10 +12,10 @@ export const handleCellClick = (
   if (eraserMode) {
     eraseCell(rowIndex, cellIndex);
   } else if (inputType === INPUT_TYPE.DIGIT_FIRST) {
-    if (selectedNumber !== null && cell.value === 0) {
+    if (selectedNumber !== null) {
       setNumber(rowIndex, cellIndex, selectedNumber);
     }
-  } else if (inputType === INPUT_TYPE.CELL_FIRST && cell.value === 0) {
+  } else if (inputType === INPUT_TYPE.CELL_FIRST) {
     selectCell(rowIndex, cellIndex);
   }
 };

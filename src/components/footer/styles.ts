@@ -45,13 +45,12 @@ export const FooterBtn = styled.button.withConfig({
   transition: background-color var(--default-transition),
     color var(--default-transition);
 
-  &.selected,
-  &.pencil-selected {
+  &.selected {
     color: var(--background-color);
     background-color: var(--active-color);
   }
 
-  &.pencil-selected svg {
+  &.pencil.selected svg {
     transform: rotate(45deg);
   }
 

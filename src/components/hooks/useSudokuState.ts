@@ -55,6 +55,8 @@ const useSudokuState = () => {
   }, [state]);
 
   const setNumber = useCallback((rowIndex: number, cellIndex: number, number: number) => {
+    setInvalidCells([]);
+
     const gridValues = state.newboard.grids[0].value.map(row => row.map(cell => cell.value));
     const conflicts = validateCell(gridValues, rowIndex, cellIndex, number);
 

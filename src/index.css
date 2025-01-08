@@ -19,7 +19,8 @@
 .night-theme {
   --text-color: #f8f8f8;
   --background-color: #000000;
-  --active-color: #2a3c99;
+  --active-color: #354dc6;
+  --active-color-transparent: #5969c2;
   --highlight-color: #434867;
 }
 

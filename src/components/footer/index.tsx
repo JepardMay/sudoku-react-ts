@@ -54,7 +54,7 @@ function Footer ({
   return (
     <FooterContainer>
       {numberButtons}
-      <IconButton isSelected={pencilMode} onClick={() => setPencilMode(!pencilMode)}>
+      <IconButton isSelected={pencilMode} className={'pencil'} onClick={() => setPencilMode(!pencilMode)}>
         <PencilIcon />
       </IconButton>
       <IconButton isSelected={eraserMode && inputType === INPUT_TYPE.DIGIT_FIRST} onClick={() => handleEraserClick(inputType, selectedCell, setState, setEraserMode, setSelectedNumber)}>
