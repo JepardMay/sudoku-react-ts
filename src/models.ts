@@ -22,6 +22,29 @@ export type SudokuFetch = {
   chosenDifficulty: string;
 }
 
+export interface ModalActions {
+  validateEntireGrid: () => void;
+  setSettingsModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSolvingSudoku: () => void;
+  getHint: () => void;
+  reset: () => void;
+}
+
+export interface ThemeSettings {
+  nightTheme: boolean;
+  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface HighlightSettings {
+  isHighlighting: boolean;
+  setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface TimerSettings {
+  isTimerHidden: boolean;
+  setIsTimerHidden: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export interface Cell {
   value: number;
   pencilMarks: number[];

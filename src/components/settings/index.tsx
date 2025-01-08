@@ -1,19 +1,10 @@
 import React from 'react';
 import { getSettingsConfig } from './config';
+import { ModalActions, ThemeSettings, HighlightSettings, TimerSettings } from '../../models';
 
 import { SettingsList, SettingsItem, SettingsBtn, Toggle } from './styles';
 
-interface Props {
-  validateEntireGrid: () => void;
-  setSettingsModal: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSolvingSudoku: () => void;
-  isHighlighting: boolean;
-  setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
-  getHint: () => void;
-  reset: () => void;
-  nightTheme: boolean;
-  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
-}
+interface Props extends ModalActions, ThemeSettings, HighlightSettings, TimerSettings {};
 
 function Settings ({
   validateEntireGrid,
@@ -25,18 +16,33 @@ function Settings ({
   reset,
   nightTheme,
   setNightTheme,
+  isTimerHidden,
+  setIsTimerHidden
 }: Readonly<Props>) {
-  const settings = getSettingsConfig(
+  const modalActions: ModalActions = {
     validateEntireGrid,
     setSettingsModal,
     handleSolvingSudoku,
     getHint,
     reset,
-    isHighlighting,
-    setIsHighlighting, 
+  };
+
+  const themeSettings: ThemeSettings = {
     nightTheme,
     setNightTheme,
-  );
+  };
+
+  const highlightSettings: HighlightSettings = {
+    isHighlighting,
+    setIsHighlighting,
+  };
+
+  const timerSettings: TimerSettings = {
+    isTimerHidden,
+    setIsTimerHidden,
+  };
+
+  const settings = getSettingsConfig(modalActions, themeSettings, highlightSettings, timerSettings);
 
   return (
     <SettingsList>

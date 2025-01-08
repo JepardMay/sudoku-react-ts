@@ -1,56 +1,61 @@
+import { ModalActions, ThemeSettings, HighlightSettings, TimerSettings } from '../../models';
+
 export const getSettingsConfig = (
-  validateEntireGrid: () => void,
-  setSettingsModal: React.Dispatch<React.SetStateAction<boolean>>,
-  handleSolvingSudoku: () => void,
-  getHint: () => void,
-  reset: () => void,
-  isHighlighting: boolean,
-  setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>,
-  nightTheme: boolean,
-  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>,
+  modalActions: ModalActions,
+  themeSettings: ThemeSettings,
+  highlightSettings: HighlightSettings,
+  timerSettings: TimerSettings
 ) => [
   {
     text: 'Validate',
     onClick: () => {
-      validateEntireGrid();
-      setSettingsModal(false);
+      modalActions.validateEntireGrid();
+      modalActions.setSettingsModal(false);
     }
   },
   {
     text: "Hint",
     onClick: () => {
-      getHint();
-      setSettingsModal(false);
+      modalActions.getHint();
+      modalActions.setSettingsModal(false);
     }
   },
   {
     text: 'Solve',
     onClick: () => {
-      handleSolvingSudoku();
-      setSettingsModal(false);
+      modalActions.handleSolvingSudoku();
+      modalActions.setSettingsModal(false);
     }
   },
   {
     text: 'Reset',
     onClick: () => {
-      reset();
-      setSettingsModal(false);
+      modalActions.reset();
+      modalActions.setSettingsModal(false);
     }
+  },
+  {
+    text: 'Hide timer',
+    onClick: () => { 
+      timerSettings.setIsTimerHidden(!timerSettings.isTimerHidden);
+    },
+    toggle: true,
+    className: `${timerSettings.isTimerHidden ? 'active' : ''}`
   },
   {
     text: 'Highlight crossings',
     onClick: () => { 
-      setIsHighlighting(!isHighlighting);
+      highlightSettings.setIsHighlighting(!highlightSettings.isHighlighting);
     },
     toggle: true,
-    className: `${isHighlighting ? 'active' : ''}`
+    className: `${highlightSettings.isHighlighting ? 'active' : ''}`
   },
   {
     text: 'Night Theme',
     onClick: () => { 
-      setNightTheme(!nightTheme);
+      themeSettings.setNightTheme(!themeSettings.nightTheme);
     },
     toggle: true,
-    className: `${nightTheme ? 'active' : ''}`
+    className: `${themeSettings.nightTheme ? 'active' : ''}`
   },
 ];

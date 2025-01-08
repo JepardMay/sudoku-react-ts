@@ -26,7 +26,7 @@ function Grid({
   setError,
   difficulty,
   nightTheme,
-  setNightTheme
+  setNightTheme,
 }: Readonly<Props>) {
   const {
     state,
@@ -56,6 +56,7 @@ function Grid({
     redoStack,
     undo, 
     redo,
+    timeSpent,
   } = useSudokuState();
 
   useFetchSudokuData({
@@ -103,6 +104,7 @@ function Grid({
             redo={redo}
             nightTheme={nightTheme}
             setNightTheme={setNightTheme}
+            timeSpent={timeSpent}
           />
           <Table
             data={state}
@@ -134,6 +136,7 @@ function Grid({
           />
           <CompletionModal
             show={isCompleted}
+            timeSpent={timeSpent}
             onClose={() => setGame(false)}
           />
         </>

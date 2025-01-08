@@ -24,6 +24,11 @@ const useSudokuState = () => {
   const [numberCounts, setNumberCounts] = useState<NumberCounts>({});
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
+   const [timeSpent, setTimeSpent] = useState<number>(() => {
+    const savedTime = localStorage.getItem('timeSpent');
+    return savedTime ? parseInt(savedTime, 10) : 0;
+  });
+
   const saveStateToLocalStorage = (state: SudokuData) => {
     localStorage.setItem('sudokuState', JSON.stringify(state));
   };
@@ -43,6 +48,33 @@ const useSudokuState = () => {
   useEffect(() => {
     localStorage.setItem('inputType', inputType);
   }, [inputType]);
+  
+  useEffect(() => {
+    localStorage.setItem('timeSpent', timeSpent.toString());
+  }, [timeSpent]);
+  
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        clearInterval(timer);
+      } else if (!isCompleted) {
+        timer = setInterval(() => setTimeSpent(prev => prev + 1), 1000);
+      }
+    };
+
+    if (!isCompleted) {
+      timer = setInterval(() => setTimeSpent(prev => prev + 1), 1000);
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isCompleted]);
 
   const validateEntireGrid = useCallback(() => {
     const grid = state.newboard.grids[0];
@@ -134,6 +166,7 @@ const useSudokuState = () => {
     redoStack,
     undo,
     redo,
+    timeSpent,
   };
 };
 

@@ -135,3 +135,9 @@ export const RedoBtn = styled(BaseBtn)`
     left: -31px;
   }
 `;
+
+export const Timer = styled.p`
+  margin: 15px 0;
+  font-weight: 700;
+  font-size: 18px;
+`;

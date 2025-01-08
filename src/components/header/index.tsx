@@ -4,8 +4,9 @@ import { ArrowBack } from '../Icons';
 import Logo from '../logo/index';
 import { SettingsModal } from './modals';
 import { UndoButton, RedoButton, SettingsButton } from './buttons';
+import { formatTime } from '../utils/formatUtils';
 
-import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty } from './styles';
+import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, Timer } from './styles';
 
 interface Props {
   setResume: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +24,7 @@ interface Props {
   redo: () => void;
   nightTheme: boolean;
   setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
+  timeSpent: number;
 }
 
 function Header ({
@@ -40,9 +42,11 @@ function Header ({
   undo, 
   redo,
   nightTheme,
-  setNightTheme
+  setNightTheme,
+  timeSpent,
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
+  const [isTimerHidden, setIsTimerHidden] = useState<boolean>(false);
 
   const handleBackClick = () => {
     setGame(false);
@@ -68,6 +72,7 @@ function Header ({
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
         </Difficulty>
         <SettingsButton onClick={handleSettingsClick} />
+        { !isTimerHidden && <Timer>{ formatTime(timeSpent) }</Timer> }
       </HeaderWrapper>
       <SettingsModal
         show={settingsModal}
@@ -80,6 +85,8 @@ function Header ({
         reset={reset}
         nightTheme={nightTheme}
         setNightTheme={setNightTheme}
+        isTimerHidden={isTimerHidden}
+        setIsTimerHidden={setIsTimerHidden}
       />
     </HeaderContainer>
   );

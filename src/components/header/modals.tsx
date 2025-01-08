@@ -13,6 +13,8 @@ interface SettingsModalProps {
   reset: () => void;
   nightTheme: boolean;
   setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
+  isTimerHidden: boolean,
+  setIsTimerHidden: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
@@ -25,7 +27,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   getHint, 
   reset,
   nightTheme,
-  setNightTheme
+  setNightTheme,
+  isTimerHidden,
+  setIsTimerHidden
 }) => (
   <Modal show={show} onClose={onClose}>
     <Settings 
@@ -38,6 +42,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       reset={reset}
       nightTheme={nightTheme}
       setNightTheme={setNightTheme}
+      isTimerHidden={isTimerHidden}
+      setIsTimerHidden={setIsTimerHidden}
     />
   </Modal>
 );

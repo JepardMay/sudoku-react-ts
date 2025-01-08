@@ -1,4 +1,3 @@
-// components/RowComponent.tsx
 import React, { useCallback} from 'react';
 import { SudokuData, Cell as CellType, CellPosition } from '../../models';
 import Cell from '../cell';
