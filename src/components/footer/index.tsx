@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { PencilIcon, EraserIcon } from '../Icons';
 import { SudokuData, INPUT_TYPE, NumberCounts, CellPosition } from '../../models';
 import { NumberButton, IconButton } from './buttons';
-import { handleNumberClick, handleEraserClick } from '../utils/footerHandlers';
+import { handleNumberClick, handleEraserClick } from '../../utils/footerHandlers';
 import { FooterContainer, FooterBtn } from './styles';
 
 interface Props {

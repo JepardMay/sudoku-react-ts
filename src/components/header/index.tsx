@@ -4,7 +4,7 @@ import { ArrowBack } from '../Icons';
 import Logo from '../logo/index';
 import { SettingsModal } from './modals';
 import { UndoButton, RedoButton, SettingsButton } from './buttons';
-import { formatTime } from '../utils/formatUtils';
+import { formatTime } from '../../utils/formatUtils';
 
 import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, Timer } from './styles';
 

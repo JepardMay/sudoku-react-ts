@@ -1,6 +1,6 @@
 import React from 'react';
 import { Cell as CellType, CellPosition, CellClickData, CellCallbacks } from '../../models';
-import { handleCellClick, isConflicting, isInvalid } from '../utils/tableHandlers';
+import { handleCellClick, isConflicting, isInvalid } from '../../utils/tableHandlers';
 
 import { TableCell, PencilMark } from './styles';
 

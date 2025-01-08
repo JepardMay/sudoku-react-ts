@@ -1,4 +1,4 @@
-import { SudokuData } from '../../models';
+import { SudokuData } from '../models';
 
 export const loadStateFromLocalStorage = (): SudokuData | null => {
   const savedState = localStorage.getItem('sudokuState');

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SudokuData, CellPosition, NumberCounts, INPUT_TYPE } from '../../models';
+import { SudokuData, CellPosition, NumberCounts, INPUT_TYPE } from '../models';
 import { validateCell, validatePuzzle, findInvalidCells } from '../utils/validationUtils';
 import { countNumbersInGrid, solveSudoku, findEmptyCells, getRandomEmptyCell, resetGrid } from '../utils/gridUtils';
 import { initialSudokuState } from '../utils/stateInitialization';
@@ -128,7 +128,10 @@ const useSudokuState = () => {
     const { row, col } = getRandomEmptyCell(emptyCells);
 
     updateHistory(setState, setHistory, setRedoStack, state, newState => {
-      newState.newboard.grids[0].value[row][col].value = grid.solution[row][col];
+      const cell = newState.newboard.grids[0].value[row][col];
+      cell.value = grid.solution[row][col];
+
+      updateCellValue(newState, row, col, cell.value);
     });
   }, [state]);
 

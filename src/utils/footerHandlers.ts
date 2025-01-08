@@ -1,4 +1,4 @@
-import { SudokuData, CellPosition, INPUT_TYPE } from '../../models';
+import { SudokuData, CellPosition, INPUT_TYPE } from '../models';
 
 export const handleNumberClick = (
   number: number,

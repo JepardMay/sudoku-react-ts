@@ -1,4 +1,4 @@
-import { SudokuData, Cell, CellPosition, NumberCounts } from '../../models';
+import { SudokuData, Cell, CellPosition, NumberCounts } from '../models';
 
 export const countNumbersInGrid = (grid: Cell[][]): NumberCounts => {
   const count: NumberCounts = {};

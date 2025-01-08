@@ -1,4 +1,4 @@
-import { INPUT_TYPE, CellPosition, CellClickData, CellCallbacks } from '../../models';
+import { INPUT_TYPE, CellPosition, CellClickData, CellCallbacks } from '../models';
 
 export const handleCellClick = (
   clickData: CellClickData,

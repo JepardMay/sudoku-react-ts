@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import useSudokuState from '../hooks/useSudokuState';
-import useFetchSudokuData from '../hooks/useFetchSudokuData';
+import useSudokuState from '../../hooks/useSudokuState';
+import useFetchSudokuData from '../../hooks/useFetchSudokuData';
 import Loader from '../loader';
 import Header from '../header';
 import Table from '../table';

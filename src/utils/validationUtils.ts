@@ -1,4 +1,4 @@
-import { CellPosition, Grid } from '../../models';
+import { CellPosition, Grid } from '../models';
 
 export const validateCell = (grid: number[][], row: number, col: number, value: number): CellPosition[] => {
   const conflictingCells: CellPosition[] = [];

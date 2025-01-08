@@ -1,4 +1,4 @@
-import { SudokuData, Cell } from '../../models';
+import { SudokuData, Cell } from '../models';
 
 export const updatePencilMarks = (cell: Cell, number: number) => {
   const index = cell.pencilMarks.indexOf(number);

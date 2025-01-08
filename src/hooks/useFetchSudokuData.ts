@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { FETCH_URL } from '../../api';
-import { SudokuData, Grid, SudokuFetch } from '../../models';
+import { FETCH_URL } from '../api';
+import { SudokuData, Grid, SudokuFetch } from '../models';
 
 const transformGridData = (grid: { difficulty: string; solution: number[][]; value: number[][] }): Grid => ({
   difficulty: grid.difficulty,

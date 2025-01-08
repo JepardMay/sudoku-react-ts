@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Main from '../main/index';
 import Grid from '../grid/index';
-import { checkSavedState, removeSavedState } from '../utils/stateInitialization';
+import { checkSavedState, removeSavedState } from '../../utils/stateInitialization';
 
 import { Container } from './styles';
 

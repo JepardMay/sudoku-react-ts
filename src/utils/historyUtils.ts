@@ -1,4 +1,4 @@
-import { SudokuData } from '../../models';
+import { SudokuData } from '../models';
 
 export const updateHistory = (
   setState: React.Dispatch<React.SetStateAction<SudokuData>>,

@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from '../modal';
 import { Btn } from './styles';
-import { formatTime } from '../utils/formatUtils';
+import { formatTime } from '../../utils/formatUtils';
 
 interface CompletionModalProps {
   show: boolean;
