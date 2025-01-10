@@ -65,6 +65,7 @@ function Footer ({
         onClick={() => {
           setSelectedNumber(null);
           setSelectedCell(null);
+          setEraserMode(false);
           setInputType(inputType === INPUT_TYPE.DIGIT_FIRST ? INPUT_TYPE.CELL_FIRST : INPUT_TYPE.DIGIT_FIRST);
         }}
       >

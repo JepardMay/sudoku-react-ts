@@ -19,6 +19,7 @@ export type SudokuFetch = {
   setGame: (view: boolean) => void;
   setError: (error: string) => void;
   shouldFetch: boolean;
+  isCompleted?: boolean;
   chosenDifficulty: string;
 }
 

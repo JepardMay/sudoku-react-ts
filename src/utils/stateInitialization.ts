@@ -1,8 +1,8 @@
 import { SudokuData } from '../models';
+import { getStorage } from './storageUtils';
 
 export const loadStateFromLocalStorage = (): SudokuData | null => {
-  const savedState = localStorage.getItem('sudokuState');
-  return savedState ? JSON.parse(savedState) : null;
+  return getStorage<SudokuData | null>('sudokuState', null);
 };
 
 export const initialSudokuState = (): SudokuData => {
@@ -22,10 +22,6 @@ export const initialSudokuState = (): SudokuData => {
       results: 0,
     },
   };
-};
-
-export const removeSavedState = (): void => {
-  localStorage.removeItem('sudokuState');
 };
 
 export const checkSavedState = (): boolean => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useSudokuState from '../../hooks/useSudokuState';
 import useFetchSudokuData from '../../hooks/useFetchSudokuData';
+import { removeSavedStorage } from '../../utils/storageUtils';
 import Loader from '../loader';
 import Header from '../header';
 import Table from '../table';
@@ -64,6 +65,7 @@ function Grid({
     setState,
     setLoading,
     shouldFetch: !resume,
+    isCompleted,
     chosenDifficulty: difficulty,
     setGame,
     setError
@@ -77,7 +79,7 @@ function Grid({
   
   useEffect(() => {
     if (isCompleted) {
-      localStorage.removeItem('sudokuState');
+      removeSavedStorage('sudokuState');
       setResume(false);
     }
   }, [isCompleted, setResume]);
@@ -137,7 +139,10 @@ function Grid({
           <CompletionModal
             show={isCompleted}
             timeSpent={timeSpent}
-            onClose={() => setGame(false)}
+            onClose={ () => {
+              setGame(false);
+              removeSavedStorage('timeSpent');
+            }}
           />
         </>
       )}

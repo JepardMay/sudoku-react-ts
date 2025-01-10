@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Main from '../main/index';
 import Grid from '../grid/index';
-import { checkSavedState, removeSavedState } from '../../utils/stateInitialization';
+import { checkSavedState } from '../../utils/stateInitialization';
+import { setStorage, getStorage, removeSavedStorage } from '../../utils/storageUtils';
 
 import { Container } from './styles';
 
@@ -11,17 +12,17 @@ function App() {
   const [difficulty, setDifficulty] = useState<string>('random');
   const [error, setError] = useState<string | null>(null);
   const [nightTheme, setNightTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('nightTheme');
+    const savedTheme = getStorage<string | null>('nightTheme', null);
     return savedTheme === 'true';
   });
 
   useEffect(() => {
     document.documentElement.className = nightTheme ? 'night-theme' : '';
-    localStorage.setItem('nightTheme', String(nightTheme));
+    setStorage('nightTheme', String(nightTheme));
   }, [nightTheme]);
 
   const startNewGame = useCallback((difficulty: string) => {
-    removeSavedState();
+    removeSavedStorage('sudokuState');
     setDifficulty(difficulty);
     setResume(false);
     setGame(true);

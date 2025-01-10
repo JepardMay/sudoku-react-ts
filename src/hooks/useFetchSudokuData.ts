@@ -39,6 +39,7 @@ const useFetchSudokuData = ({
   setState,
   setLoading,
   shouldFetch,
+  isCompleted,
   chosenDifficulty,
   setGame,
   setError
@@ -46,7 +47,7 @@ const useFetchSudokuData = ({
   const hasDataFetched = useRef(false);
 
   useEffect(() => {
-    if (!shouldFetch || hasDataFetched.current) return;
+    if (isCompleted || !shouldFetch || hasDataFetched.current) return;
 
     const fetchData = async () => {
       setLoading(true);

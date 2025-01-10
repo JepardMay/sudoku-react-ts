@@ -42,7 +42,7 @@ export const solveSudoku = (
       });
 
       fillCell(gridIndex, nextRow, nextCol);
-    }, 50);
+    }, 30);
   };
 
   fillCell(0, 0, 0);
