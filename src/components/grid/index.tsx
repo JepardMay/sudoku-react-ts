@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useSudokuState from '../../hooks/useSudokuState';
 import useFetchSudokuData from '../../hooks/useFetchSudokuData';
-import { removeSavedStorage } from '../../utils/storageUtils';
+import { setStorage, getStorage, removeSavedStorage } from '../../utils/storageUtils';
 import Loader from '../loader';
 import Header from '../header';
 import Table from '../table';
@@ -70,6 +70,8 @@ function Grid({
     setGame,
     setError
   });
+
+  const [isHighlighting, setIsHighlighting] = useState<boolean>(() => getStorage<boolean>('isHighlighting', false));
   
   useEffect(() => {
     if (resume) {
@@ -78,13 +80,15 @@ function Grid({
   }, [resume, setLoading]);
   
   useEffect(() => {
+    setStorage('isHighlighting', String(isHighlighting));
+  }, [isHighlighting]);
+  
+  useEffect(() => {
     if (isCompleted) {
       removeSavedStorage('sudokuState');
       setResume(false);
     }
   }, [isCompleted, setResume]);
-
-  const [isHighlighting, setIsHighlighting] = useState<boolean>(false);
 
   return (
     <GridSection>

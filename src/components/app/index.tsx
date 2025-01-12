@@ -11,10 +11,7 @@ function App() {
   const [resume, setResume] = useState<boolean>(checkSavedState);
   const [difficulty, setDifficulty] = useState<string>('random');
   const [error, setError] = useState<string | null>(null);
-  const [nightTheme, setNightTheme] = useState(() => {
-    const savedTheme = getStorage<string | null>('nightTheme', null);
-    return savedTheme === 'true';
-  });
+  const [nightTheme, setNightTheme] = useState<boolean>(() => getStorage<boolean>('nightTheme', false));
 
   useEffect(() => {
     document.documentElement.className = nightTheme ? 'night-theme' : '';

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SudokuData } from '../../models';
 import { ArrowBack } from '../Icons';
 import Logo from '../logo/index';
 import { SettingsModal } from './modals';
 import { UndoButton, RedoButton, SettingsButton } from './buttons';
 import { formatTime } from '../../utils/formatUtils';
+import { setStorage, getStorage } from '../../utils/storageUtils';
 
 import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, Timer } from './styles';
 
@@ -46,7 +47,7 @@ function Header ({
   timeSpent,
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
-  const [isTimerHidden, setIsTimerHidden] = useState<boolean>(false);
+  const [isTimerHidden, setIsTimerHidden] = useState<boolean>(() => getStorage<boolean>('isTimerHidden', false));
 
   const handleBackClick = () => {
     setGame(false);
@@ -56,6 +57,10 @@ function Header ({
   const handleSettingsClick = () => {
     setSettingsModal(!settingsModal);
   };
+
+  useEffect(() => {
+    setStorage('isTimerHidden', String(isTimerHidden));
+  }, [isTimerHidden]);
 
   return (
     <HeaderContainer>
