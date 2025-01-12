@@ -3,6 +3,7 @@ import Main from '../main/index';
 import Grid from '../grid/index';
 import { checkSavedState } from '../../utils/stateInitialization';
 import { setStorage, getStorage, removeSavedStorage } from '../../utils/storageUtils';
+import { openGameSound } from '../../utils/soundUtils';
 
 import { Container } from './styles';
 
@@ -23,11 +24,13 @@ function App() {
     setDifficulty(difficulty);
     setResume(false);
     setGame(true);
+    openGameSound();
   }, []);
 
   const resumeGame = useCallback(() => {
     setResume(true);
     setGame(true);
+    openGameSound();
   }, []);
 
   return (

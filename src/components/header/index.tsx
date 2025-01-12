@@ -6,6 +6,7 @@ import { SettingsModal } from './modals';
 import { UndoButton, RedoButton, SettingsButton } from './buttons';
 import { formatTime } from '../../utils/formatUtils';
 import { setStorage, getStorage } from '../../utils/storageUtils';
+import { closeGameSound } from '../../utils/soundUtils';
 
 import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, Timer } from './styles';
 
@@ -52,6 +53,7 @@ function Header ({
   const handleBackClick = () => {
     setGame(false);
     setResume(true);
+    closeGameSound();
   };
 
   const handleSettingsClick = () => {

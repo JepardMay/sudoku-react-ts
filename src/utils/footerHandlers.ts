@@ -1,4 +1,5 @@
 import { SudokuData, CellPosition, INPUT_TYPE } from '../models';
+import { cellFillSound, cellEraseSound } from './soundUtils';
 
 export const handleNumberClick = (
   number: number,
@@ -10,6 +11,7 @@ export const handleNumberClick = (
 ) => {
   if (inputType === INPUT_TYPE.CELL_FIRST && selectedCell) {
     setNumber(selectedCell.row, selectedCell.col, number);
+    cellFillSound();
   } else if (inputType === INPUT_TYPE.DIGIT_FIRST) {
     setSelectedNumber(number);
     setEraserMode(false);
@@ -29,6 +31,7 @@ export const handleEraserClick = (
       newState.newboard.grids[0].value[selectedCell.row][selectedCell.col] = { value: 0, pencilMarks: [] };
       return newState;
     });
+    cellEraseSound();
   } else if (inputType === INPUT_TYPE.DIGIT_FIRST) {
     setEraserMode(true);
     setSelectedNumber(null);
