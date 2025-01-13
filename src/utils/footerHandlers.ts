@@ -1,4 +1,4 @@
-import { SudokuData, CellPosition, INPUT_TYPE } from '../models';
+import { Grid, CellPosition, INPUT_TYPE } from '../models';
 import { cellFillSound, cellEraseSound } from './soundUtils';
 
 export const handleNumberClick = (
@@ -21,14 +21,14 @@ export const handleNumberClick = (
 export const handleEraserClick = (
   inputType: string,
   selectedCell: CellPosition | null,
-  setState: React.Dispatch<React.SetStateAction<SudokuData>>,
+  setState: React.Dispatch<React.SetStateAction<Grid>>,
   setEraserMode: React.Dispatch<React.SetStateAction<boolean>>,
   setSelectedNumber: React.Dispatch<React.SetStateAction<number | null>>
 ) => {
   if (inputType === INPUT_TYPE.CELL_FIRST && selectedCell) {
     setState(prevState => {
       const newState = { ...prevState };
-      newState.newboard.grids[0].value[selectedCell.row][selectedCell.col] = { value: 0, pencilMarks: [] };
+      newState.puzzle[selectedCell.row][selectedCell.col] = { value: 0, pencilMarks: [] };
       return newState;
     });
     cellEraseSound();

@@ -1,4 +1,4 @@
-import { SudokuData, Cell, CellPosition, NumberCounts } from '../models';
+import { Grid, Cell, CellPosition, NumberCounts } from '../models';
 
 export const countNumbersInGrid = (grid: Cell[][]): NumberCounts => {
   const count: NumberCounts = {};
@@ -16,11 +16,11 @@ export const countNumbersInGrid = (grid: Cell[][]): NumberCounts => {
 };
 
 export const solveSudoku = (
-  setState: React.Dispatch<React.SetStateAction<SudokuData>>,
+  setState: React.Dispatch<React.SetStateAction<Grid>>,
   setInvalidCells: React.Dispatch<React.SetStateAction<CellPosition[]>>,
   setSelectedCell: React.Dispatch<React.SetStateAction<CellPosition | null>>
 ) => {
-  const fillCell = (gridIndex: number, row: number, col: number) => {
+  const fillCell = (row: number, col: number) => {
     if (row >= 9) {
       return;
     }
@@ -34,18 +34,18 @@ export const solveSudoku = (
     setTimeout(() => {
       setState(prevState => {
         const newState = { ...prevState };
-        const grid = newState.newboard.grids[gridIndex];
-        if (grid.value[row][col].value !== grid.solution[row][col]) {
-          grid.value[row][col].value = grid.solution[row][col];
+        const grid = newState;
+        if (grid.puzzle[row][col].value !== grid.solution[row][col]) {
+          grid.puzzle[row][col].value = grid.solution[row][col];
         }
         return newState;
       });
 
-      fillCell(gridIndex, nextRow, nextCol);
+      fillCell(nextRow, nextCol);
     }, 30);
   };
 
-  fillCell(0, 0, 0);
+  fillCell(0, 0);
 };
 
 export const findEmptyCells = (gridValues: Cell[][]): CellPosition[] => {

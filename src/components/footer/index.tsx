@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { PencilIcon, EraserIcon } from '../Icons';
-import { SudokuData, INPUT_TYPE, NumberCounts, CellPosition } from '../../models';
+import { Grid, INPUT_TYPE, NumberCounts, CellPosition } from '../../models';
 import { NumberButton, IconButton } from './buttons';
 import { handleNumberClick, handleEraserClick } from '../../utils/footerHandlers';
 import { FooterContainer, FooterBtn } from './styles';
@@ -17,7 +17,7 @@ interface Props {
   selectedCell: CellPosition | null;
   setSelectedCell: React.Dispatch<React.SetStateAction<CellPosition | null>>;
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
-  setState: React.Dispatch<React.SetStateAction<SudokuData>>;
+  setState: React.Dispatch<React.SetStateAction<Grid>>;
   numberCounts: NumberCounts;
 }
 

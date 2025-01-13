@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { Difficulty } from '../../models';
 import Main from '../main/index';
 import Grid from '../grid/index';
 import { checkSavedState } from '../../utils/stateInitialization';
@@ -10,7 +11,7 @@ import { Container } from './styles';
 function App() {
   const [game, setGame] = useState<boolean>(false);
   const [resume, setResume] = useState<boolean>(checkSavedState);
-  const [difficulty, setDifficulty] = useState<string>('random');
+  const [difficulty, setDifficulty] = useState<Difficulty>(undefined);
   const [error, setError] = useState<string | null>(null);
   const [nightTheme, setNightTheme] = useState<boolean>(() => getStorage<boolean>('nightTheme', false));
 
@@ -19,7 +20,7 @@ function App() {
     setStorage('nightTheme', String(nightTheme));
   }, [nightTheme]);
 
-  const startNewGame = useCallback((difficulty: string) => {
+  const startNewGame = useCallback((difficulty: Difficulty) => {
     removeSavedStorage('sudokuState');
     setDifficulty(difficulty);
     setResume(false);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Difficulty } from '../../models';
 import Logo from '../logo';
 import { DifficultyModal, ErrorModal } from './modals';
 
@@ -6,7 +7,7 @@ import { MainBtn } from './styles';
 
 interface Props {
   resume: boolean;
-  startNewGame: (difficulty: string) => void;
+  startNewGame: (difficulty: Difficulty) => void;
   resumeGame: () => void;
   error: string | null;
   setError: React.Dispatch<React.SetStateAction<string | null>>;

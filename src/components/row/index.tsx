@@ -1,5 +1,5 @@
 import React, { useCallback} from 'react';
-import { SudokuData, Cell as CellType, CellPosition } from '../../models';
+import { Grid, Cell as CellType, CellPosition } from '../../models';
 import Cell from '../cell';
 
 import { TableRow } from './styles';
@@ -13,7 +13,7 @@ interface Props {
   selectedCell: CellPosition | null;
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
   setSelectedCell: React.Dispatch<React.SetStateAction<CellPosition | null>>;
-  setState: React.Dispatch<React.SetStateAction<SudokuData>>;
+  setState: React.Dispatch<React.SetStateAction<Grid>>;
   conflictingCells: CellPosition[];
   invalidCells: CellPosition[];
   isHighlighting: boolean;
@@ -41,7 +41,7 @@ function RowComponent (props: Readonly<Props>) {
   const eraseCell = useCallback((rowIndex: number, cellIndex: number) => {
     setState(prevState => {
       const newState = { ...prevState };
-      newState.newboard.grids[0].value[rowIndex][cellIndex] = { value: 0, pencilMarks: [] };
+      newState.puzzle[rowIndex][cellIndex] = { value: 0, pencilMarks: [] };
       return newState;
     });
   }, [setState]);

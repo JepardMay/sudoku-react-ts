@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { SudokuData, CellPosition, NumberCounts, INPUT_TYPE } from '../models';
+import { Grid, CellPosition, NumberCounts, INPUT_TYPE } from '../models';
 import { initialSudokuState } from '../utils/stateInitialization';
 import { getStorage } from '../utils/storageUtils';
 
 export const useInitializeState = () => {
-  const [state, setState] = useState<SudokuData>(initialSudokuState);
-  const [history, setHistory] = useState<SudokuData[]>([]);
-  const [redoStack, setRedoStack] = useState<SudokuData[]>([]);
+  const [state, setState] = useState<Grid>(initialSudokuState);
+  const [history, setHistory] = useState<Grid[]>([]);
+  const [redoStack, setRedoStack] = useState<Grid[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [inputType, setInputType] = useState<string>(() => getStorage('inputType', INPUT_TYPE.DIGIT_FIRST));
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null);

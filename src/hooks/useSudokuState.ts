@@ -44,7 +44,7 @@ const useSudokuState = () => {
 
   // Helper Functions
   const validateEntireGrid = useCallback(() => {
-    setInvalidCells(findInvalidCells(state.newboard.grids[0]));
+    setInvalidCells(findInvalidCells(state));
   }, [state]);
 
   const handleSolvingSudoku = useCallback(() => {
@@ -54,7 +54,7 @@ const useSudokuState = () => {
   const setNumber = useCallback((rowIndex: number, cellIndex: number, number: number) => {
     setInvalidCells([]);
 
-    const gridValues = state.newboard.grids[0].value.map(row => row.map(cell => cell.value));
+    const gridValues = state.puzzle.map(row => row.map(cell => cell.value));
     const conflicts = validateCell(gridValues, rowIndex, cellIndex, number);
 
     if (!pencilMode && conflicts.length > 0) {
@@ -64,7 +64,7 @@ const useSudokuState = () => {
     }
 
     updateHistory(setState, setHistory, setRedoStack, state, newState => {
-      const cell = newState.newboard.grids[0].value[rowIndex][cellIndex];
+      const cell = newState.puzzle[rowIndex][cellIndex];
       pencilMode ? updatePencilMarks(cell, number) : updateCellValue(newState, rowIndex, cellIndex, number);
       setConflictingCells([]);
     });
@@ -74,15 +74,15 @@ const useSudokuState = () => {
   const redo = useCallback(() => redoHistory(redoStack, setState, setHistory, state, setRedoStack), [redoStack, state]);
 
   const getHint = useCallback(() => {
-    const grid = state.newboard.grids[0];
-    const emptyCells = findEmptyCells(grid.value);
+    const grid = state;
+    const emptyCells = findEmptyCells(grid.puzzle);
 
     if (emptyCells.length === 0) return;
 
     const { row, col } = getRandomEmptyCell(emptyCells);
 
     updateHistory(setState, setHistory, setRedoStack, state, newState => {
-      newState.newboard.grids[0].value[row][col].value = grid.solution[row][col];
+      newState.puzzle[row][col].value = grid.solution[row][col];
       updateCellValue(newState, row, col, grid.solution[row][col]);
       setInvalidCells([]);
       setConflictingCells([]);
@@ -90,7 +90,7 @@ const useSudokuState = () => {
   }, [state]);
 
   const reset = useCallback(() => updateHistory(setState, setHistory, setRedoStack, state, newState => {
-    newState.newboard.grids[0].value = resetGrid(newState.newboard.grids[0].value);
+    newState.puzzle = resetGrid(newState.puzzle);
   }), [state]);
 
   return {

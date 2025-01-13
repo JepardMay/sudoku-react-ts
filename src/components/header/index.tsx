@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SudokuData } from '../../models';
+import { Difficulty as DifficultyType, Grid } from '../../models';
 import { ArrowBack } from '../Icons';
 import Logo from '../logo/index';
 import { SettingsModal } from './modals';
@@ -13,15 +13,15 @@ import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, Timer } from './st
 interface Props {
   setResume: React.Dispatch<React.SetStateAction<boolean>>;
   setGame: React.Dispatch<React.SetStateAction<boolean>>;
-  difficulty: string;
+  difficulty: DifficultyType;
   validateEntireGrid: () => void;
   handleSolvingSudoku: () => void;
   isHighlighting: boolean;
   setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
   getHint: () => void;
   reset: () => void;
-  history: SudokuData[];
-  redoStack: SudokuData[];
+  history: Grid[];
+  redoStack: Grid[];
   undo: () => void;
   redo: () => void;
   nightTheme: boolean;
@@ -73,7 +73,8 @@ function Header ({
         <UndoButton onClick={undo} disabled={history.length === 0} />
         <RedoButton onClick={redo} disabled={redoStack.length === 0} />
         <Logo />
-        <Difficulty className={difficulty.toLowerCase()}>
+        <Difficulty className={difficulty?.toLowerCase()}>
+          <img src="./img/lock.png" alt="Lock" width="32" height="32" />
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />

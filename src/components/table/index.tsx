@@ -1,25 +1,25 @@
 import React from 'react';
-import { SudokuData, CellPosition, Cell } from '../../models';
+import { Grid, CellPosition, Cell } from '../../models';
 import Row from '../row';
 
 import { TableContainer } from './styles';
 
 interface TableProps {
-  data: SudokuData;
+  state: Grid;
   inputType: string;
   eraserMode: boolean;
   selectedNumber: number | null;
   selectedCell: { row: number, col: number } | null;
   setSelectedCell: React.Dispatch<React.SetStateAction<{ row: number, col: number } | null>>;
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
-  setState: React.Dispatch<React.SetStateAction<SudokuData>>;
+  setState: React.Dispatch<React.SetStateAction<Grid>>;
   conflictingCells: CellPosition[];
   invalidCells: CellPosition[];
   isHighlighting: boolean;
 }
 
 const Table: React.FC<TableProps> = ({
-  data,
+  state,
   inputType,
   eraserMode,
   setNumber,
@@ -33,7 +33,7 @@ const Table: React.FC<TableProps> = ({
 }) => (
   <TableContainer>
     <tbody>
-      {data.newboard.grids[0].value.map((row: Cell[], rowIndex: number) => (
+      {state.puzzle.map((row: Cell[], rowIndex: number) => (
         <Row
           key={`row: ${rowIndex + 1}`}
           row={row}

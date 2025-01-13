@@ -43,10 +43,15 @@ export const BtnGrid = styled.div`
 `;
 
 export const SmallBtn = styled(MainBtn)`
+  max-width: unset;
   padding: 10px;
   font-size: 18px;
 
   & {
     margin-top: 0;
+  }
+
+  &:nth-child(odd):last-child {
+    grid-column: 1 / -1;
   }
 `;

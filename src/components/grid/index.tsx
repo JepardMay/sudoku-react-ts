@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useSudokuState from '../../hooks/useSudokuState';
-import useFetchSudokuData from '../../hooks/useFetchSudokuData';
+import useGetSudoku from '../../hooks/useGetSudoku';
+import { Difficulty } from '../../models';
 import { setStorage, getStorage, removeSavedStorage } from '../../utils/storageUtils';
 import Loader from '../loader';
 import Header from '../header';
@@ -15,7 +16,7 @@ interface Props {
   setResume: React.Dispatch<React.SetStateAction<boolean>>;
   setGame: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
-  difficulty: string;
+  difficulty: Difficulty;
   nightTheme: boolean;
   setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -60,11 +61,10 @@ function Grid({
     timeSpent,
   } = useSudokuState();
 
-  useFetchSudokuData({
+  useGetSudoku({
     state,
     setState,
     setLoading,
-    shouldFetch: !resume,
     isCompleted,
     chosenDifficulty: difficulty,
     setGame,
@@ -97,7 +97,7 @@ function Grid({
           <Header 
             setResume={setResume} 
             setGame={setGame} 
-            difficulty={state.newboard.grids[0].difficulty} 
+            difficulty={state.difficulty} 
             validateEntireGrid={validateEntireGrid}
             handleSolvingSudoku={handleSolvingSudoku}
             isHighlighting={isHighlighting}
@@ -113,7 +113,7 @@ function Grid({
             timeSpent={timeSpent}
           />
           <Table
-            data={state}
+            state={state}
             inputType={inputType}
             eraserMode={eraserMode}
             selectedNumber={selectedNumber}

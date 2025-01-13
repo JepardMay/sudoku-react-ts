@@ -1,11 +1,11 @@
-import { SudokuData } from '../models';
+import { Grid } from '../models';
 
 export const updateHistory = (
-  setState: React.Dispatch<React.SetStateAction<SudokuData>>,
-  setHistory: React.Dispatch<React.SetStateAction<SudokuData[]>>,
-  setRedoStack: React.Dispatch<React.SetStateAction<SudokuData[]>>,
-  currentState: SudokuData,
-  updateFunction: (newState: SudokuData) => void
+  setState: React.Dispatch<React.SetStateAction<Grid>>,
+  setHistory: React.Dispatch<React.SetStateAction<Grid[]>>,
+  setRedoStack: React.Dispatch<React.SetStateAction<Grid[]>>,
+  currentState: Grid,
+  updateFunction: (newState: Grid) => void
 ) => {
   setHistory(prevHistory => [JSON.parse(JSON.stringify(currentState)), ...prevHistory]);
   setRedoStack([]);
@@ -17,11 +17,11 @@ export const updateHistory = (
 };
 
 export const undo = (
-  history: SudokuData[], 
-  setState: React.Dispatch<React.SetStateAction<SudokuData>>, 
-  setHistory: React.Dispatch<React.SetStateAction<SudokuData[]>>, 
-  setRedoStack: React.Dispatch<React.SetStateAction<SudokuData[]>>, 
-  currentState: SudokuData
+  history: Grid[], 
+  setState: React.Dispatch<React.SetStateAction<Grid>>, 
+  setHistory: React.Dispatch<React.SetStateAction<Grid[]>>, 
+  setRedoStack: React.Dispatch<React.SetStateAction<Grid[]>>, 
+  currentState: Grid
 ) => {
   if (history.length === 0) return;
   const previousState = history[0];
@@ -31,11 +31,11 @@ export const undo = (
 };
 
 export const redo = (
-  redoStack: SudokuData[], 
-  setState: React.Dispatch<React.SetStateAction<SudokuData>>, 
-  setHistory: React.Dispatch<React.SetStateAction<SudokuData[]>>, 
-  currentState: SudokuData, 
-  setRedoStack: React.Dispatch<React.SetStateAction<SudokuData[]>>
+  redoStack: Grid[], 
+  setState: React.Dispatch<React.SetStateAction<Grid>>, 
+  setHistory: React.Dispatch<React.SetStateAction<Grid[]>>, 
+  currentState: Grid, 
+  setRedoStack: React.Dispatch<React.SetStateAction<Grid[]>>
 ) => {
   if (redoStack.length === 0) return;
   const nextState = redoStack[0];

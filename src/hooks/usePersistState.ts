@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
-import { SudokuData, NumberCounts } from '../models';
+import { Grid, NumberCounts } from '../models';
 import { validatePuzzle } from '../utils/validationUtils';
 import { countNumbersInGrid } from '../utils/gridUtils';
 import { setStorage } from '../utils/storageUtils';
 
 export const usePersistState = (
-  state: SudokuData,
+  state: Grid,
   inputType: string,
   timeSpent: number,
   setNumberCounts: React.Dispatch<React.SetStateAction<NumberCounts>>,
   setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   useEffect(() => {
-    const grid = state.newboard.grids[0];
+    const grid = state;
     setStorage('sudokuState', JSON.stringify(state));
-    setNumberCounts(countNumbersInGrid(grid.value));
+    setNumberCounts(countNumbersInGrid(grid.puzzle));
 
     if (validatePuzzle(grid)) {
       setIsCompleted(true);

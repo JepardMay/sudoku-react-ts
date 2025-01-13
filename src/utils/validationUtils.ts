@@ -20,18 +20,18 @@ export const validateCell = (grid: number[][], row: number, col: number, value: 
 };
 
 export const validatePuzzle = (grid: Grid): boolean => {
-  const { value } = grid;
+  const { puzzle } = grid;
 
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
-      const cellValue = value[row][col].value;
+      const cellValue = puzzle[row][col].value;
 
       if (cellValue === 0) {
         return false;
       }
 
       const conflictingCells = validateCell(
-        value.map(row => row.map(cell => cell.value)),
+        puzzle.map(row => row.map(cell => cell.value)),
         row,
         col,
         cellValue
@@ -52,7 +52,7 @@ export const findInvalidCells = (grid: Grid) => {
   for (let row = 0; row < grid.solution.length; row++) {
     for (let col = 0; col < grid.solution[row].length; col++) {
       const solutionValue = grid.solution[row][col];
-      const cellValue = grid.value[row][col].value;
+      const cellValue = grid.puzzle[row][col].value;
       
       if (cellValue !== 0 && cellValue !== solutionValue) {
         invalidCells.push({ row, col });

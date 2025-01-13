@@ -3,6 +3,8 @@ export enum INPUT_TYPE {
   CELL_FIRST = 'Cell first',
 }
 
+export type Difficulty = 'easy' | 'medium' | 'hard' | 'expert' | undefined;
+
 export type NumberCounts = {
   [key: number]: number;
 }
@@ -12,15 +14,14 @@ export type CellPosition = {
   col: number;
 }
 
-export type SudokuFetch = {
-  state: SudokuData;
-  setState: React.Dispatch<React.SetStateAction<SudokuData>>;
+export type SudokuGet = {
+  state: Grid;
+  setState: React.Dispatch<React.SetStateAction<Grid>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setGame: (view: boolean) => void;
   setError: (error: string) => void;
-  shouldFetch: boolean;
   isCompleted?: boolean;
-  chosenDifficulty: string;
+  chosenDifficulty: Difficulty;
 }
 
 export interface ModalActions {
@@ -53,17 +54,15 @@ export interface Cell {
 }
 
 export interface Grid {
-  difficulty: string;
+  difficulty: Difficulty;
   solution: number[][];
-  value: Cell[][];
+  puzzle: Cell[][];
 }
 
 export interface SudokuData {
-  newboard: {
-    grids: Grid[];
-    message: string;
-    results: number;
-  };
+  puzzle: string;
+  solution: string;
+  difficulty: Difficulty;
 }
 
 export interface CellClickData {

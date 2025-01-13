@@ -1,11 +1,12 @@
 import React from 'react';
 import Modal from '../modal';
 import { BtnGrid, SmallBtn } from './styles';
+import { Difficulty } from '../../models';
 
 interface DifficultyModalProps {
   show: boolean;
   onClose: () => void;
-  startNewGame: (difficulty: string) => void;
+  startNewGame: (difficulty: Difficulty) => void;
 }
 
 export const DifficultyModal: React.FC<DifficultyModalProps> = ({ show, onClose, startNewGame }) => (
@@ -18,7 +19,8 @@ export const DifficultyModal: React.FC<DifficultyModalProps> = ({ show, onClose,
       <SmallBtn onClick={() => startNewGame('easy')}>Easy</SmallBtn>
       <SmallBtn onClick={() => startNewGame('medium')}>Medium</SmallBtn>
       <SmallBtn onClick={() => startNewGame('hard')}>Hard</SmallBtn>
-      <SmallBtn onClick={() => startNewGame('random')}>Random</SmallBtn>
+      <SmallBtn onClick={() => startNewGame('expert')}>Expert</SmallBtn>
+      <SmallBtn onClick={() => startNewGame(undefined)}>Random</SmallBtn>
     </BtnGrid>
   </Modal>
 );
