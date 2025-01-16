@@ -1,7 +1,7 @@
 import { getSudoku } from 'sudoku-gen';
 
 import { useEffect } from 'react';
-import { SudokuData, Grid, SudokuGet } from '../models';
+import { SudokuData, Grid, Difficulty } from '../models';
 import { stringToArray } from '../utils/formatUtils';
 
 const transformGridData = (data: SudokuData): Grid => ({
@@ -13,6 +13,18 @@ const transformGridData = (data: SudokuData): Grid => ({
     locked: cellValue !== 0,
   }))),
 });
+
+type SudokuGet = {
+  state: Grid;
+  setState: React.Dispatch<React.SetStateAction<Grid>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setTimeSpent: React.Dispatch<React.SetStateAction<number>>;
+  setGame: (view: boolean) => void;
+  setError: (error: string) => void;
+  isCompleted?: boolean;
+  resume: boolean;
+  chosenDifficulty: Difficulty;
+}
 
 const useGetSudoku = ({
   setState,
