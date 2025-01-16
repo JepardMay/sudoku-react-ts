@@ -6,15 +6,12 @@ interface BtnProps {
 
 export const FooterContainer = styled.footer`
   display: grid;
-  grid-template-rows: repeat(6, calc(var(--cell-width) * 1.238));
-  grid-auto-flow: column;
+  grid-template-columns: repeat(2, calc(var(--cell-width) * 1.238));
   gap: 1rem;
   margin-left: 1rem;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(6, calc(var(--cell-width) * 1.26));
-    grid-template-rows: none;
-    grid-auto-flow: row;
     gap: 0.75rem;
     margin: 1rem 0;
   }
