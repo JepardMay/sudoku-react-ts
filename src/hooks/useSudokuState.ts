@@ -122,6 +122,7 @@ const useSudokuState = () => {
     undo,
     redo,
     timeSpent,
+    setTimeSpent,
   };
 };
 

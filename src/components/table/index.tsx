@@ -54,4 +54,4 @@ const Table: React.FC<TableProps> = ({
   </TableContainer>
 );
 
-export default React.memo(Table);
+export default Table;

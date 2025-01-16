@@ -59,13 +59,16 @@ function Grid({
     undo, 
     redo,
     timeSpent,
+    setTimeSpent,
   } = useSudokuState();
 
   useGetSudoku({
     state,
     setState,
     setLoading,
+    setTimeSpent,
     isCompleted,
+    resume,
     chosenDifficulty: difficulty,
     setGame,
     setError
@@ -89,6 +92,11 @@ function Grid({
       setResume(false);
     }
   }, [isCompleted, setResume]);
+
+  const onModalClose = () => {
+    setGame(false);
+    removeSavedStorage('timeSpent');
+  };
 
   return (
     <GridSection>
@@ -143,10 +151,7 @@ function Grid({
           <CompletionModal
             show={isCompleted}
             timeSpent={timeSpent}
-            onClose={ () => {
-              setGame(false);
-              removeSavedStorage('timeSpent');
-            }}
+            onClose={onModalClose}
           />
         </>
       )}
@@ -154,4 +159,4 @@ function Grid({
   );
 }
 
-export default React.memo(Grid);
+export default Grid;

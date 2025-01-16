@@ -17,15 +17,18 @@ const transformGridData = (data: SudokuData): Grid => ({
 const useGetSudoku = ({
   setState,
   setLoading,
+  setTimeSpent,
   isCompleted,
+  resume,
   chosenDifficulty,
   setGame,
   setError
 }: SudokuGet) => {
   useEffect(() => {
-    if (isCompleted) return;
+    if (isCompleted || resume) return;
     
     setLoading(true);
+    setTimeSpent(0);
     try {
       const data: SudokuData = getSudoku(chosenDifficulty);
 

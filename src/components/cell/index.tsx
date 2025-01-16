@@ -68,4 +68,4 @@ function Cell ({
   );
 }
 
-export default React.memo(Cell);
+export default Cell;

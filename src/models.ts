@@ -18,9 +18,11 @@ export type SudokuGet = {
   state: Grid;
   setState: React.Dispatch<React.SetStateAction<Grid>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setTimeSpent: React.Dispatch<React.SetStateAction<number>>;
   setGame: (view: boolean) => void;
   setError: (error: string) => void;
   isCompleted?: boolean;
+  resume: boolean;
   chosenDifficulty: Difficulty;
 }
 
