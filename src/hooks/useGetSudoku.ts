@@ -1,7 +1,8 @@
 import { getSudoku } from 'sudoku-gen';
 
 import { useEffect } from 'react';
-import { SudokuData, Grid, Difficulty } from '../models';
+import { ACTION_TYPE, SudokuData, Grid } from '../models';
+import { useInitializeState } from './useInitializeState';
 import { stringToArray } from '../utils/formatUtils';
 
 const transformGridData = (data: SudokuData): Grid => ({
@@ -14,48 +15,32 @@ const transformGridData = (data: SudokuData): Grid => ({
   }))),
 });
 
-type SudokuGet = {
-  state: Grid;
-  setState: React.Dispatch<React.SetStateAction<Grid>>;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setTimeSpent: React.Dispatch<React.SetStateAction<number>>;
-  setGame: (view: boolean) => void;
-  setError: (error: string) => void;
-  isCompleted?: boolean;
-  resume: boolean;
-  chosenDifficulty: Difficulty;
-}
+const useGetSudoku = () => {
+  const { state, dispatch } = useInitializeState();
+  const { resume, difficulty, completed } = state;
 
-const useGetSudoku = ({
-  setState,
-  setLoading,
-  setTimeSpent,
-  isCompleted,
-  resume,
-  chosenDifficulty,
-  setGame,
-  setError
-}: SudokuGet) => {
   useEffect(() => {
-    if (isCompleted || resume) return;
+    if (completed || resume) return;
     
-    setLoading(true);
-    setTimeSpent(0);
+    dispatch({ type: ACTION_TYPE.SET_LOADING, payload: true });
+    dispatch({ type: ACTION_TYPE.SET_TIME_SPENT, payload: 0 });
+    
     try {
-      const data: SudokuData = getSudoku(chosenDifficulty);
+      const data: SudokuData = getSudoku(difficulty);
 
       // Transform the data to include pencilMarks
       const transformedData: Grid = transformGridData(data);
 
-      setState(transformedData);
+      dispatch({ type: ACTION_TYPE.SET_GRID, payload: transformedData });
     } catch(error) {
       console.error('Error getting sudoku:', error);
-      setError((error as Error).message);
-      setGame(false);
+
+      dispatch({ type: ACTION_TYPE.SET_ERROR, payload: (error as Error).message });
+      dispatch({ type: ACTION_TYPE.SET_GAME, payload: false });
     } finally {
-      setLoading(false);
+      dispatch({ type: ACTION_TYPE.SET_LOADING, payload: false });
     }
-  }, [chosenDifficulty]);
+  }, [difficulty]);
 };
 
 export default useGetSudoku;

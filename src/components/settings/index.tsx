@@ -1,25 +1,19 @@
 import React from 'react';
 import { getSettingsConfig } from './config';
-import { ModalActions, ThemeSettings, HighlightSettings, TimerSettings } from '../../models';
+import { SettingsActions } from '../../models';
 
 import { SettingsList, SettingsItem, SettingsBtn, Toggle } from './styles';
 
-interface Props extends ModalActions, ThemeSettings, HighlightSettings, TimerSettings {};
+interface Props extends SettingsActions {}
 
 function Settings ({
   validateEntireGrid,
   setSettingsModal,
   handleSolvingSudoku,
-  isHighlighting,
-  setIsHighlighting,
   getHint,
   reset,
-  nightTheme,
-  setNightTheme,
-  isTimerHidden,
-  setIsTimerHidden
 }: Readonly<Props>) {
-  const modalActions: ModalActions = {
+  const modalActions: SettingsActions = {
     validateEntireGrid,
     setSettingsModal,
     handleSolvingSudoku,
@@ -27,22 +21,7 @@ function Settings ({
     reset,
   };
 
-  const themeSettings: ThemeSettings = {
-    nightTheme,
-    setNightTheme,
-  };
-
-  const highlightSettings: HighlightSettings = {
-    isHighlighting,
-    setIsHighlighting,
-  };
-
-  const timerSettings: TimerSettings = {
-    isTimerHidden,
-    setIsTimerHidden,
-  };
-
-  const settings = getSettingsConfig(modalActions, themeSettings, highlightSettings, timerSettings);
+  const settings = getSettingsConfig(modalActions);
 
   return (
     <SettingsList>

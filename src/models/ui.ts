@@ -1,13 +1,5 @@
 import { Cell } from './cell';
 
-export interface ModalActions {
-  validateEntireGrid: () => void;
-  setSettingsModal: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSolvingSudoku: () => void;
-  getHint: () => void;
-  reset: () => void;
-}
-
 export interface CellClickData {
   rowIndex: number;
   cellIndex: number;

@@ -1,68 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import { Difficulty as DifficultyType, Grid } from '../../models';
+import React, { useState } from 'react';
+import { ACTION_TYPE } from '../../models';
+import { useInitializeState } from '../../hooks/useInitializeState';
 import { ArrowBack } from '../Icons';
 import Logo from '../logo/index';
 import { SettingsModal } from './modals';
 import { UndoButton, RedoButton, SettingsButton } from './buttons';
 import { formatTime } from '../../utils/formatUtils';
-import { setStorage, getStorage } from '../../utils/storageUtils';
 import { closeGameSound } from '../../utils/soundUtils';
 
 import { HeaderContainer, HeaderWrapper, BackBtn, Difficulty, Timer } from './styles';
 
 interface Props {
-  setResume: React.Dispatch<React.SetStateAction<boolean>>;
-  setGame: React.Dispatch<React.SetStateAction<boolean>>;
-  difficulty: DifficultyType;
   validateEntireGrid: () => void;
   handleSolvingSudoku: () => void;
-  isHighlighting: boolean;
-  setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
   getHint: () => void;
   reset: () => void;
-  history: Grid[];
-  redoStack: Grid[];
   undo: () => void;
   redo: () => void;
-  nightTheme: boolean;
-  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
-  timeSpent: number;
 }
 
 function Header ({
-  setResume,
-  setGame,
-  difficulty,
   validateEntireGrid,
   handleSolvingSudoku,
-  isHighlighting,
-  setIsHighlighting,
   getHint,
   reset,
-  history,
-  redoStack,
   undo, 
   redo,
-  nightTheme,
-  setNightTheme,
-  timeSpent,
 }: Readonly<Props>) {
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
-  const [isTimerHidden, setIsTimerHidden] = useState<boolean>(() => getStorage<boolean>('isTimerHidden', false));
+
+  const { state, dispatch } = useInitializeState();
+  const { history, redoStack, difficulty, timeSpent, timerHidden } = state;
 
   const handleBackClick = () => {
-    setGame(false);
-    setResume(true);
+    dispatch({ type: ACTION_TYPE.SET_GAME, payload: false });
+    dispatch({ type: ACTION_TYPE.SET_RESUME, payload: true });
     closeGameSound();
   };
 
   const handleSettingsClick = () => {
     setSettingsModal(!settingsModal);
   };
-
-  useEffect(() => {
-    setStorage('isTimerHidden', String(isTimerHidden));
-  }, [isTimerHidden]);
 
   return (
     <HeaderContainer>
@@ -80,21 +58,15 @@ function Header ({
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
         </Difficulty>
         <SettingsButton onClick={handleSettingsClick} />
-        { !isTimerHidden && <Timer>{ formatTime(timeSpent) }</Timer> }
+        { !timerHidden && <Timer>{ formatTime(timeSpent) }</Timer> }
       </HeaderWrapper>
       <SettingsModal
         show={settingsModal}
         onClose={() => setSettingsModal(false)}
         validateEntireGrid={validateEntireGrid}
         handleSolvingSudoku={handleSolvingSudoku}
-        isHighlighting={isHighlighting}
-        setIsHighlighting={setIsHighlighting}
         getHint={getHint}
         reset={reset}
-        nightTheme={nightTheme}
-        setNightTheme={setNightTheme}
-        isTimerHidden={isTimerHidden}
-        setIsTimerHidden={setIsTimerHidden}
       />
     </HeaderContainer>
   );

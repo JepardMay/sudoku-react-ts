@@ -1,5 +1,6 @@
-import React, { useCallback} from 'react';
-import { Grid, Cell as CellType, CellPosition } from '../../models';
+import React from 'react';
+import { ACTION_TYPE, Cell as CellType } from '../../models';
+import { useInitializeState } from '../../hooks/useInitializeState';
 import Cell from '../cell';
 
 import { TableRow } from './styles';
@@ -7,44 +8,25 @@ import { TableRow } from './styles';
 interface Props {
   row: CellType[];
   rowIndex: number;
-  inputType: string;
-  eraserMode: boolean;
-  selectedNumber: number | null;
-  selectedCell: CellPosition | null;
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
-  setSelectedCell: React.Dispatch<React.SetStateAction<CellPosition | null>>;
-  setState: React.Dispatch<React.SetStateAction<Grid>>;
-  conflictingCells: CellPosition[];
-  invalidCells: CellPosition[];
-  isHighlighting: boolean;
 }
-function RowComponent (props: Readonly<Props>) {
-  const {
-    row,
-    rowIndex,
-    inputType,
-    eraserMode,
-    selectedNumber,
-    selectedCell,
-    setNumber,
-    setSelectedCell,
-    setState,
-    conflictingCells,
-    invalidCells,
-    isHighlighting,
-  } = props;
+function Row({
+  row,
+  rowIndex,
+  setNumber
+}: Readonly<Props>) {
+  const { state, dispatch } = useInitializeState();
+  const { grid } = state;
 
-  const selectCell = useCallback((rowIndex: number, cellIndex: number) => {
-    setSelectedCell({ row: rowIndex, col: cellIndex });
-  }, [setSelectedCell]);
+  const selectCell = (rowIndex: number, cellIndex: number) => {
+    dispatch({ type: ACTION_TYPE.SET_SELECTED_CELL, payload: { row: rowIndex, col: cellIndex } });
+  };
 
-  const eraseCell = useCallback((rowIndex: number, cellIndex: number) => {
-    setState(prevState => {
-      const newState = { ...prevState };
-      newState.puzzle[rowIndex][cellIndex] = { value: 0, pencilMarks: [] };
-      return newState;
-    });
-  }, [setState]);
+  const eraseCell = (rowIndex: number, cellIndex: number) => {
+    const newGrid = JSON.parse(JSON.stringify(grid));
+    newGrid.puzzle[rowIndex][cellIndex] = { value: 0, pencilMarks: [] };
+    dispatch({ type: ACTION_TYPE.SET_GRID, payload: newGrid });
+  };
 
   return (
     <TableRow key={`row: ${rowIndex + 1}`}>
@@ -54,20 +36,13 @@ function RowComponent (props: Readonly<Props>) {
           cell={cell}
           cellIndex={cellIndex}
           rowIndex={rowIndex}
-          inputType={inputType}
-          eraserMode={eraserMode}
-          selectedNumber={selectedNumber}
-          selectedCell={selectedCell}
           setNumber={setNumber}
           selectCell={selectCell}
           eraseCell={eraseCell}
-          conflictingCells={conflictingCells}
-          invalidCells={invalidCells}
-          isHighlighting={isHighlighting}
         />
       ))}
     </TableRow>
   );
 }
 
-export default React.memo(RowComponent);
+export default React.memo(Row);

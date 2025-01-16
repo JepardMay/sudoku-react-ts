@@ -1,128 +1,101 @@
-import { useCallback } from 'react';
+import { ACTION_TYPE } from '../models';
+import { useInitializeState } from './useInitializeState';
 import { validateCell, findInvalidCells } from '../utils/validationUtils';
 import { solveSudoku, findEmptyCells, getRandomEmptyCell, resetGrid } from '../utils/gridUtils';
 import { updatePencilMarks, updateCellValue } from '../utils/updateUtils';
-import { updateHistory, undo as undoHistory, redo as redoHistory } from '../utils/historyUtils';
+import { updateHistory } from '../utils/historyUtils';
+import { cellFillSound } from '../utils/soundUtils';
 import { useTimer } from './useTimer';
-import { useInitializeState } from './useInitializeState';
-import { usePersistState } from './usePersistState';
 
 const useSudokuState = () => {
-  const {
-    state,
-    setState,
-    history,
-    setHistory,
-    redoStack,
-    setRedoStack,
-    loading,
-    setLoading,
-    inputType,
-    setInputType,
-    selectedNumber,
-    setSelectedNumber,
-    selectedCell,
-    setSelectedCell,
-    pencilMode,
-    setPencilMode,
-    eraserMode,
-    setEraserMode,
-    conflictingCells,
-    setConflictingCells,
-    invalidCells,
-    setInvalidCells,
-    numberCounts,
-    setNumberCounts,
-    isCompleted,
-    setIsCompleted,
-    timeSpent,
-    setTimeSpent,
-  } = useInitializeState();
+  const { state, dispatch } = useInitializeState();
+  const { grid, history, redoStack, pencilMode } = state;
 
-  usePersistState(state, inputType, timeSpent, setNumberCounts, setIsCompleted);
-  useTimer(isCompleted, setTimeSpent);
+  useTimer();
 
   // Helper Functions
-  const validateEntireGrid = useCallback(() => {
-    setInvalidCells(findInvalidCells(state));
-  }, [state]);
+  const validateEntireGrid = () => {
+    dispatch({ type: ACTION_TYPE.SET_INVALID_CELLS, payload: findInvalidCells(grid) });
+  };
 
-  const handleSolvingSudoku = useCallback(() => {
-    solveSudoku(setState, setInvalidCells, setSelectedCell);
-  }, [state]);
+  const handleSolvingSudoku = () => {
+    solveSudoku(grid, dispatch);
+  };
 
-  const setNumber = useCallback((rowIndex: number, cellIndex: number, number: number) => {
-    setInvalidCells([]);
+  const setNumber = (rowIndex: number, cellIndex: number, number: number) => {
+    dispatch({ type: ACTION_TYPE.SET_INVALID_CELLS, payload: [] });
 
-    const gridValues = state.puzzle.map(row => row.map(cell => cell.value));
+    const gridValues = grid.puzzle.map(row => row.map(cell => cell.value));
     const conflicts = validateCell(gridValues, rowIndex, cellIndex, number);
 
     if (!pencilMode && conflicts.length > 0) {
-      setConflictingCells(conflicts);
-      setTimeout(() => setConflictingCells([]), 3000);
+      dispatch({ type: ACTION_TYPE.SET_CONFLICTING_CELLS, payload: conflicts });
+      setTimeout(() => dispatch({ type: ACTION_TYPE.SET_CONFLICTING_CELLS, payload: [] }), 3000);
       return;
     }
 
-    updateHistory(setState, setHistory, setRedoStack, state, newState => {
+    if (!pencilMode) cellFillSound();
+    
+    updateHistory(grid, history, dispatch, (newState) => {
       const cell = newState.puzzle[rowIndex][cellIndex];
       pencilMode ? updatePencilMarks(cell, number) : updateCellValue(newState, rowIndex, cellIndex, number);
-      setConflictingCells([]);
+      dispatch({ type: ACTION_TYPE.SET_CONFLICTING_CELLS, payload: [] });
     });
-  }, [pencilMode, state]);
+  };
 
-  const undo = useCallback(() => undoHistory(history, setState, setHistory, setRedoStack, state), [history, state]);
-  const redo = useCallback(() => redoHistory(redoStack, setState, setHistory, state, setRedoStack), [redoStack, state]);
+  const undo = () => {
+    if (history.length === 0) return;
+    const previousState = history[0];
 
-  const getHint = useCallback(() => {
-    const grid = state;
+    const newRedostack = [JSON.parse(JSON.stringify(grid)), ...redoStack];
+    dispatch({ type: ACTION_TYPE.SET_REDOSTACK, payload: newRedostack });
+
+    const newHistory = history.slice(1);
+    dispatch({ type: ACTION_TYPE.SET_HISTORY, payload: newHistory });
+
+    dispatch({ type: ACTION_TYPE.SET_GRID, payload: previousState });
+  };
+
+  const redo = () => {
+    if (redoStack.length === 0) return;
+    const nextState = redoStack[0];
+
+    const newHistory = [JSON.parse(JSON.stringify(grid)), ...history];
+    dispatch({ type: ACTION_TYPE.SET_HISTORY, payload: newHistory });
+
+    const newRedostack = redoStack.slice(1);
+    dispatch({ type: ACTION_TYPE.SET_REDOSTACK, payload: newRedostack });
+    
+    dispatch({ type: ACTION_TYPE.SET_GRID, payload: nextState });
+  };
+
+  const getHint = () => {
     const emptyCells = findEmptyCells(grid.puzzle);
 
     if (emptyCells.length === 0) return;
 
     const { row, col } = getRandomEmptyCell(emptyCells);
 
-    updateHistory(setState, setHistory, setRedoStack, state, newState => {
+    updateHistory(grid, history, dispatch, (newState) => {
       newState.puzzle[row][col].value = grid.solution[row][col];
       updateCellValue(newState, row, col, grid.solution[row][col]);
-      setInvalidCells([]);
-      setConflictingCells([]);
+      dispatch({ type: ACTION_TYPE.SET_INVALID_CELLS, payload: [] });
+      dispatch({ type: ACTION_TYPE.SET_CONFLICTING_CELLS, payload: [] });
     });
-  }, [state]);
+  };
 
-  const reset = useCallback(() => updateHistory(setState, setHistory, setRedoStack, state, newState => {
+  const reset = () => updateHistory(grid, history, dispatch, (newState) => {
     newState.puzzle = resetGrid(newState.puzzle);
-  }), [state]);
+  });
 
   return {
-    state,
-    setState,
-    loading,
-    setLoading,
-    inputType,
-    setInputType,
-    selectedNumber,
-    setSelectedNumber,
-    selectedCell,
-    setSelectedCell,
-    pencilMode,
-    setPencilMode,
-    eraserMode,
-    setEraserMode,
     setNumber,
-    conflictingCells,
-    isCompleted,
-    numberCounts,
-    invalidCells,
     validateEntireGrid,
     handleSolvingSudoku,
     getHint,
-    reset,
-    history,
-    redoStack,
-    undo,
     redo,
-    timeSpent,
-    setTimeSpent,
+    undo,
+    reset,
   };
 };
 

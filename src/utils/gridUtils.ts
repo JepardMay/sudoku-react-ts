@@ -1,4 +1,5 @@
-import { Grid, Cell, CellPosition, NumberCounts } from '../models';
+import { Dispatch } from 'react';
+import { ACTION_TYPE, Action, Grid, Cell, CellPosition, NumberCounts } from '../models';
 
 export const countNumbersInGrid = (grid: Cell[][]): NumberCounts => {
   const count: NumberCounts = {};
@@ -16,9 +17,8 @@ export const countNumbersInGrid = (grid: Cell[][]): NumberCounts => {
 };
 
 export const solveSudoku = (
-  setState: React.Dispatch<React.SetStateAction<Grid>>,
-  setInvalidCells: React.Dispatch<React.SetStateAction<CellPosition[]>>,
-  setSelectedCell: React.Dispatch<React.SetStateAction<CellPosition | null>>
+  grid: Grid,
+  dispatch: Dispatch<Action>,
 ) => {
   const fillCell = (row: number, col: number) => {
     if (row >= 9) {
@@ -28,18 +28,15 @@ export const solveSudoku = (
     const nextCol = (col + 1) % 9;
     const nextRow = col === 8 ? row + 1 : row;
 
-    setInvalidCells([]);
-    setSelectedCell(null);
+    dispatch({ type: ACTION_TYPE.SET_INVALID_CELLS, payload: [] });
+    dispatch({ type: ACTION_TYPE.SET_SELECTED_CELL, payload: null });
 
     setTimeout(() => {
-      setState(prevState => {
-        const newState = { ...prevState };
-        const grid = newState;
-        if (grid.puzzle[row][col].value !== grid.solution[row][col]) {
-          grid.puzzle[row][col].value = grid.solution[row][col];
-        }
-        return newState;
-      });
+      const newGrid = JSON.parse(JSON.stringify(grid));
+      if (newGrid.puzzle[row][col].value !== newGrid.solution[row][col]) {
+        newGrid.puzzle[row][col].value = newGrid.solution[row][col];
+      }
+      dispatch({ type: ACTION_TYPE.SET_GRID, payload: newGrid });
 
       fillCell(nextRow, nextCol);
     }, 30);

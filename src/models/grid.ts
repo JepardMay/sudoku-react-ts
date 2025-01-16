@@ -1,5 +1,4 @@
-import { Cell } from './cell';
-import { Difficulty } from './settings';
+import { Cell, Difficulty } from '../models';
 
 export interface Grid {
   difficulty: Difficulty;

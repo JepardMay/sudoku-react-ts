@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
-import { Difficulty } from '../../models';
+import { Difficulty, ACTION_TYPE } from '../../models';
+import { useInitializeState } from '../../hooks/useInitializeState';
 import Logo from '../logo';
 import { DifficultyModal, ErrorModal } from './modals';
+import { removeSavedStorage } from '../../utils/storageUtils';
+import { openGameSound } from '../../utils/soundUtils';
 
 import { MainBtn } from './styles';
 
-interface Props {
-  resume: boolean;
-  startNewGame: (difficulty: Difficulty) => void;
-  resumeGame: () => void;
-  error: string | null;
-  setError: React.Dispatch<React.SetStateAction<string | null>>;
-}
+function Main() {
+  const { state, dispatch } = useInitializeState();
+  const { resume, error } = state;
 
-function Main({
-  resume,
-  startNewGame,
-  resumeGame,
-  error,
-  setError,
-}: Readonly<Props>) {
   const [difficultyModal, setDifficultyModal] = useState<boolean>(false);
+
+  const startNewGame = (difficulty: Difficulty) => {
+    removeSavedStorage('sudokuState');
+    dispatch({ type: ACTION_TYPE.SET_DIFFICULTY, payload: difficulty });
+    dispatch({ type: ACTION_TYPE.SET_RESUME, payload: false });
+    dispatch({ type: ACTION_TYPE.SET_GAME, payload: true });
+    openGameSound();
+  };
+
+  const resumeGame = () => {
+    dispatch({ type: ACTION_TYPE.SET_RESUME, payload: true });
+    dispatch({ type: ACTION_TYPE.SET_GAME, payload: true });
+    openGameSound();
+  };
 
   return (
     <div>
@@ -34,7 +40,7 @@ function Main({
       />
       <ErrorModal
         show={!!error}
-        onClose={() => setError(null)}
+        onClose={() => dispatch({ type: ACTION_TYPE.SET_ERROR, payload: null })}
       />
     </div>
   );

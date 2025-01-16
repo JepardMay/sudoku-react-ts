@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client';
 import 'normalize.css';
 import './index.css';
 
+import { StateProvider } from './context/StateContext';
+
 import App from './components/app';
 import reportWebVitals from './reportWebVitals';
 
@@ -12,7 +14,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <StateProvider>
+      <App />
+    </StateProvider>
   </React.StrictMode>,
 );
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Cell as CellType, CellPosition, CellClickData, CellCallbacks } from '../../models';
+import { Cell as CellType, CellClickData, CellCallbacks } from '../../models';
+import { useInitializeState } from '../../hooks/useInitializeState';
 import { handleCellClick, isConflicting, isInvalid } from '../../utils/tableHandlers';
 
 import { TableCell, PencilMark } from './styles';
@@ -8,40 +9,29 @@ interface Props {
   cell: CellType;
   cellIndex: number;
   rowIndex: number;
-  inputType: string;
-  eraserMode: boolean;
-  selectedNumber: number | null;
-  selectedCell: CellPosition | null;
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
   selectCell: (rowIndex: number, cellIndex: number) => void;
   eraseCell: (rowIndex: number, cellIndex: number) => void;
-  conflictingCells: CellPosition[];
-  invalidCells: CellPosition[];
-  isHighlighting: boolean;
 }
 
 function Cell ({
   cell,
   cellIndex,
   rowIndex,
-  inputType,
-  eraserMode,
-  selectedNumber,
-  selectedCell,
   setNumber,
   selectCell,
   eraseCell,
-  conflictingCells,
-  invalidCells,
-  isHighlighting,
 }: Readonly<Props>) {
+  const { state } = useInitializeState();
+  const { inputType, eraserMode, selectedNumber, selectedCell, conflictingCells, invalidCells, highlighting } = state;
+
   const clickData: CellClickData = {
     rowIndex,
     cellIndex,
     cell,
     inputType,
     eraserMode,
-    selectedNumber,
+    selectedNumber
   };
 
   const callbacks: CellCallbacks = {
@@ -55,7 +45,7 @@ function Cell ({
 
   return (
     <TableCell
-      className={`${cell.locked ? 'locked' : ''} ${isSelected ? 'selected' : ''} ${isConflicting(rowIndex, cellIndex, conflictingCells) ? 'conflicting' : ''} ${isInvalid(rowIndex, cellIndex, invalidCells) ? 'invalid' : ''} ${isHighlighted && isHighlighting ? 'highlight' : ''}`}
+      className={`${cell.locked ? 'locked' : ''} ${isSelected ? 'selected' : ''} ${isConflicting(rowIndex, cellIndex, conflictingCells) ? 'conflicting' : ''} ${isInvalid(rowIndex, cellIndex, invalidCells) ? 'invalid' : ''} ${isHighlighted && highlighting ? 'highlight' : ''}`}
       key={`cell: ${cellIndex + 1 + rowIndex * 9}`}
       data-row={rowIndex}
       data-cell={cellIndex}
@@ -68,4 +58,4 @@ function Cell ({
   );
 }
 
-export default Cell;
+export default React.memo(Cell);

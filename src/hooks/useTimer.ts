@@ -1,29 +1,46 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
+import { ACTION_TYPE } from '../models';
+import { useInitializeState } from './useInitializeState';
 
-export const useTimer = (
-  isCompleted: boolean,
-  setTimeSpent: React.Dispatch<React.SetStateAction<number>>
-) => {
-  let timer: NodeJS.Timeout;
+export const useTimer = () => {
+  const { state, dispatch } = useInitializeState();
+  const { game, completed, timeSpent } = state;
 
-  const handleVisibilityChange = () => {
-    if (document.visibilityState === 'hidden') {
-      clearInterval(timer);
-    } else if (!isCompleted) {
-      timer = setInterval(() => setTimeSpent(prev => prev + 1), 1000);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
-  };
-  
+  }, []);
+
+  const startTimer = useCallback(() => {
+    timerRef.current = setInterval(() => {
+      const newTimeSpent = timeSpent + 1;
+      dispatch({ type: ACTION_TYPE.SET_TIME_SPENT, payload: newTimeSpent });
+    }, 1000);
+  }, [timeSpent, dispatch]);
+
+  const handleVisibilityChange = useCallback(() => {
+    if (document.visibilityState === 'hidden') {
+      clearTimer();
+    } else if (!completed && game) {
+      startTimer();
+    }
+  }, [completed, clearTimer, startTimer]);
+
   useEffect(() => {
-    if (!isCompleted) {
-      timer = setInterval(() => setTimeSpent(prev => prev + 1), 1000);
+    if (!completed && game) {
+      startTimer();
     }
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      clearInterval(timer);
+      clearTimer();
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [isCompleted]);
+  }, [completed, handleVisibilityChange, clearTimer, startTimer]);
+
 };

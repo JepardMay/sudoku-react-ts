@@ -1,44 +1,20 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { PencilIcon, EraserIcon } from '../Icons';
-import { Grid, INPUT_TYPE, NumberCounts, CellPosition } from '../../models';
+import { ACTION_TYPE, INPUT_TYPE } from '../../models';
+import { useInitializeState } from '../../hooks/useInitializeState';
 import { NumberButton, IconButton } from './buttons';
 import { handleNumberClick, handleEraserClick } from '../../utils/footerHandlers';
 import { FooterContainer, FooterBtn } from './styles';
 
 interface Props {
-  pencilMode: boolean;
-  setPencilMode: React.Dispatch<React.SetStateAction<boolean>>;
-  eraserMode: boolean;
-  setEraserMode: React.Dispatch<React.SetStateAction<boolean>>;
-  inputType: string;
-  setInputType: React.Dispatch<React.SetStateAction<string>>;
-  selectedNumber: number | null;
-  setSelectedNumber: React.Dispatch<React.SetStateAction<number | null>>;
-  selectedCell: CellPosition | null;
-  setSelectedCell: React.Dispatch<React.SetStateAction<CellPosition | null>>;
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
-  setState: React.Dispatch<React.SetStateAction<Grid>>;
-  numberCounts: NumberCounts;
 }
 
 function Footer ({
-  pencilMode,
-  eraserMode,
-  inputType,
-  setPencilMode,
-  setEraserMode,
-  setInputType,
-  selectedNumber,
-  setSelectedNumber,
-  selectedCell,
-  setSelectedCell,
   setNumber,
-  setState,
-  numberCounts
 }: Readonly<Props>) {
-  const handleNumberClickMemoized = useCallback((number: number) => {
-    handleNumberClick(number, inputType, selectedCell, setNumber, setSelectedNumber, setEraserMode);
-  }, [inputType, selectedCell, setNumber, setSelectedNumber, setEraserMode]);
+  const { state, dispatch } = useInitializeState();
+  const { grid, inputType, selectedCell, selectedNumber, numberCounts, eraserMode, pencilMode } = state;
 
   const numberButtons = Array.from({ length: 9 }, (_, i) => i + 1).map(number => (
     <NumberButton
@@ -46,7 +22,7 @@ function Footer ({
       number={number}
       isSelected={selectedNumber === number}
       isDisabled={numberCounts[number] === 9}
-      onClick={() => handleNumberClickMemoized(number)}
+      onClick={() => handleNumberClick(number, inputType, selectedCell, setNumber, dispatch)}
       count={numberCounts[number]}
     />
   ));
@@ -54,19 +30,19 @@ function Footer ({
   return (
     <FooterContainer>
       {numberButtons}
-      <IconButton isSelected={eraserMode && inputType === INPUT_TYPE.DIGIT_FIRST} onClick={() => handleEraserClick(inputType, selectedCell, setState, setEraserMode, setSelectedNumber)}>
+      <IconButton isSelected={eraserMode && inputType === INPUT_TYPE.DIGIT_FIRST} onClick={() => handleEraserClick(grid, inputType, selectedCell, dispatch)}>
         <EraserIcon />
       </IconButton>
-      <IconButton isSelected={pencilMode} className={'pencil'} onClick={() => setPencilMode(!pencilMode)}>
+      <IconButton isSelected={pencilMode} className={'pencil'} onClick={() => dispatch({ type: ACTION_TYPE.SET_PENCIL_MODE, payload: !pencilMode })}>
         <PencilIcon />
       </IconButton>
       <FooterBtn
         btnType="text"
-        onClick={() => {
-          setSelectedNumber(null);
-          setSelectedCell(null);
-          setEraserMode(false);
-          setInputType(inputType === INPUT_TYPE.DIGIT_FIRST ? INPUT_TYPE.CELL_FIRST : INPUT_TYPE.DIGIT_FIRST);
+        onClick={ () => {
+          dispatch({ type: ACTION_TYPE.SET_SELECTED_NUMBER, payload: null });
+          dispatch({ type: ACTION_TYPE.SET_SELECTED_CELL, payload: null });
+          dispatch({ type: ACTION_TYPE.SET_ERASER_MODE, payload: false });
+          dispatch({ type: ACTION_TYPE.SET_INPUT_TYPE, payload: inputType === INPUT_TYPE.DIGIT_FIRST ? INPUT_TYPE.CELL_FIRST : INPUT_TYPE.DIGIT_FIRST });
         }}
       >
         {inputType}

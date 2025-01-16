@@ -1,25 +1,30 @@
-import { useEffect } from 'react';
-import { Grid, NumberCounts } from '../models';
+import { useEffect, useRef } from 'react';
+import { ACTION_TYPE, Grid } from '../models';
+import { useInitializeState } from './useInitializeState';
 import { validatePuzzle } from '../utils/validationUtils';
 import { countNumbersInGrid } from '../utils/gridUtils';
 import { setStorage } from '../utils/storageUtils';
 
-export const usePersistState = (
-  state: Grid,
-  inputType: string,
-  timeSpent: number,
-  setNumberCounts: React.Dispatch<React.SetStateAction<NumberCounts>>,
-  setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
+export const usePersistState = () => {
+  const { state, dispatch } = useInitializeState();
+  const { grid, timeSpent, inputType, nightTheme, highlighting } = state;
+  
+  const previousGridRef = useRef<Grid | null>(null);
+
   useEffect(() => {
-    const grid = state;
-    setStorage('sudokuState', JSON.stringify(state));
-    setNumberCounts(countNumbersInGrid(grid.puzzle));
+    if (previousGridRef.current === grid) {
+      return;
+    }
+    previousGridRef.current = grid;
+
+    setStorage('sudokuState', JSON.stringify(grid));
+    const numberCounts = countNumbersInGrid(grid.puzzle);
+    dispatch({ type: ACTION_TYPE.SET_NUMBER_COUNTS, payload: numberCounts });
 
     if (validatePuzzle(grid)) {
-      setIsCompleted(true);
+      dispatch({ type: ACTION_TYPE.SET_IS_COMPLETED, payload: true });
     }
-  }, [state]);
+  }, [grid]);
 
   useEffect(() => {
     setStorage('inputType', inputType);
@@ -28,4 +33,17 @@ export const usePersistState = (
   useEffect(() => {
     setStorage('timeSpent', String(timeSpent));
   }, [timeSpent]);
+
+  useEffect(() => {
+    setStorage('timeSpent', String(timeSpent));
+  }, [timeSpent]);
+
+  useEffect(() => {
+    document.documentElement.className = nightTheme ? 'night-theme' : '';
+    setStorage('nightTheme', String(nightTheme));
+  }, [nightTheme]);
+
+  useEffect(() => {
+    setStorage('highlighting', String(highlighting));
+  }, [highlighting]);
 };

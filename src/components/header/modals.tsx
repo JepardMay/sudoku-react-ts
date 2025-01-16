@@ -7,14 +7,8 @@ interface SettingsModalProps {
   onClose: () => void;
   validateEntireGrid: () => void;
   handleSolvingSudoku: () => void;
-  isHighlighting: boolean;
-  setIsHighlighting: React.Dispatch<React.SetStateAction<boolean>>;
   getHint: () => void;
   reset: () => void;
-  nightTheme: boolean;
-  setNightTheme: React.Dispatch<React.SetStateAction<boolean>>;
-  isTimerHidden: boolean,
-  setIsTimerHidden: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
@@ -22,28 +16,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   onClose, 
   validateEntireGrid, 
   handleSolvingSudoku, 
-  isHighlighting, 
-  setIsHighlighting, 
   getHint, 
   reset,
-  nightTheme,
-  setNightTheme,
-  isTimerHidden,
-  setIsTimerHidden
 }) => (
   <Modal show={show} onClose={onClose}>
     <Settings 
       setSettingsModal={onClose} 
       validateEntireGrid={validateEntireGrid}
       handleSolvingSudoku={handleSolvingSudoku}
-      isHighlighting={isHighlighting}
-      setIsHighlighting={setIsHighlighting}
       getHint={getHint}
       reset={reset}
-      nightTheme={nightTheme}
-      setNightTheme={setNightTheme}
-      isTimerHidden={isTimerHidden}
-      setIsTimerHidden={setIsTimerHidden}
     />
   </Modal>
 );
