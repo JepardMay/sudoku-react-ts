@@ -38,7 +38,11 @@ const useSudokuState = () => {
     
     updateHistory(grid, history, dispatch, (newState) => {
       const cell = newState.puzzle[rowIndex][cellIndex];
-      pencilMode ? updatePencilMarks(cell, number) : updateCellValue(newState, rowIndex, cellIndex, number);
+      if (pencilMode) {
+        updatePencilMarks(cell, number);
+      } else {
+        updateCellValue(newState, rowIndex, cellIndex, number);
+      }
       dispatch({ type: ACTION_TYPE.SET_CONFLICTING_CELLS, payload: [] });
     });
   };

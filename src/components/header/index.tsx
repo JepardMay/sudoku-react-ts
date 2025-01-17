@@ -42,6 +42,8 @@ function Header ({
     setSettingsModal(!settingsModal);
   };
 
+  console.log(history.length === 0, redoStack.length === 0);
+
   return (
     <HeaderContainer>
       <BackBtn onClick={handleBackClick}>

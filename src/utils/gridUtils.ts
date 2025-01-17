@@ -17,10 +17,10 @@ export const countNumbersInGrid = (grid: Cell[][]): NumberCounts => {
 };
 
 export const solveSudoku = (
-  grid: Grid,
-  dispatch: Dispatch<Action>,
+  initialGrid: Grid,
+  dispatch: Dispatch<Action>
 ) => {
-  const fillCell = (row: number, col: number) => {
+  const fillCell = (row: number, col: number, grid: Grid) => {
     if (row >= 9) {
       return;
     }
@@ -38,11 +38,11 @@ export const solveSudoku = (
       }
       dispatch({ type: ACTION_TYPE.SET_GRID, payload: newGrid });
 
-      fillCell(nextRow, nextCol);
+      fillCell(nextRow, nextCol, newGrid);
     }, 30);
   };
 
-  fillCell(0, 0);
+  fillCell(0, 0, initialGrid);
 };
 
 export const findEmptyCells = (gridValues: Cell[][]): CellPosition[] => {

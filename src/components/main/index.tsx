@@ -16,6 +16,7 @@ function Main() {
 
   const startNewGame = (difficulty: Difficulty) => {
     removeSavedStorage('sudokuState');
+    dispatch({ type: ACTION_TYPE.SET_IS_COMPLETED, payload: false });
     dispatch({ type: ACTION_TYPE.SET_DIFFICULTY, payload: difficulty });
     dispatch({ type: ACTION_TYPE.SET_RESUME, payload: false });
     dispatch({ type: ACTION_TYPE.SET_GAME, payload: true });
