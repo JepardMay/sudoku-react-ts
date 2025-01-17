@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { StateContext } from '../context/StateContext';
+import { StateContext } from '../state/context';
 
 export const useInitializeState = () => {
   const context = useContext(StateContext);

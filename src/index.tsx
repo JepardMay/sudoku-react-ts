@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import 'normalize.css';
 import './index.css';
 
-import { StateProvider } from './context/StateContext';
+import { StateProvider } from './state/context';
 
 import App from './components/app';
 import reportWebVitals from './reportWebVitals';
