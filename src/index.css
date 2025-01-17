@@ -14,6 +14,7 @@
   --conflicting-color: #90c9fd;
   --default-transition: 0.15s ease-out;
   --modal-transition: 0.3s ease-in-out;
+  --fade-transition: 0.6s ease-in-out;
 }
 
 .night-theme {
@@ -74,40 +75,28 @@ button,
   appearance: none;
 }
 
-.modal-enter {
-  opacity: 0;
+.fade-slide-enter {
+  /* opacity: 0; */
+  transform: translateY(100px);
 }
 
-.modal-enter .modal-wrapper {
-  transform: translateY(20px);
-}
-
-.modal-enter-active {
+.fade-slide-enter-active {
   opacity: 1;
-  transition: opacity var(--modal-transition);
-}
-
-.modal-enter-active .modal-wrapper {
   transform: translateY(0);
-  transition: transform var(--modal-transition);
+  transition: opacity var(--fade-transition), 
+    transform var(--fade-transition);
 }
 
-.modal-exit {
+.fade-slide-exit {
   opacity: 1;
-}
-
-.modal-exit .modal-wrapper {
   transform: translateY(0);
 }
 
-.modal-exit-active {
-  opacity: 0;
-  transition: opacity var(--modal-transition);
-}
-
-.modal-exit-active .modal-wrapper {
-  transform: translateY(20px);
-  transition: transform var(--modal-transition);
+.fade-slide-exit-active {
+  /* opacity: 0; */
+  transform: translateY(-100px);
+  transition: opacity var(--fade-transition), 
+    transform var(--fade-transition);
 }
 
 @media (max-width: 768px) {

@@ -1,5 +1,5 @@
 import { INPUT_TYPE, CellPosition, CellClickData, CellCallbacks } from '../models';
-import { cellFillSound, cellEraseSound } from './soundUtils';
+import { cellEraseSound } from './soundUtils';
 
 export const handleCellClick = (
   clickData: CellClickData,
@@ -16,7 +16,6 @@ export const handleCellClick = (
   } else if (inputType === INPUT_TYPE.DIGIT_FIRST) {
     if (selectedNumber !== null) {
       setNumber(rowIndex, cellIndex, selectedNumber);
-      cellFillSound();
     }
   } else if (inputType === INPUT_TYPE.CELL_FIRST) {
     selectCell(rowIndex, cellIndex);

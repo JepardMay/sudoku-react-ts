@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const bouncing = keyframes`
   0% {
@@ -10,24 +10,34 @@ const bouncing = keyframes`
   }
 `;
 
-interface LoaderContainerProps {
-  loading: boolean;
-}
-
-export const LoaderContainer = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== 'loading',
-})<LoaderContainerProps>`
+export const LoaderContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px 20px 140px;
+
+  &.loader-enter {
+    opacity: 0;
+  }
+
+  &.loader-enter-active {
+    opacity: 1;
+    transition: opacity var(--loader-transition);
+  }
+
+  &.loader-exit {
+    opacity: 1;
+  }
+
+  &.loader-exit-active {
+    opacity: 0;
+    transition: opacity var(--loader-transition);
+  }
   
   & img {
     position: absolute;
-    ${({ loading }) => loading && css`
-      animation: ${bouncing} 1s cubic-bezier(0.28, 1.21, 0.35, 1.2) infinite alternate;
-    `}
+    animation: ${bouncing} 1s cubic-bezier(0.28, 1.21, 0.35, 1.2) infinite alternate;
   }
 
   & img:nth-child(5) {

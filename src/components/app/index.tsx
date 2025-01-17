@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ACTION_TYPE } from '../../models';
 import { useInitializeState } from '../../hooks/useInitializeState';
 import { usePersistState } from '../../hooks/usePersistState';
@@ -16,15 +16,15 @@ function App() {
 
   usePersistState();
 
-  useEffect(() => {
+  const handleLoadComplete = () => {
     setTimeout(() => {
       dispatch({ type: ACTION_TYPE.SET_LOADING, payload: false });
     }, 3000);
-  }, [])
+  };
 
   return (
     <Container>
-      {loading ? <Loader loading={loading} /> : view}
+      {loading ? <Loader onLoadComplete={handleLoadComplete} /> : view}
     </Container>
   );
 }

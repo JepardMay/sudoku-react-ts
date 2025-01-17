@@ -12,6 +12,42 @@ export const ModalContainer = styled.div`
   align-items: center;
   padding: 30px;
   background-color: var(--overlay-color);
+
+  &.modal-enter {
+    opacity: 0;
+  }
+
+  &.modal-enter .modal-wrapper {
+    transform: translateY(20px);
+  }
+
+  &.modal-enter-active {
+    opacity: 1;
+    transition: opacity var(--modal-transition);
+  }
+
+  &.modal-enter-active .modal-wrapper {
+    transform: translateY(0);
+    transition: transform var(--modal-transition);
+  }
+
+  &.modal-exit {
+    opacity: 1;
+  }
+
+  &.modal-exit .modal-wrapper {
+    transform: translateY(0);
+  }
+
+  &.modal-exit-active {
+    opacity: 0;
+    transition: opacity var(--modal-transition);
+  }
+
+  &.modal-exit-active .modal-wrapper {
+    transform: translateY(20px);
+    transition: transform var(--modal-transition);
+  }
 `;
 
 export const ModalWrapper = styled.div`
