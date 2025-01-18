@@ -30,7 +30,7 @@ function Header ({
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
   const { state, dispatch } = useInitializeState();
-  const { history, redoStack, difficulty, timeSpent, timerHidden } = state;
+  const { history, redoStack, grid, timeSpent, timerHidden } = state;
 
   const handleBackClick = () => {
     dispatch({ type: ACTION_TYPE.SET_GAME, payload: false });
@@ -53,7 +53,7 @@ function Header ({
         <UndoButton onClick={undo} disabled={history.length === 0} />
         <RedoButton onClick={redo} disabled={redoStack.length === 0} />
         <Logo />
-        <Difficulty className={difficulty?.toLowerCase()}>
+        <Difficulty className={grid.difficulty?.toLowerCase()}>
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
