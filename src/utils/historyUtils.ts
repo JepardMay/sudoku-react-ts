@@ -7,7 +7,7 @@ export const updateHistory = (
   dispatch: Dispatch<Action>,
   updateFunction: (newState: Grid) => void,
 ) => {
-  const newHistory = [...history, JSON.parse(JSON.stringify(grid))];
+  const newHistory = [JSON.parse(JSON.stringify(grid)), ...history];
   dispatch({ type: ACTION_TYPE.SET_HISTORY, payload: newHistory });
   dispatch({ type: ACTION_TYPE.SET_REDOSTACK, payload: [] });
   

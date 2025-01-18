@@ -49,29 +49,29 @@ const useSudokuState = () => {
 
   const undo = () => {
     if (history.length === 0) return;
+  
     const previousState = history[0];
 
-    const newRedostack = [JSON.parse(JSON.stringify(grid)), ...redoStack];
-    dispatch({ type: ACTION_TYPE.SET_REDOSTACK, payload: newRedostack });
-
     const newHistory = history.slice(1);
-    dispatch({ type: ACTION_TYPE.SET_HISTORY, payload: newHistory });
+    const newRedostack = [JSON.parse(JSON.stringify(grid)), ...redoStack];
 
+    dispatch({ type: ACTION_TYPE.SET_HISTORY, payload: newHistory });
+    dispatch({ type: ACTION_TYPE.SET_REDOSTACK, payload: newRedostack });
     dispatch({ type: ACTION_TYPE.SET_GRID, payload: previousState });
-  };
+};
 
   const redo = () => {
     if (redoStack.length === 0) return;
+  
     const nextState = redoStack[0];
 
     const newHistory = [JSON.parse(JSON.stringify(grid)), ...history];
-    dispatch({ type: ACTION_TYPE.SET_HISTORY, payload: newHistory });
-
     const newRedostack = redoStack.slice(1);
+
+    dispatch({ type: ACTION_TYPE.SET_HISTORY, payload: newHistory });
     dispatch({ type: ACTION_TYPE.SET_REDOSTACK, payload: newRedostack });
-    
     dispatch({ type: ACTION_TYPE.SET_GRID, payload: nextState });
-  };
+};
 
   const getHint = () => {
     const emptyCells = findEmptyCells(grid.puzzle);
