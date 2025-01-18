@@ -44,6 +44,7 @@ export const BackBtn = styled(Btn)`
   top: 85px;
   left: 80px;
   transform: rotate(90deg);
+  opacity: 0;
 
   @media (max-width: 768px) {
     top: 50px;

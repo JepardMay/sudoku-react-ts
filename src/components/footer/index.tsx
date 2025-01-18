@@ -33,7 +33,7 @@ function Footer ({
       <IconButton isSelected={eraserMode && inputType === INPUT_TYPE.DIGIT_FIRST} onClick={() => handleEraserClick(grid, inputType, selectedCell, dispatch)}>
         <EraserIcon />
       </IconButton>
-      <IconButton isSelected={pencilMode} className={'pencil'} onClick={() => dispatch({ type: ACTION_TYPE.SET_PENCIL_MODE, payload: !pencilMode })}>
+      <IconButton isSelected={pencilMode} className='pencil' onClick={() => dispatch({ type: ACTION_TYPE.SET_PENCIL_MODE, payload: !pencilMode })}>
         <PencilIcon />
       </IconButton>
       <FooterBtn

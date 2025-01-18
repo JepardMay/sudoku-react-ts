@@ -1,4 +1,6 @@
 import React from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ACTION_TYPE } from '../../models';
 import { useInitializeState } from '../../hooks/useInitializeState';
 import useSudokuState from '../../hooks/useSudokuState';
@@ -33,8 +35,32 @@ function Grid() {
     removeSavedStorage('timeSpent');
   };
 
+  useGSAP(() => {
+    const element = document.querySelector('.fade-in');
+    gsap.from(element, {
+      scale: 0.9,
+      y: 100,
+      opacity: 0,
+      onComplete: () => {
+        if (element) {
+          element.removeAttribute('style');
+        }
+        gsap.to('.back-btn', {
+          opacity: 1
+        });
+      }
+    }); 
+     
+    gsap.from('.pop-in', {
+      scale: 0,
+      opacity: 0,
+      stagger: 0.02,
+      ease: "elastic.out(1,0.5)",
+    });
+  });
+
   return (
-    <GridSection>
+    <GridSection className="fade-in">
       <>
         <Header 
           validateEntireGrid={validateEntireGrid}

@@ -47,8 +47,12 @@ export const FooterBtn = styled.button.withConfig({
     background-color: var(--active-color);
   }
 
-  &.pencil.selected svg {
+  &.pencil svg {
     transform: rotate(45deg);
+  }
+
+  &.pencil.selected svg {
+    transform: rotate(0deg);
   }
 
   &:disabled {

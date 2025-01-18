@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { Difficulty, ACTION_TYPE } from '../../models';
 import { useInitializeState } from '../../hooks/useInitializeState';
 import Logo from '../logo';
@@ -29,11 +31,20 @@ function Main() {
     openGameSound();
   };
 
+  useGSAP(() => {
+    gsap.from('.slide-in', {
+      y: 100,
+      z: -100,
+      opacity: 0,
+      stagger: 0.3
+    });
+  });
+
   return (
     <div>
-      <Logo mod='big' />
-      {resume && <MainBtn onClick={resumeGame}>Resume Game</MainBtn>}
-      <MainBtn onClick={() => setDifficultyModal(true)}>New Game</MainBtn>
+      <Logo mod='slide-in big' />
+      {resume && <MainBtn className='slide-in' onClick={resumeGame}>Resume Game</MainBtn>}
+      <MainBtn className='slide-in' onClick={() => setDifficultyModal(true)}>New Game</MainBtn>
       <DifficultyModal
         show={difficultyModal && !error}
         onClose={() => setDifficultyModal(false)}

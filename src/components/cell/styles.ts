@@ -44,6 +44,10 @@ export const TableCell = styled.td`
   }
 `;
 
+export const NumberSpan = styled.span`
+  display: inline-block;
+`;
+
 export const PencilMark = styled.span`
   position: absolute;
   font-size: 12px;

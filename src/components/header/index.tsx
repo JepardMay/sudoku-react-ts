@@ -46,7 +46,7 @@ function Header ({
 
   return (
     <HeaderContainer>
-      <BackBtn onClick={handleBackClick}>
+      <BackBtn className='back-btn' onClick={handleBackClick}>
         <ArrowBack />
       </BackBtn>
       <HeaderWrapper>

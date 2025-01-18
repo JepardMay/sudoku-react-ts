@@ -18,7 +18,7 @@ export const ModalContainer = styled.div`
   }
 
   &.modal-enter .modal-wrapper {
-    transform: translateY(20px);
+    transform: translateY(50px);
   }
 
   &.modal-enter-active {
@@ -45,7 +45,7 @@ export const ModalContainer = styled.div`
   }
 
   &.modal-exit-active .modal-wrapper {
-    transform: translateY(20px);
+    transform: translateY(50px);
     transition: transform var(--modal-transition);
   }
 `;

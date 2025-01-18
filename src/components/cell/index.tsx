@@ -3,7 +3,7 @@ import { Cell as CellType, CellClickData, CellCallbacks } from '../../models';
 import { useInitializeState } from '../../hooks/useInitializeState';
 import { handleCellClick, isConflicting, isInvalid } from '../../utils/tableHandlers';
 
-import { TableCell, PencilMark } from './styles';
+import { TableCell, NumberSpan, PencilMark } from './styles';
 
 interface Props {
   cell: CellType;
@@ -51,7 +51,7 @@ function Cell ({
       data-cell={cellIndex}
       onClick={() => handleCellClick(clickData, callbacks)}
     >
-      {cell.value !== 0 ? <span>{cell.value}</span> : cell.pencilMarks.map(mark =>
+      {cell.value !== 0 ? <NumberSpan className='pop-in'>{cell.value}</NumberSpan> : cell.pencilMarks.map(mark =>
         <PencilMark className={`_${mark}`} key={`cell: ${cellIndex + 1 + rowIndex * 9}, mark: ${mark}`}>{mark}</PencilMark>
       )}
     </TableCell>
