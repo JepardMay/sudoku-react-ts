@@ -25,6 +25,7 @@ export interface State {
   timerHidden: boolean,
   timeHistory: TimeHistory[],
   bestTimeHistory: BestTimeHistoryRecord | null,
+  isHelperUsed: boolean,
 }
 
 export interface StateContextType {

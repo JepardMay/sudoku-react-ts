@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
-import { ACTION_TYPE, Grid, TimeHistory, BestTimeHistoryRecord } from '../models';
+import { ACTION_TYPE, Grid } from '../models';
 import { useInitializeState } from './useInitializeState';
-import { validatePuzzle } from '../utils/validationUtils';
 import { countNumbersInGrid, isGridEmpty } from '../utils/gridUtils';
-import { setStorage, removeSavedStorage } from '../utils/storageUtils';
+import { handlePuzzleCompletion } from '../utils/completionUtils';
+import { setStorage } from '../utils/storageUtils';
 
 export const usePersistState = () => {
   const { state, dispatch } = useInitializeState();
-  const { grid, timeSpent, inputType, completed, nightTheme, highlighting, timeHistory, bestTimeHistory } = state;
+  const { grid, timeSpent, inputType, completed, nightTheme, highlighting, timeHistory, bestTimeHistory, isHelperUsed } = state;
   
   const previousGridRef = useRef<Grid | null>(null);
 
@@ -20,39 +20,7 @@ export const usePersistState = () => {
     const numberCounts = countNumbersInGrid(grid.puzzle);
     dispatch({ type: ACTION_TYPE.SET_NUMBER_COUNTS, payload: numberCounts });
 
-    if (validatePuzzle(grid) && !completed) {
-      dispatch({ type: ACTION_TYPE.SET_RESUME, payload: false });
-      dispatch({ type: ACTION_TYPE.SET_IS_COMPLETED, payload: true });
-      removeSavedStorage('sudokuState');
-      
-      // Save latest result
-      const newScore: TimeHistory = {
-        timeSpent: timeSpent,
-        difficulty: grid.difficulty ? grid.difficulty : 'easy',
-        date: new Date
-      };
-
-      const newHistory: TimeHistory[] = [...timeHistory, newScore].slice(-6);
-      dispatch({ type: ACTION_TYPE.SET_TIME_HISTORY, payload: newHistory });
-
-      // Update the best results
-      let newBestTimeHistory: BestTimeHistoryRecord;
-      
-      if (bestTimeHistory) {
-        const existingBestTime = bestTimeHistory[newScore.difficulty];
-        const isBetterTime = !existingBestTime || newScore.timeSpent < existingBestTime.timeSpent;
-
-        newBestTimeHistory = {
-          ...bestTimeHistory,
-          [newScore.difficulty]: isBetterTime ? newScore : existingBestTime,
-        };
-      } else {
-        newBestTimeHistory = {
-          [newScore.difficulty]: newScore,
-        };
-      }
-      dispatch({ type: ACTION_TYPE.SET_BEST_TIME_HISTORY, payload: newBestTimeHistory });
-    }
+    if (!completed) handlePuzzleCompletion(grid, timeSpent, isHelperUsed, timeHistory, bestTimeHistory, dispatch);
 
     return () => {
       previousGridRef.current = grid;
@@ -83,4 +51,8 @@ export const usePersistState = () => {
   useEffect(() => {
     setStorage('bestTimeHistory', JSON.stringify(bestTimeHistory));
   }, [bestTimeHistory]);
+
+  useEffect(() => {
+    setStorage('isHelperUsed', String(isHelperUsed));
+  }, [isHelperUsed]);
 };

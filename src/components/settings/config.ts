@@ -13,6 +13,7 @@ export const getSettingsConfig = (
       onClick: () => {
         modalActions.validateEntireGrid();
         modalActions.setSettingsModal(false);
+        dispatch({ type: ACTION_TYPE.SET_IS_HELPER_USED, payload: true });
       }
     },
     {
@@ -20,6 +21,7 @@ export const getSettingsConfig = (
       onClick: () => {
         modalActions.getHint();
         modalActions.setSettingsModal(false);
+        dispatch({ type: ACTION_TYPE.SET_IS_HELPER_USED, payload: true });
       }
     },
     {
@@ -27,6 +29,7 @@ export const getSettingsConfig = (
       onClick: () => {
         modalActions.handleSolvingSudoku();
         modalActions.setSettingsModal(false);
+        dispatch({ type: ACTION_TYPE.SET_IS_HELPER_USED, payload: true });
       }
     },
     {

@@ -26,4 +26,5 @@ export const getInitialState = (): State => ({
   timerHidden: getStorage<boolean>('isTimerHidden', false),
   timeHistory: getStorage<TimeHistory[]>('timeHistory', []),
   bestTimeHistory: getStorage<BestTimeHistoryRecord | null>('bestTimeHistory', null),
+  isHelperUsed: getStorage<boolean>('isHelperUsed', false),
 });

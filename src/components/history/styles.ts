@@ -42,3 +42,9 @@ export const Cell = styled.td`
     color: var(--active-color);
   }
 `;
+
+export const Remark = styled.p`
+  margin: 0;
+  color: var(--active-color-transparent);
+  text-align: left;
+`;

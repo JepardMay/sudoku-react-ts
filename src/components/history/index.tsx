@@ -11,8 +11,12 @@ function History () {
   
   return (
     <HistoryWrapper>
-      <Title>Top Times</Title>
-      <BestTimesTable bestTimeHistory={bestTimeHistory} />
+      { bestTimeHistory &&
+        <>
+          <Title>Top Times</Title>
+          <BestTimesTable bestTimeHistory={ bestTimeHistory } />
+        </>
+      }
       <Title>Latest Results</Title>
       <TimeHistoryTable timeHistory={timeHistory} />
     </HistoryWrapper>

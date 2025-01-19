@@ -21,10 +21,11 @@ export interface TimeHistory {
   timeSpent: number;
   difficulty: DefinedDifficulty;
   date: Date;
+  isHelperUsed: boolean;
 }
 
 export interface BestTimeHistory {
-  [key: string]: TimeHistory;
+  [key: string]: Omit<TimeHistory, 'isHelperUsed'>;
 }
 
 export type BestTimeHistoryRecord = Partial<Record<DefinedDifficulty, TimeHistory>>;

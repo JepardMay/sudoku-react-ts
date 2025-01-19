@@ -14,6 +14,8 @@ export const gameStateReducer = (state: State, action: Action): State => {
       return { ...state, error: action.payload };
     case ACTION_TYPE.SET_DIFFICULTY:
       return { ...state, difficulty: action.payload };
+    case ACTION_TYPE.SET_IS_HELPER_USED:
+      return { ...state, isHelperUsed: action.payload };
     default:
       return state;
   }
