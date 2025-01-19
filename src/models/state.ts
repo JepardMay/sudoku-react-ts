@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { Action, Grid, CellPosition, NumberCounts, Difficulty } from '../models';
+import { Action, Grid, CellPosition, NumberCounts, Difficulty, TimeHistory } from '../models';
 
 export interface State {
   grid: Grid;
@@ -23,6 +23,8 @@ export interface State {
   nightTheme: boolean,
   highlighting: boolean,
   timerHidden: boolean,
+  timeHistory: TimeHistory[],
+  bestTimeHistory: TimeHistory[][],
 }
 
 export interface StateContextType {

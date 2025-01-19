@@ -17,5 +17,6 @@ export const initialSudokuState = (): Grid => {
 };
 
 export const checkSavedState = (): boolean => {
+  console.log(!!loadStateFromLocalStorage());
   return !!loadStateFromLocalStorage();
 };

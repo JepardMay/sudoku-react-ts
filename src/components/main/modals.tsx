@@ -1,7 +1,9 @@
 import React from 'react';
-import Modal from '../modal';
-import { BtnGrid, SmallBtn } from './styles';
 import { Difficulty } from '../../models';
+import Modal from '../modal';
+import History from '../history';
+
+import { BtnGrid, SmallBtn } from './styles';
 
 interface DifficultyModalProps {
   show: boolean;
@@ -37,4 +39,18 @@ export const ErrorModal: React.FC<ErrorModalProps> = ({ show, onClose }) => (
     message="Try to start the game again"
     onClose={onClose}
   />
+);
+
+interface HistoryModalProps {
+  show: boolean;
+  onClose: () => void;
+}
+
+export const HistoryModal: React.FC<HistoryModalProps> = ({ show, onClose }) => (
+  <Modal
+    show={show}
+    onClose={onClose}
+  >
+    <History/>
+  </Modal>
 );

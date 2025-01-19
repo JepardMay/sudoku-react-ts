@@ -32,6 +32,7 @@ function Grid() {
   const onModalClose = () => {
     dispatch({ type: ACTION_TYPE.SET_GAME, payload: false });
     dispatch({ type: ACTION_TYPE.SET_RESUME, payload: false });
+    dispatch({ type: ACTION_TYPE.SET_IS_COMPLETED, payload: false });
     removeSavedStorage('timeSpent');
   };
 

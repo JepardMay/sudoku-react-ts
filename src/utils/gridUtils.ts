@@ -71,3 +71,19 @@ export const resetGrid = (grid: Cell[][]): Cell[][] => {
     )
   );
 };
+
+export const isGridEmpty = (grid: Grid) => {
+    const emptyGrid = {
+      difficulty: undefined,
+      solution: [[0]],
+      puzzle: Array.from({ length: 9 }, () => 
+        Array.from({ length: 9 }, () => ({ value: 0, pencilMarks: [] }))
+      ),
+    };
+
+    return (
+      grid.difficulty === emptyGrid.difficulty &&
+      JSON.stringify(grid.solution) === JSON.stringify(emptyGrid.solution) &&
+      JSON.stringify(grid.puzzle) === JSON.stringify(emptyGrid.puzzle)
+    );
+  };

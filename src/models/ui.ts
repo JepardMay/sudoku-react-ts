@@ -1,4 +1,4 @@
-import { Cell } from './cell';
+import { Cell, Difficulty } from '../models';
 
 export interface CellClickData {
   rowIndex: number;
@@ -13,4 +13,10 @@ export interface CellCallbacks {
   setNumber: (rowIndex: number, cellIndex: number, number: number) => void;
   selectCell: (rowIndex: number, cellIndex: number) => void;
   eraseCell: (rowIndex: number, cellIndex: number) => void;
+}
+
+export interface TimeHistory {
+  timeSpent: number;
+  difficulty: Exclude<Difficulty, undefined>;
+  date: Date;
 }

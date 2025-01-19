@@ -6,8 +6,6 @@ export const gameStateReducer = (state: State, action: Action): State => {
       return { ...state, numberCounts: action.payload };
     case ACTION_TYPE.SET_IS_COMPLETED:
       return { ...state, completed: action.payload };
-    case ACTION_TYPE.SET_TIME_SPENT:
-      return { ...state, timeSpent: action.payload };
     case ACTION_TYPE.SET_GAME:
       return { ...state, game: action.payload };
     case ACTION_TYPE.SET_RESUME:
