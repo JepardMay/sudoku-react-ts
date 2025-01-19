@@ -1,4 +1,4 @@
-import { Grid, CellPosition, NumberCounts, Difficulty, TimeHistory } from '../models';
+import { Grid, CellPosition, NumberCounts, Difficulty, TimeHistory, BestTimeHistoryRecord } from '../models';
 
 export enum ACTION_TYPE {
   SET_GRID = 'SET_GRID',
@@ -49,4 +49,4 @@ export type Action =
   | { type: ACTION_TYPE.SET_HIGHLIGHTING; payload: boolean }
   | { type: ACTION_TYPE.SET_TIMER_HIDDEN; payload: boolean }
   | { type: ACTION_TYPE.SET_TIME_HISTORY; payload: TimeHistory[] }
-  | { type: ACTION_TYPE.SET_BEST_TIME_HISTORY; payload: TimeHistory[][] };
+  | { type: ACTION_TYPE.SET_BEST_TIME_HISTORY; payload: BestTimeHistoryRecord };

@@ -1,26 +1,20 @@
 import React from 'react';
-import { TimeHistory } from '../../models';
 import { useInitializeState } from '../../hooks/useInitializeState';
-import { formatTime, formatDate } from '../../utils/formatUtils';
+import TimeHistoryTable from './timeHistoryTable';
+import BestTimesTable from './bestTimesTable';
 
-import { HistoryWrapper, Title, Table, Row, Cell } from './styles';
+import { HistoryWrapper, Title } from './styles';
 
 function History () {
   const { state } = useInitializeState();
-  const { timeHistory } = state;
-
+  const { timeHistory, bestTimeHistory } = state;
+  
   return (
     <HistoryWrapper>
+      <Title>Top Times</Title>
+      <BestTimesTable bestTimeHistory={bestTimeHistory} />
       <Title>Latest Results</Title>
-      <Table>
-        { timeHistory.map((score: TimeHistory) => (
-          <Row key={score.timeSpent + score.difficulty}>
-            <Cell>{ score.difficulty }</Cell>
-            <Cell>{ formatDate(score.date) }</Cell>
-            <Cell>{ formatTime(score.timeSpent) }</Cell>
-          </Row>
-        )) }
-      </Table>
+      <TimeHistoryTable timeHistory={timeHistory} />
     </HistoryWrapper>
   );
 };

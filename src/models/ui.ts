@@ -15,8 +15,16 @@ export interface CellCallbacks {
   eraseCell: (rowIndex: number, cellIndex: number) => void;
 }
 
+export type DefinedDifficulty = Exclude<Difficulty, undefined>;
+
 export interface TimeHistory {
   timeSpent: number;
-  difficulty: Exclude<Difficulty, undefined>;
+  difficulty: DefinedDifficulty;
   date: Date;
 }
+
+export interface BestTimeHistory {
+  [key: string]: TimeHistory;
+}
+
+export type BestTimeHistoryRecord = Partial<Record<DefinedDifficulty, TimeHistory>>;

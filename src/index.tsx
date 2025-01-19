@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import 'normalize.css';
+import './normalize.css';
+import './font.css';
 import GlobalStyles from './GlobalStyles';
 
 import { StateProvider } from './state/context';
@@ -15,9 +16,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <StateProvider>
-      <GlobalStyles>
-        <App />
-      </GlobalStyles>
+      <GlobalStyles/>
+      <App />
     </StateProvider>
   </React.StrictMode>,
 );

@@ -7,12 +7,13 @@ export const HistoryWrapper = styled.div`
 
 export const Title = styled.h2`
   margin: 0;
+  margin-top: 20px;
   margin-bottom: 10px;
-  font-size: 22px;
+  font-size: 20px;
   text-align: left;
 
-  & + & {
-    margin-top: 20px;
+  &:first-child{
+    margin-top: 0;
   }
 `;
 
@@ -21,11 +22,7 @@ export const Table = styled.table`
 `;
 
 export const Row = styled.tr`
-  border-bottom: 1px solid var(--border-color);
-
-  &:last-child {
-    border: none;
-  }
+  border-top: 1px solid var(--border-color);
 
   td:first-child {
     text-align: left;
@@ -39,4 +36,9 @@ export const Row = styled.tr`
 export const Cell = styled.td`
   padding: 5px 0;
   vertical-align: middle;
+
+  b {
+    font-weight: 600;
+    color: var(--active-color);
+  }
 `;

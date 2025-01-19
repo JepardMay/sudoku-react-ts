@@ -12,7 +12,7 @@ import { MainBtn } from './styles';
 
 function Main() {
   const { state, dispatch } = useInitializeState();
-  const { resume, error, timeHistory, bestTimeHistory } = state;
+  const { resume, error, timeHistory } = state;
 
   const [difficultyModal, setDifficultyModal] = useState<boolean>(false);
   const [historyModal, setHistoryModal] = useState<boolean>(false);
@@ -46,7 +46,7 @@ function Main() {
       <Logo mod='slide-in big' />
       { resume && <MainBtn className='slide-in' onClick={resumeGame}>Resume Game</MainBtn> }
       <MainBtn className='slide-in' onClick={() => setDifficultyModal(true)}>New Game</MainBtn>
-      { (timeHistory.length > 0 || bestTimeHistory.length > 0) && <MainBtn className='slide-in' onClick={ () => setHistoryModal(true) }>History</MainBtn> }
+      { (timeHistory.length > 0) && <MainBtn className='slide-in' onClick={ () => setHistoryModal(true) }>History</MainBtn> }
       <DifficultyModal
         show={difficultyModal && !error}
         onClose={() => setDifficultyModal(false)}

@@ -1,4 +1,4 @@
-import { INPUT_TYPE, State, TimeHistory } from '../models';
+import { INPUT_TYPE, State, TimeHistory, BestTimeHistoryRecord } from '../models';
 import { initialSudokuState, checkSavedState } from '../utils/stateInitialization';
 import { getStorage } from '../utils/storageUtils';
 
@@ -25,5 +25,5 @@ export const getInitialState = (): State => ({
   highlighting: getStorage<boolean>('isHighlighting', false),
   timerHidden: getStorage<boolean>('isTimerHidden', false),
   timeHistory: getStorage<TimeHistory[]>('timeHistory', []),
-  bestTimeHistory: getStorage<TimeHistory[][]>('bestTimeHistory', []),
+  bestTimeHistory: getStorage<BestTimeHistoryRecord | null>('bestTimeHistory', null),
 });
