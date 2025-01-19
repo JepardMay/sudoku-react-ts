@@ -21,7 +21,7 @@ export const getInitialState = (): State => ({
   resume: checkSavedState(),
   error: null,
   difficulty: undefined,
-  nightTheme: getStorage<boolean>('nightTheme', false),
+  nightTheme: getStorage<boolean>('nightTheme', !!window.matchMedia('(prefers-color-scheme: dark)')),
   highlighting: getStorage<boolean>('isHighlighting', false),
   timerHidden: getStorage<boolean>('isTimerHidden', false),
   timeHistory: getStorage<TimeHistory[]>('timeHistory', []),
