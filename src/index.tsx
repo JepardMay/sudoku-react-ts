@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import 'normalize.css';
-import './index.css';
+import GlobalStyles from './GlobalStyles';
 
 import { StateProvider } from './state/context';
 
@@ -15,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <StateProvider>
-      <App />
+      <GlobalStyles>
+        <App />
+      </GlobalStyles>
     </StateProvider>
   </React.StrictMode>,
 );
