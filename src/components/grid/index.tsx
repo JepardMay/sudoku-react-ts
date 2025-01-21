@@ -23,6 +23,7 @@ function Grid() {
     handleSolvingSudoku,
     getHint,
     reset,
+    resetPencilMarks,
     undo, 
     redo,
   } = useSudokuState();
@@ -68,6 +69,7 @@ function Grid() {
           handleSolvingSudoku={handleSolvingSudoku}
           getHint={getHint}
           reset={reset}
+          resetPencilMarks={resetPencilMarks}
           undo={undo}
           redo={redo}
         />

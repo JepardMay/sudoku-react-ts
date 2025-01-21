@@ -11,4 +11,5 @@ export interface SettingsActions {
   handleSolvingSudoku: () => void;
   getHint: () => void;
   reset: () => void;
+  resetPencilMarks: () => void;
 }

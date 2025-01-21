@@ -9,6 +9,7 @@ interface SettingsModalProps {
   handleSolvingSudoku: () => void;
   getHint: () => void;
   reset: () => void;
+  resetPencilMarks: () => void;
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
@@ -18,6 +19,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   handleSolvingSudoku, 
   getHint, 
   reset,
+  resetPencilMarks,
 }) => (
   <Modal show={show} onClose={onClose}>
     <Settings 
@@ -26,6 +28,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       handleSolvingSudoku={handleSolvingSudoku}
       getHint={getHint}
       reset={reset}
+      resetPencilMarks={resetPencilMarks}
     />
   </Modal>
 );

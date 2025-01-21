@@ -12,6 +12,7 @@ function Settings ({
   handleSolvingSudoku,
   getHint,
   reset,
+  resetPencilMarks,
 }: Readonly<Props>) {
   const modalActions: SettingsActions = {
     validateEntireGrid,
@@ -19,6 +20,7 @@ function Settings ({
     handleSolvingSudoku,
     getHint,
     reset,
+    resetPencilMarks,
   };
 
   const settings = getSettingsConfig(modalActions);

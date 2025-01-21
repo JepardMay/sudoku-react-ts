@@ -40,6 +40,13 @@ export const getSettingsConfig = (
       }
     },
     {
+      text: 'Reset Pencil Marks',
+      onClick: () => {
+        modalActions.resetPencilMarks();
+        modalActions.setSettingsModal(false);
+      }
+    },
+    {
       text: 'Hide timer',
       onClick: () => {
         dispatch({ type: ACTION_TYPE.SET_TIMER_HIDDEN, payload: !timerHidden });

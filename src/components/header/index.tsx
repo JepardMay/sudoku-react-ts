@@ -15,6 +15,7 @@ interface Props {
   handleSolvingSudoku: () => void;
   getHint: () => void;
   reset: () => void;
+  resetPencilMarks: () => void;
   undo: () => void;
   redo: () => void;
 }
@@ -24,6 +25,7 @@ function Header ({
   handleSolvingSudoku,
   getHint,
   reset,
+  resetPencilMarks,
   undo, 
   redo,
 }: Readonly<Props>) {
@@ -66,7 +68,8 @@ function Header ({
         validateEntireGrid={validateEntireGrid}
         handleSolvingSudoku={handleSolvingSudoku}
         getHint={getHint}
-        reset={reset}
+        reset={ reset }
+        resetPencilMarks={resetPencilMarks}
       />
     </HeaderContainer>
   );

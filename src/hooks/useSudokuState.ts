@@ -92,6 +92,12 @@ const useSudokuState = () => {
     newState.puzzle = resetGrid(newState.puzzle);
   });
 
+  const resetPencilMarks = () => updateHistory(grid, history, dispatch, (newState) => {
+    newState.puzzle.forEach((row) => {
+      row.forEach((cell) => cell.pencilMarks = []);
+    });
+  });
+
   return {
     setNumber,
     validateEntireGrid,
@@ -100,6 +106,7 @@ const useSudokuState = () => {
     redo,
     undo,
     reset,
+    resetPencilMarks,
   };
 };
 
