@@ -1,8 +1,8 @@
-export const useSound = (url: string) => {
+export const useSound = (url: string, mute: boolean) => {
   const audio = new Audio(url);
 
   const play = () => {
-    audio.play();
+    if (!mute) audio.play();
   };
 
   return play;

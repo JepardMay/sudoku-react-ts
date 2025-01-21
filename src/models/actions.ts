@@ -25,6 +25,7 @@ export enum ACTION_TYPE {
   SET_TIME_HISTORY = 'SET_TIME_HISTORY',
   SET_BEST_TIME_HISTORY = 'SET_BEST_TIME_HISTORY',
   SET_IS_HELPER_USED = 'SET_IS_HELPER_USED',
+  SET_MUTE = 'SET_MUTE',
 }
 
 export type Action =
@@ -51,4 +52,5 @@ export type Action =
   | { type: ACTION_TYPE.SET_TIMER_HIDDEN; payload: boolean }
   | { type: ACTION_TYPE.SET_TIME_HISTORY; payload: TimeHistory[] }
   | { type: ACTION_TYPE.SET_BEST_TIME_HISTORY; payload: BestTimeHistoryRecord }
-  | { type: ACTION_TYPE.SET_IS_HELPER_USED; payload: boolean };
+  | { type: ACTION_TYPE.SET_IS_HELPER_USED; payload: boolean }
+  | { type: ACTION_TYPE.SET_MUTE; payload: boolean };

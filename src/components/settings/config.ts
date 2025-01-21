@@ -5,7 +5,7 @@ export const getSettingsConfig = (
   modalActions: SettingsActions,
 ) => {
   const { state, dispatch } = useInitializeState();
-  const { timerHidden, highlighting, nightTheme } = state;
+  const { timerHidden, highlighting, nightTheme, mute } = state;
 
   return [
     {
@@ -40,7 +40,7 @@ export const getSettingsConfig = (
       }
     },
     {
-      text: 'Reset Pencil Marks',
+      text: 'Reset pencil marks',
       onClick: () => {
         modalActions.resetPencilMarks();
         modalActions.setSettingsModal(false);
@@ -55,7 +55,7 @@ export const getSettingsConfig = (
       className: `${timerHidden ? 'active' : ''}`
     },
     {
-      text: 'Highlight crossings',
+      text: 'Highlight crossings (cell\u00A0first)',
       onClick: () => {
         dispatch({ type: ACTION_TYPE.SET_HIGHLIGHTING, payload: !highlighting });
       },
@@ -69,6 +69,14 @@ export const getSettingsConfig = (
       },
       toggle: true,
       className: `${nightTheme ? 'active' : ''}`
+    },
+    {
+      text: 'Mute Sounds',
+      onClick: () => {
+        dispatch({ type: ACTION_TYPE.SET_MUTE, payload: !mute });
+      },
+      toggle: true,
+      className: `${mute ? 'active' : ''}`
     },
   ]
 };

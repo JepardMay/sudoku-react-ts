@@ -1,9 +1,9 @@
 import { useSound } from '../hooks/useSound';
 
-export const openGameSound = useSound('sounds/Modern8.mp3');
+export const openGameSound = (mute: boolean) => useSound('sounds/Modern8.mp3', mute);
 
-export const closeGameSound = useSound('sounds/Modern9.mp3');
+export const closeGameSound = (mute: boolean) => useSound('sounds/Modern9.mp3', mute);
 
-export const cellFillSound = useSound('sounds/Modern5.mp3');
+export const cellFillSound = (mute: boolean) => useSound('sounds/Modern5.mp3', mute);
 
-export const cellEraseSound = useSound('sounds/Modern6.mp3');
+export const cellEraseSound = (mute: boolean) => useSound('sounds/Modern6.mp3', mute);

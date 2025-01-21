@@ -9,7 +9,7 @@ import { useTimer } from './useTimer';
 
 const useSudokuState = () => {
   const { state, dispatch } = useInitializeState();
-  const { grid, history, redoStack, pencilMode } = state;
+  const { grid, history, redoStack, pencilMode, mute } = state;
 
   useTimer();
 
@@ -34,7 +34,7 @@ const useSudokuState = () => {
       return;
     }
 
-    if (!pencilMode) cellFillSound();
+    if (!pencilMode) cellFillSound(mute)();
     
     updateHistory(grid, history, dispatch, (newState) => {
       const cell = newState.puzzle[rowIndex][cellIndex];

@@ -17,7 +17,7 @@ const BestTimesTable: React.FC<BestTimesTableProps> = ({ bestTimeHistory }) => {
     <Table>
       <tbody>
         {Object.entries(sortedBestTimes).map(([difficulty, score]: [string, TimeHistory]) => (
-          <Row key={score.timeSpent + score.difficulty}>
+          <Row key={'top-time: ' + String(score.date) + score.timeSpent + score.difficulty}>
             <Cell><b>{difficulty}</b></Cell>
             <Cell>{formatDate(score.date)}</Cell>
             <Cell>{formatTime(score.timeSpent)}</Cell>

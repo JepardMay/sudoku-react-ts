@@ -7,6 +7,7 @@ export interface CellClickData {
   inputType: string;
   eraserMode: boolean;
   selectedNumber: number | null;
+  mute: boolean;
 }
 
 export interface CellCallbacks {

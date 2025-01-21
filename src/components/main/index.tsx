@@ -12,7 +12,7 @@ import { MainBtn } from './styles';
 
 function Main() {
   const { state, dispatch } = useInitializeState();
-  const { resume, error, timeHistory } = state;
+  const { resume, error, timeHistory, mute } = state;
 
   const [difficultyModal, setDifficultyModal] = useState<boolean>(false);
   const [historyModal, setHistoryModal] = useState<boolean>(false);
@@ -24,13 +24,13 @@ function Main() {
     dispatch({ type: ACTION_TYPE.SET_RESUME, payload: false });
     dispatch({ type: ACTION_TYPE.SET_IS_HELPER_USED, payload: false });
     dispatch({ type: ACTION_TYPE.SET_GAME, payload: true });
-    openGameSound();
+    openGameSound(mute)();
   };
 
   const resumeGame = () => {
     dispatch({ type: ACTION_TYPE.SET_RESUME, payload: true });
     dispatch({ type: ACTION_TYPE.SET_GAME, payload: true });
-    openGameSound();
+    openGameSound(mute)();
   };
 
   useGSAP(() => {

@@ -23,7 +23,7 @@ function Cell ({
   eraseCell,
 }: Readonly<Props>) {
   const { state } = useInitializeState();
-  const { inputType, eraserMode, selectedNumber, selectedCell, conflictingCells, invalidCells, highlighting } = state;
+  const { inputType, eraserMode, selectedNumber, selectedCell, conflictingCells, invalidCells, highlighting, mute } = state;
 
   const clickData: CellClickData = {
     rowIndex,
@@ -31,7 +31,8 @@ function Cell ({
     cell,
     inputType,
     eraserMode,
-    selectedNumber
+    selectedNumber,
+    mute
   };
 
   const callbacks: CellCallbacks = {

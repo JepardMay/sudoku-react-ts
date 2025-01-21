@@ -14,7 +14,7 @@ function Footer ({
   setNumber,
 }: Readonly<Props>) {
   const { state, dispatch } = useInitializeState();
-  const { grid, inputType, selectedCell, selectedNumber, numberCounts, eraserMode, pencilMode } = state;
+  const { grid, inputType, selectedCell, selectedNumber, numberCounts, eraserMode, pencilMode, mute } = state;
 
   const numberButtons = Array.from({ length: 9 }, (_, i) => i + 1).map(number => (
     <NumberButton
@@ -30,7 +30,7 @@ function Footer ({
   return (
     <FooterContainer>
       {numberButtons}
-      <IconButton isSelected={eraserMode && inputType === INPUT_TYPE.DIGIT_FIRST} onClick={() => handleEraserClick(grid, inputType, selectedCell, dispatch)}>
+      <IconButton isSelected={eraserMode && inputType === INPUT_TYPE.DIGIT_FIRST} onClick={() => handleEraserClick(grid, inputType, selectedCell, mute, dispatch)}>
         <EraserIcon />
       </IconButton>
       <IconButton isSelected={pencilMode} className='pencil' onClick={() => dispatch({ type: ACTION_TYPE.SET_PENCIL_MODE, payload: !pencilMode })}>

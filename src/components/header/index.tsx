@@ -32,12 +32,12 @@ function Header ({
   const [settingsModal, setSettingsModal] = useState<boolean>(false);
 
   const { state, dispatch } = useInitializeState();
-  const { history, redoStack, grid, timeSpent, timerHidden } = state;
+  const { history, redoStack, grid, timeSpent, timerHidden, mute } = state;
 
   const handleBackClick = () => {
     dispatch({ type: ACTION_TYPE.SET_GAME, payload: false });
     dispatch({ type: ACTION_TYPE.SET_RESUME, payload: true });
-    closeGameSound();
+    closeGameSound(mute)();
   };
 
   const handleSettingsClick = () => {

@@ -3,7 +3,7 @@ import { gridReducer } from './gridReducer';
 import { loadingReducer } from './loadingReducer';
 import { inputReducer } from './inputReducer';
 import { gameStateReducer } from './gameStateReducer';
-import { themeReducer } from './themeReducer';
+import { settingsReducer } from './settingsReducer';
 import { timeReducer } from './timeReducer';
 
 export const stateReducer = (state: State, action: Action): State => {
@@ -12,6 +12,6 @@ export const stateReducer = (state: State, action: Action): State => {
   const inputState = inputReducer(loadingState, action);
   const gameState = gameStateReducer(inputState, action);
   const timeState = timeReducer(gameState, action);
-  const finalState = themeReducer(timeState, action);
+  const finalState = settingsReducer(timeState, action);
   return finalState;
 };

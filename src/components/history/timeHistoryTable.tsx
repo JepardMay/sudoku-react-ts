@@ -16,7 +16,7 @@ const TimeHistoryTable: React.FC<TimeHistoryTableProps> = ({ timeHistory }) => {
       <Table>
         <tbody>
           { reversedTimeHistory.map((score: TimeHistory, i) => (
-            <Row key={score.timeSpent + i + score.difficulty}>
+            <Row key={score.timeSpent + String(score.date) + i + score.difficulty}>
               <Cell><b>{ score.difficulty }{ score.isHelperUsed && '*' }</b></Cell>
               <Cell>{ formatDate(score.date) }</Cell>
               <Cell>{ formatTime(score.timeSpent) }</Cell>
