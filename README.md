@@ -37,8 +37,8 @@ This Sudoku App is a web-based application that allows users to play and solve S
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/JepardMay/sudoku-react-ts
-   cd sudoku-app
+   git clone https://github.com/JepardMay/sudoku-react-ts.git
+   cd sudoku-react-ts
    ```
 
 2. **Install dependencies**:
