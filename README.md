@@ -1,46 +1,65 @@
-# Getting Started with Create React App
+# Sudoku App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Description
 
-## Available Scripts
+This Sudoku App is a web-based application that allows users to play and solve Sudoku puzzles. It provides an interactive grid, multiple difficulty levels, and various features.
 
-In the project directory, you can run:
+## Live Site URL: [Netlify](tiny-sudoku.netlify.app/)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Interactive Grid**: A user-friendly interface to input and solve Sudoku puzzles.
+- **Multiple Difficulty Levels**: Choose from four difficulty levels or let the app select a random difficulty for you.
+- **Save & Resume**: Save your game state and resume later.
+- **Timer**: Track your time while solving Sudoku puzzles.
+- **Score History**: View your latest and best scores for each difficulty level (best scores are saved only if solved without helpers).
+- **Input Modes**: Switch between cell-first and digit-first input modes.
+- **Pencil Marks**: Add pencil marks to cells for notes.
+- **Hints**: Get hints to assist in solving the puzzle.
+- **Puzzle Validation**: Validate your solution.
+- **Solve**: Automatically solve the puzzle.
+- **Reset Options**: Reset the whole puzzle or only clear the pencil marks.
+- **Responsive Design**: Optimized for desktop and mobile devices.
+- **Settings for User Preferences**: Save preferences such as hiding/showing the timer, highlighting crossing cells (for cell-first input), and enabling night theme.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+- React
+- TypeScript
+- Styled Components
+- [SudokuGen](https://www.npmjs.com/package/sudoku-gen)
+- [React Confetti Boom](https://www.npmjs.com/package/react-confetti-boom)
+- [GSAP](https://gsap.com/)
+- React Transition Group
+- Jest
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/sudoku-app.git
+   cd sudoku-app
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Start the development server**:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   npm start
+   ```
+The app will be available at http://localhost:3000.
 
-### `npm run eject`
+## Testing
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   ```bash
+   npm test
+   ```
+This will execute the Jest test suite.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Author
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- GitHub: [Veronika Palto](https://github.com/JepardMay)
