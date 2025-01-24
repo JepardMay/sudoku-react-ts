@@ -4,7 +4,7 @@
 
 This Sudoku App is a web-based application that allows users to play and solve Sudoku puzzles. It provides an interactive grid, multiple difficulty levels, and various features.
 
-## Live Site URL: [Netlify](tiny-sudoku.netlify.app/)
+## Live Site URL: [Netlify](https://tiny-sudoku.netlify.app/)
 
 ## Features
 
