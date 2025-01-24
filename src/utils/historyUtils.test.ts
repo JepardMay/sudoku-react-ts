@@ -1,16 +1,16 @@
 import { ACTION_TYPE, Grid } from '../models';
 import { updateHistory } from './historyUtils';
 
-// Mocking the dispatch function
 const mockDispatch = jest.fn();
 
 describe('updateHistory', () => {
+  let initialGrid: Grid;
+  let history: Grid[];
+
   beforeEach(() => {
     jest.clearAllMocks();
-  });
 
-  it('should update history and grid correctly', () => {
-    const initialGrid: Grid = {
+    initialGrid = {
       puzzle: [
         [{ value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }],
         [{ value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }],
@@ -23,7 +23,10 @@ describe('updateHistory', () => {
       ],
       difficulty: undefined
     };
-    const history: Grid[] = [];
+    history = [];
+  });
+
+  it('should update history and grid correctly', () => {
     const newGridState: Grid = JSON.parse(JSON.stringify(initialGrid));
     newGridState.puzzle[0][0].value = 1;
 
@@ -46,29 +49,20 @@ describe('updateHistory', () => {
       type: ACTION_TYPE.SET_GRID,
       payload: newGridState,
     });
+
+    expect(newGridState.puzzle[0][0].value).toBe(1);
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: ACTION_TYPE.SET_HISTORY,
+      payload: expect.arrayContaining([initialGrid]),
+    });
   });
 
   it('should not mutate the original grid', () => {
-    const initialGrid: Grid = {
-      puzzle: [
-        [{ value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }],
-        [{ value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }],
-        [{ value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }, { value: 0, pencilMarks: [] }],
-      ],
-      solution: [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
-      ],
-      difficulty: undefined
-    };
-    const history: Grid[] = [];
+    const initialGridCopy = JSON.parse(JSON.stringify(initialGrid));
     
     const updateFunction = (newState: Grid) => {
       newState.puzzle[0][0].value = 1;
     };
-
-    const initialGridCopy = JSON.parse(JSON.stringify(initialGrid));
 
     updateHistory(initialGrid, history, mockDispatch, updateFunction);
 
