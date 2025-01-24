@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import 'normalize.css';
-import './font.css';
 import GlobalStyles from './GlobalStyles';
 
 import { StateProvider } from './state/context';

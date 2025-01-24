@@ -35,7 +35,7 @@ function Main() {
 
   useGSAP(() => {
     gsap.from('.slide-in', {
-      y: 100,
+      y: 120,
       z: -100,
       opacity: 0,
       stagger: 0.3
