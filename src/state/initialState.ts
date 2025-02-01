@@ -1,31 +1,32 @@
-import { INPUT_TYPE, State, TimeHistory, BestTimeHistoryRecord } from '../models';
-import { initialSudokuState, checkSavedState } from '../utils/stateInitialization';
-import { getStorage } from '../utils/storageUtils';
+import { State } from '../models';
+import { loadStateFromLocalStorage, initialGridState, checkSavedGrid } from '../utils/stateInitialization';
 
-export const getInitialState = (): State => ({
-  grid: initialSudokuState(),
-  history: [],
-  redoStack: [],
-  loading: true,
-  inputType: getStorage('inputType', INPUT_TYPE.DIGIT_FIRST),
-  selectedNumber: null,
-  selectedCell: null,
-  pencilMode: false,
-  eraserMode: false,
-  conflictingCells: [],
-  invalidCells: [],
-  numberCounts: {},
-  completed: false,
-  timeSpent: parseInt(getStorage('timeSpent', '0'), 10),
-  game: false,
-  resume: checkSavedState(),
-  error: null,
-  difficulty: undefined,
-  nightTheme: getStorage<boolean>('nightTheme', !!window.matchMedia('(prefers-color-scheme: dark)')),
-  highlighting: getStorage<boolean>('isHighlighting', false),
-  timerHidden: getStorage<boolean>('isTimerHidden', false),
-  timeHistory: getStorage<TimeHistory[]>('timeHistory', []),
-  bestTimeHistory: getStorage<BestTimeHistoryRecord | null>('bestTimeHistory', null),
-  isHelperUsed: getStorage<boolean>('isHelperUsed', false),
-  mute: false,
-});
+export const getInitialState = (): State => {
+  return {
+    grid: initialGridState(),
+    history: [],
+    redoStack: [],
+    loading: true,
+    inputType: loadStateFromLocalStorage().inputType,
+    selectedNumber: null,
+    selectedCell: null,
+    pencilMode: false,
+    eraserMode: false,
+    conflictingCells: [],
+    invalidCells: [],
+    numberCounts: {},
+    completed: false,
+    timeSpent: loadStateFromLocalStorage().timeSpent,
+    game: false,
+    resume: checkSavedGrid(),
+    error: null,
+    difficulty: undefined,
+    nightTheme: loadStateFromLocalStorage().nightTheme,
+    highlighting: loadStateFromLocalStorage().highlighting,
+    timerHidden: loadStateFromLocalStorage().timerHidden,
+    timeHistory: loadStateFromLocalStorage().timeHistory,
+    bestTimeHistory: loadStateFromLocalStorage().bestTimeHistory,
+    isHelperUsed: loadStateFromLocalStorage().isHelperUsed,
+    mute: false,
+  };
+};

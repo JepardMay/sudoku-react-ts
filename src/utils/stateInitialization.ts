@@ -1,12 +1,22 @@
-import { Grid } from '../models';
+import { LocalStorageState, Grid, INPUT_TYPE } from '../models';
 import { getStorage } from './storageUtils';
 
-export const loadStateFromLocalStorage = (): Grid | null => {
-  return getStorage<Grid | null>('sudokuState', null);
+export const loadStateFromLocalStorage = (): LocalStorageState => {
+  return getStorage<LocalStorageState>('sudokuAppState', {
+    grid: null,
+    inputType: INPUT_TYPE.DIGIT_FIRST,
+    timeSpent: 0,
+    nightTheme: !!window.matchMedia('(prefers-color-scheme: dark)').matches,
+    highlighting: false,
+    timerHidden: false,
+    timeHistory: [],
+    bestTimeHistory: null,
+    isHelperUsed: false,
+  });
 };
 
-export const initialSudokuState = (): Grid => {
-  const savedState = loadStateFromLocalStorage();
+export const initialGridState = (): Grid => {
+  const savedState = loadStateFromLocalStorage().grid;
   return savedState || {
     difficulty: undefined,
     solution: [[0]],
@@ -16,6 +26,6 @@ export const initialSudokuState = (): Grid => {
   };
 };
 
-export const checkSavedState = (): boolean => {
-  return !!loadStateFromLocalStorage();
+export const checkSavedGrid = (): boolean => {
+  return !!loadStateFromLocalStorage().grid?.difficulty;
 };

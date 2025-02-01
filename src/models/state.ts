@@ -33,3 +33,15 @@ export interface StateContextType {
   state: State;
   dispatch: Dispatch<Action>;
 }
+
+export interface LocalStorageState {
+  grid: Grid | null;
+  inputType: string;
+  timeSpent: number;
+  nightTheme: boolean;
+  highlighting: boolean;
+  timerHidden: boolean;
+  timeHistory: TimeHistory[];
+  bestTimeHistory: BestTimeHistoryRecord | null;
+  isHelperUsed: boolean;
+}
