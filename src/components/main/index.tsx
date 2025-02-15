@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
+import React from 'react';
 import { Difficulty, ACTION_TYPE } from '../../models';
 import { useInitializeState } from '../../hooks/useInitializeState';
+import { useModals } from '../../hooks/useModals';
+import { useAnimations } from '../../hooks/useAnimations';
 import Logo from '../logo';
 import { DifficultyModal, ErrorModal, HistoryModal } from './modals';
 import { removeSavedStorage } from '../../utils/storageUtils';
@@ -14,8 +14,7 @@ function Main() {
   const { state, dispatch } = useInitializeState();
   const { resume, error, timeHistory, mute } = state;
 
-  const [difficultyModal, setDifficultyModal] = useState<boolean>(false);
-  const [historyModal, setHistoryModal] = useState<boolean>(false);
+  const { difficultyModal, historyModal, openDifficultyModal, closeDifficultyModal, openHistoryModal, closeHistoryModal } = useModals();
 
   const startNewGame = (difficulty: Difficulty) => {
     removeSavedStorage('sudokuState');
@@ -33,24 +32,17 @@ function Main() {
     openGameSound(mute)();
   };
 
-  useGSAP(() => {
-    gsap.from('.slide-in', {
-      y: 120,
-      z: -100,
-      opacity: 0,
-      stagger: 0.3
-    });
-  });
+  useAnimations({ slideIn: true });
 
   return (
     <div>
       <Logo mod='slide-in big' />
       { resume && <MainBtn className='slide-in' onClick={resumeGame}>Resume Game</MainBtn> }
-      <MainBtn className='slide-in' onClick={() => setDifficultyModal(true)}>New Game</MainBtn>
-      { (timeHistory.length > 0) && <MainBtn className='slide-in' onClick={ () => setHistoryModal(true) }>History</MainBtn> }
+      <MainBtn className='slide-in' onClick={openDifficultyModal}>New Game</MainBtn>
+      { (timeHistory.length > 0) && <MainBtn className='slide-in' onClick={openHistoryModal}>History</MainBtn> }
       <DifficultyModal
         show={difficultyModal && !error}
-        onClose={() => setDifficultyModal(false)}
+        onClose={closeDifficultyModal}
         startNewGame={startNewGame}
       />
       <ErrorModal
@@ -59,7 +51,7 @@ function Main() {
       />
       <HistoryModal
         show={historyModal && !error}
-        onClose={() => setHistoryModal(false)}
+        onClose={closeHistoryModal}
       />
     </div>
   );
