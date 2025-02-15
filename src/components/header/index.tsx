@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ACTION_TYPE } from '../../models';
 import { useInitializeState } from '../../hooks/useInitializeState';
+import { useModals } from '../../hooks/useModals';
 import { ArrowBack } from '../Icons';
 import Logo from '../logo/index';
 import { SettingsModal } from './modals';
@@ -29,7 +30,7 @@ function Header ({
   undo, 
   redo,
 }: Readonly<Props>) {
-  const [settingsModal, setSettingsModal] = useState<boolean>(false);
+  const { settingsModal, openSettingsModal, closeSettingsModal } = useModals();
 
   const { state, dispatch } = useInitializeState();
   const { history, redoStack, grid, timeSpent, timerHidden, mute } = state;
@@ -38,10 +39,6 @@ function Header ({
     dispatch({ type: ACTION_TYPE.SET_GAME, payload: false });
     dispatch({ type: ACTION_TYPE.SET_RESUME, payload: true });
     closeGameSound(mute)();
-  };
-
-  const handleSettingsClick = () => {
-    setSettingsModal(!settingsModal);
   };
 
   return (
@@ -59,12 +56,12 @@ function Header ({
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
           <img src="./img/lock.png" alt="Lock" width="32" height="32" />
         </Difficulty>
-        <SettingsButton onClick={handleSettingsClick} />
+        <SettingsButton onClick={openSettingsModal} />
         { !timerHidden && <Timer>{ formatTime(timeSpent) }</Timer> }
       </HeaderWrapper>
       <SettingsModal
         show={settingsModal}
-        onClose={() => setSettingsModal(false)}
+        onClose={closeSettingsModal}
         validateEntireGrid={validateEntireGrid}
         handleSolvingSudoku={handleSolvingSudoku}
         getHint={getHint}
